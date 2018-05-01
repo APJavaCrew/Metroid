@@ -8,7 +8,11 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import entity.Player;
+
 public class Runner extends JPanel implements KeyListener {
+	
+	Player player = new Player();
 	
 	public Runner() {
 		setSize(new Dimension(1280, 720));
@@ -31,7 +35,8 @@ public class Runner extends JPanel implements KeyListener {
 		
 	}
 	
-	public void update(Graphics g) {
+	public void draw(Graphics g) {
+		player.draw(g);
 		paint(g);
 	}
 

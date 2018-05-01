@@ -17,7 +17,7 @@ public class SpriteSheet {
 	
 	public SpriteSheet(String path) {
 		try {
-			sheet = ImageIO.read(new File("res/" + path));
+			sheet = ImageIO.read(ImageIO.class.getResource(path)); //TODO FIX THIS READING THING
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ public class SpriteSheet {
 	
 	public SpriteSheet(String path, int individualWidth, int individualHeight) {
 		try {
-			sheet = ImageIO.read(new File("res/" + path));
+			sheet = ImageIO.read(new File("res/sprites/" + path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,12 +42,12 @@ public class SpriteSheet {
 		return sheet;
 	}
 	
-	public BufferedImage getImageAtLocation(String path) {
+	public BufferedImage getImageFile(String path) {
 		
 		BufferedImage newImage;
 		
 		try {
-			newImage = ImageIO.read(new File("res/" + path));
+			newImage = ImageIO.read(new File("res/sprites/" + path));
 		} catch (IOException e) {
 			e.printStackTrace();
 			newImage = new BufferedImage(10, 10, BufferedImage.TYPE_USHORT_GRAY);

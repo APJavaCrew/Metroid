@@ -33,6 +33,7 @@ public abstract class Entity {
 	protected Rectangle hitbox = new Rectangle((int) x, (int) y, (int) w, (int) h);
 	
 	public abstract void draw(Graphics g);
+	
 	public double getX() { return this.x; }
 	public double getY() { return this.y; }
 	public double getW() { return this.w; }
