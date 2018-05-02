@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
@@ -17,7 +18,7 @@ public class SpriteSheet {
 	
 	public SpriteSheet(String path) {
 		try {
-			sheet = ImageIO.read(ImageIO.class.getResource(path)); //TODO FIX THIS READING THING
+			sheet = ImageIO.read(new File("sprites/" + path)); //TODO FIX THIS READING THING
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -29,7 +30,7 @@ public class SpriteSheet {
 	
 	public SpriteSheet(String path, int individualWidth, int individualHeight) {
 		try {
-			sheet = ImageIO.read(new File("res/sprites/" + path));
+			sheet = ImageIO.read(new File("sprites/" + path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +48,7 @@ public class SpriteSheet {
 		BufferedImage newImage;
 		
 		try {
-			newImage = ImageIO.read(new File("res/sprites/" + path));
+			newImage = ImageIO.read(new File("sprites/" + path));
 		} catch (IOException e) {
 			e.printStackTrace();
 			newImage = new BufferedImage(10, 10, BufferedImage.TYPE_USHORT_GRAY);
@@ -68,19 +69,31 @@ public class SpriteSheet {
 		
 	}
 	
-	//First digit is # of sprites
+	//First digit of xIndexes is # of sprites
 	//Separate indexes with '-'
-	public BufferedImage[] getSpritesAt(Scanner xIndexes, Scanner yIndexes) {
+	public BufferedImage[] getSpritesAt(String xIndexesString, String yIndexesString) {
+		Scanner xIndexes = new Scanner(xIndexesString);
+		Scanner yIndexes = new Scanner(yIndexesString);
 		xIndexes.useDelimiter("-");
+		yIndexes.useDelimiter("-");
 		int length = xIndexes.nextInt();
+		xIndexes.nextLine();
 		int pos = 0;
 		BufferedImage[] imgs = new BufferedImage[length];
 		while (xIndexes.hasNextInt()) {
-			imgs[pos] = getSpriteAt(xIndexes.nextInt(), yIndexes.nextInt());
+			try {
+				imgs[pos] = getSpriteAt(xIndexes.nextInt(), yIndexes.nextInt());
+			} catch(InputMismatchException e) {
+				throw new RuntimeException("You didn't put the right values in for the indexes: " + e.getStackTrace());
+			}
 			pos++;
 			xIndexes.nextLine();
 			yIndexes.nextLine();
 		}
+		
+		xIndexes.close();
+		yIndexes.close();
+		
 		return imgs;
 	}
 	

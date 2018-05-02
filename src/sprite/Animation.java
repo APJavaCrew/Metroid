@@ -11,14 +11,14 @@ public class Animation {
 	
 	private boolean stopped, loop;
 	
-	private ArrayList<Frame> frames = new ArrayList<Frame>();
+	private ArrayList<BufferedImage> frames = new ArrayList<BufferedImage>();
 	
 	public Animation(BufferedImage[] frames, int frameDelay) {
 		this.frameDelay = frameDelay;
 		this.stopped = true;
 		
 		for (int i = 0; i < frames.length; i++) {
-			addFrame(frames[i], frameDelay);
+			this.frames.add(frames[i]);
 		}
 		
 		loop = false;
@@ -30,7 +30,7 @@ public class Animation {
 		this.stopped = true;
 		
 		for (int i = 0; i < frames.length; i++) {
-			addFrame(frames[i], frameDelay);
+			this.frames.add(frames[i]);
 		}
 		
 		this.loop = loop;
@@ -59,18 +59,8 @@ public class Animation {
 		this.currentFrame = 0;
 	}
 	
-	private void addFrame(BufferedImage frame, int duration) {
-        if (duration <= 0) {
-            System.err.println("Invalid duration: " + duration);
-            throw new RuntimeException("Invalid duration: " + duration);
-        }
-
-        frames.add(new Frame(frame, duration));
-        currentFrame = 0;
-    }
-	
 	public BufferedImage getSprite() {
-		return frames.get(currentFrame).getFrame();
+		return frames.get(currentFrame);
 	}
 	
 	public void update() {
@@ -89,6 +79,10 @@ public class Animation {
 		} else if (loop) {
 			restart();
 		}
+	}
+	
+	public BufferedImage get() {
+		return frames.get(0);
 	}
 
 }

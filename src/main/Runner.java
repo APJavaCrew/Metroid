@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -35,8 +36,16 @@ public class Runner extends JPanel implements KeyListener {
 		
 	}
 	
-	public void draw(Graphics g) {
+	@Override
+	public void paint(Graphics g) {
 		player.draw(g);
+		
+		repaint();
+		
+	}
+	
+	@Override
+	public void update(Graphics g) {
 		paint(g);
 	}
 
