@@ -20,6 +20,7 @@ public class Runner extends JPanel implements KeyListener {
 		setPreferredSize(new Dimension(1280, 720));
 		setFocusable(true);
 		addKeyListener(this);
+		setBackground(new Color(100, 200, 255));
 	}
 
 	public static void main(String[] args) {
@@ -38,6 +39,8 @@ public class Runner extends JPanel implements KeyListener {
 	
 	@Override
 	public void paint(Graphics g) {
+		g.setColor(new Color(255, 0, 255));
+		g.fillRect(0, 0, getWidth(), getHeight());
 		player.draw(g);
 		
 		repaint();
