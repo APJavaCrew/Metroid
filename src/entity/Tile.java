@@ -3,13 +3,13 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class PlatformTile extends Entity {
+public class Tile extends Entity {
 
-	public PlatformTile() {
+	public Tile() {
 		super();
 	}
 	
-	public PlatformTile(double x, double y) {
+	public Tile(double x, double y) {
 		super(x, y, 20, 20);
 	}
 	

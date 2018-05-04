@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import entity.Player;
+import level.Room;
 
 public class Runner extends JPanel implements KeyListener {
 	
@@ -24,7 +25,7 @@ public class Runner extends JPanel implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		
+		Room test = new Room("test");
 		Runner game = new Runner();
 		
 		JFrame frame = new JFrame();
