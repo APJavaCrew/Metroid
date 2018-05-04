@@ -77,14 +77,12 @@ public class SpriteSheet {
 		xIndexes.useDelimiter("-");
 		yIndexes.useDelimiter("-");
 		int length = xIndexes.nextInt();
-		int pos = 0;
 		BufferedImage[] imgs = new BufferedImage[length];
-		
 		for (int i = 0; i < length; i++) {
 			try {
 				imgs[i] = getSpriteAt(xIndexes.nextInt(), yIndexes.nextInt());
-			} catch (InputMismatchException e) {
-				throw new RuntimeException("Your didn't put the right values in for the indexes: " + e.getStackTrace());
+			} catch(InputMismatchException e) {
+				throw new RuntimeException("You didn't put the right values in for the indexes: " + e.getStackTrace());
 			}
 		}
 		

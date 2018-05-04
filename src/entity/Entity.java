@@ -9,6 +9,8 @@ public abstract class Entity {
 	protected int w, h;
 	protected boolean removed = false;
 	
+	protected Rectangle hitbox = new Rectangle((int) x, (int) y, (int) w, (int) h);
+	
 	public Entity(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -20,17 +22,17 @@ public abstract class Entity {
 		this.x = x;
 		this.y = y;
 		this.w = w;
-		this.h= h;
+		this.h = h;
 	}
 	
 	public Entity() {
 		this.x = 0;
 		this.y = 0;
 		this.w = 1;
-		this.h= 1;
+		this.h = 1;
 	}
 	
-	protected Rectangle hitbox = new Rectangle((int) x, (int) y, (int) w, (int) h);
+	
 	
 	public abstract void draw(Graphics g);
 	

@@ -13,11 +13,11 @@ public class Animation {
 	private ArrayList<BufferedImage> frames = new ArrayList<BufferedImage>();
 	
 	public Animation(BufferedImage[] frames, int frameDelay) {
-		frameCount = 0;
-		animationDirection = 1;
-		
 		this.frameDelay = frameDelay;
 		this.stopped = true;
+		
+		frameCount = 0;
+		animationDirection = 1;
 		
 		for (int i = 0; i < frames.length; i++) {
 			this.frames.add(frames[i]);
@@ -28,11 +28,11 @@ public class Animation {
 	}
 	
 	public Animation(BufferedImage[] frames, int frameDelay, boolean loop) {
-		frameCount = 0;
-		animationDirection = 1;
-		
 		this.frameDelay = frameDelay;
 		this.stopped = true;
+		
+		frameCount = 0;
+		animationDirection = 1;
 		
 		for (int i = 0; i < frames.length; i++) {
 			this.frames.add(frames[i]);
@@ -71,7 +71,6 @@ public class Animation {
 	
 	public void update() {
 		if (!stopped) {
-//			System.out.println(frameCount);
 			frameCount++;
 			
 			if(frameCount > frameDelay) {
@@ -83,6 +82,8 @@ public class Animation {
 				else if (currentFrame < 0)
 					currentFrame = frames.size() - 1;
 			}
+		} else if (loop) {
+			restart();
 		}
 	}
 	
