@@ -6,16 +6,14 @@ import java.util.ArrayList;
 public class Animation {
 	
 	private int frameCount, frameDelay, 
-				currentFrame, animationDirection;
+				currentFrame, animationDirection, 
+				totalFrames;
 	
 	private boolean stopped, loop;
 	
 	private ArrayList<BufferedImage> frames = new ArrayList<BufferedImage>();
 	
 	public Animation(BufferedImage[] frames, int frameDelay) {
-		frameCount = 0;
-		animationDirection = 1;
-		
 		this.frameDelay = frameDelay;
 		this.stopped = true;
 		
@@ -28,9 +26,6 @@ public class Animation {
 	}
 	
 	public Animation(BufferedImage[] frames, int frameDelay, boolean loop) {
-		frameCount = 0;
-		animationDirection = 1;
-		
 		this.frameDelay = frameDelay;
 		this.stopped = true;
 		
@@ -65,24 +60,24 @@ public class Animation {
 	}
 	
 	public BufferedImage getSprite() {
-		System.out.println("Getting sprite at: " + currentFrame);
 		return frames.get(currentFrame);
 	}
 	
 	public void update() {
 		if (!stopped) {
-//			System.out.println(frameCount);
 			frameCount++;
 			
 			if(frameCount > frameDelay) {
 				frameCount = 0;
 				currentFrame += animationDirection;
 				
-				if (currentFrame == frames.size() - 1)
+				if (currentFrame > totalFrames - 1)
 					currentFrame = 0;
 				else if (currentFrame < 0)
-					currentFrame = frames.size() - 1;
+					currentFrame = totalFrames - 1;
 			}
+		} else if (loop) {
+			restart();
 		}
 	}
 	
