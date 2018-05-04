@@ -5,6 +5,7 @@ import java.awt.Image;
 
 public class Tile extends Entity {
 
+	int xIndex, yIndex;
 	
 	public Tile() {
 		super();
