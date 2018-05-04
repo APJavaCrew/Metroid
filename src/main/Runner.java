@@ -42,7 +42,6 @@ public class Runner extends JPanel implements KeyListener {
 		player.draw(g);
 		
 		repaint();
-		
 	}
 	
 	@Override
@@ -61,8 +60,6 @@ public class Runner extends JPanel implements KeyListener {
 			player.decelerate();
 		if(KeyEvent.VK_SPACE == 1 /* && [standing on ground] [temp -->]*/ && player.getDy() == 0)
 			player.jump();
-		
-		
 	}
 
 	@Override

@@ -10,8 +10,7 @@ import sprite.SpriteSheet;
 public class Player extends Being {
 	
 	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 1, true);
-	
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);	
 	private int x, y;
 	private double dx, dy;
 	
@@ -34,12 +33,11 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(walkLeft.getSprite(), 200, 100, null);
-		g.drawImage(sandman.getSpritesAt("1-0", "0")[0], 200, 100, null);
+		int newW = walkLeft.getSprite().getWidth() * 4, newH = walkLeft.getSprite().getHeight() * 4;
+		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
 		g.drawImage(sandman.getSpriteAt(0, 0), 100, 100, null);
-		g.drawImage(walkLeft.get(), 200, 100, null);
+		g.drawImage(temp, 200, 100, null);
 		walkLeft.update();
-		move();
 	}
 	
 	public void left() {
