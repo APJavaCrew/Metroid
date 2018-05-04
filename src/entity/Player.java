@@ -38,6 +38,7 @@ public class Player extends Being {
 		g.drawImage(sandman.getSpriteAt(0, 0), 100, 100, null);
 		g.drawImage(temp, 200, 100, null);
 		walkLeft.update();
+		move();
 	}
 	
 	public void left() {
@@ -81,7 +82,6 @@ public class Player extends Being {
 	
 	@Override
 	public void move() {
-		
 		x += dx;
 		y += dy;
 	}
