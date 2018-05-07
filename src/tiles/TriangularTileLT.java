@@ -1,0 +1,16 @@
+package tiles;
+
+import java.awt.Polygon;
+import java.awt.geom.Area;
+
+import entity.Tile;
+
+public class TriangularTileLT extends Tile {
+
+	public TriangularTileLT() {
+		int[] xs = {0, 0, 20};
+		int[] ys = {0, 20, 0};
+		hitbox = new Area(new Polygon(xs, ys, 3));
+	}
+	
+}

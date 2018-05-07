@@ -1,7 +1,7 @@
 package entity;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.geom.Area;
 
 public abstract class Entity {
 	
@@ -9,7 +9,7 @@ public abstract class Entity {
 	protected int w, h;
 	protected boolean removed = false;
 	
-	protected Rectangle hitbox = new Rectangle((int) x, (int) y, (int) w, (int) h);
+	protected Area hitbox;
 	
 	public Entity(double x, double y) {
 		this.x = x;
@@ -32,7 +32,8 @@ public abstract class Entity {
 		this.h = 1;
 	}
 	
-	
+	public void setW(int w) { this.w = w; }
+	public void setH(int h) { this.h = h; }
 	
 	public abstract void draw(Graphics g);
 	

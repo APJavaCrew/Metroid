@@ -39,7 +39,10 @@ public class Room {
 	public void load() {
 		for (int y = 0; y < tileTypes.length; y++) {
 			for (int x = 0; x < tileTypes[0].length; x++) {
-				if (fileRead.nextInt() == 0); //TODO Make this read the file and make tile types
+				int value = fileRead.nextInt();
+				switch (value) {
+					
+				}
 			}
 		}
 	}
