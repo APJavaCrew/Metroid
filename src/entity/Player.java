@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import main.Constants;
 import sprite.Animation;
@@ -10,7 +11,8 @@ import sprite.SpriteSheet;
 public class Player extends Being {
 	
 	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);	
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);
+	Rectangle hitbox = new Rectangle();
 	private int x, y;
 	private double dx, dy;
 	
@@ -25,7 +27,7 @@ public class Player extends Being {
 	}
 	
 	public Player(int x, int y, double dx, double dy) {
-		this.x = x;
+		this.x = x; 
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
@@ -84,6 +86,8 @@ public class Player extends Being {
 	public void move() {
 		x += dx;
 		y += dy;
+		hitbox.x += dx;
+		hitbox.y -= dy;
 	}
 	
 	public double getDx() {
