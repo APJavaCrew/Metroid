@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,14 +13,13 @@ import level.Room;
 
 public class Runner extends JPanel implements KeyListener {
 	
-	Player player = new Player();
+	private Player player = new Player();
 	
 	public Runner() {
 		setSize(new Dimension(1280, 720));
 		setPreferredSize(new Dimension(1280, 720));
 		setFocusable(true);
 		addKeyListener(this);
-		setBackground(new Color(100, 200, 255));
 	}
 
 	public static void main(String[] args) {
@@ -35,7 +33,6 @@ public class Runner extends JPanel implements KeyListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
 	}
 	
 	@Override
@@ -45,7 +42,6 @@ public class Runner extends JPanel implements KeyListener {
 		player.draw(g);
 		
 		repaint();
-		
 	}
 	
 	@Override
@@ -53,22 +49,30 @@ public class Runner extends JPanel implements KeyListener {
 		paint(g);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		if(KeyEvent.VK_A == 1 && KeyEvent.VK_D != 1)
+			player.left();
+		else if(KeyEvent.VK_D == 1 && KeyEvent.VK_A != 1)
+			player.right();
+			else if(KeyEvent.VK_D != 1 && KeyEvent.VK_A != 1) 
+			player.decelerate();
+		if(KeyEvent.VK_SPACE == 1 /* && [standing on ground] [temp -->]*/ && player.getDy() == 0)
+			player.jump();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		player.decelerate();
+		if(/*player is not on the ground [temp -->]*/true) {
+			player.fall();
+		}
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
