@@ -40,6 +40,7 @@ public class Runner extends JPanel implements KeyListener {
 		g.setColor(new Color(255, 0, 255));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		player.draw(g);
+		player.checkCollision(this);
 		
 		repaint();
 	}
@@ -74,5 +75,9 @@ public class Runner extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void getRoom() {
+		//return Room;
 	}
 }
