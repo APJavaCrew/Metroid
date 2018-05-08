@@ -39,12 +39,11 @@ public class Runner extends JPanel implements KeyListener {
 	
 	@Override
 	public void paint(Graphics g) {
+		g.setColor(new Color(255, 0, 255));
+		g.fillRect(0, 0, getWidth(), getHeight());
 		player.draw(g);
-<<<<<<< HEAD
 		test.draw(g);
-=======
 		player.checkCollision(this);
->>>>>>> yes
 		
 		repaint();
 	}

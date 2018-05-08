@@ -13,9 +13,9 @@ import sprite.SpriteSheet;
 
 public class Player extends Being {
 	
-	SpriteSheet sandman = new SpriteSheet("Samsprite.png", 32, 37);
-	Animation sprite = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);
-	Rectangle hitboxRect = new Rectangle(0, 0, sprite.getSprite().getWidth(), sprite.getSprite().getHeight()); //use this to translate the hitbox
+	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);
+	Rectangle hitboxRect = new Rectangle(0, 0, walkLeft.getSprite().getWidth(), walkLeft.getSprite().getHeight()); //use this to translate the hitbox
 	Area hitbox = new Area(hitboxRect);
 	private int x, y; //position
 	private double dx, dy; //horiz/vert speed
@@ -23,7 +23,7 @@ public class Player extends Being {
 	
 	public Player() {
 		
-		sprite.start();
+		walkLeft.start();
 		
 		x = 0;
 		y = 0;
@@ -40,16 +40,10 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
-<<<<<<< HEAD
 		int newW = walkLeft.getSprite().getWidth() * 4, newH = walkLeft.getSprite().getHeight() * 4;
 		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
-=======
-		int newW = sprite.getSprite().getWidth() * 4, newH = sprite.getSprite().getHeight() * 4;
-		Image temp = sprite.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
-		g.drawImage(sandman.getSpriteAt(0, 0), 100, 100, null);
->>>>>>> yes
 		g.drawImage(temp, 200, 100, null);
-		sprite.update();
+		walkLeft.update();
 		move();
 	}
 	
