@@ -35,7 +35,6 @@ public class Player extends Being {
 	public void draw(Graphics g) {
 		int newW = walkLeft.getSprite().getWidth() * 4, newH = walkLeft.getSprite().getHeight() * 4;
 		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
-		g.drawImage(sandman.getSpriteAt(0, 0), 100, 100, null);
 		g.drawImage(temp, 200, 100, null);
 		walkLeft.update();
 		move();

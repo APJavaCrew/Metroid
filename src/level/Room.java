@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.Tile;
+import tiles.LavaTile;
 
 /**
  * 
@@ -17,7 +18,7 @@ public class Room {
 	
 	private double x, y;
 	private int[][] tileTypes;
-	private ArrayList<Tile> tiles = new ArrayList<Tile>();
+	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
 	private File file;
 	Scanner fileRead;
 	
@@ -33,15 +34,30 @@ public class Room {
 	}
 	
 	public void draw(Graphics g) {
-		
+		for (ArrayList<Tile> a : tiles) {
+			for (Tile b : a) {
+				b.draw(g);
+			}
+		}
 	}
 	
 	public void load() {
+		tileTypes = new int[fileRead.nextInt()][fileRead.nextInt()];
 		for (int y = 0; y < tileTypes.length; y++) {
+			for (int x = 0; x < tileTypes[0].length; x++) {
+				tileTypes[y][x] = fileRead.nextInt();
+			}
+		}
+		for (int y = 0; y < tileTypes.length; y++) {
+			tiles.add(new ArrayList<Tile>());
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				int value = fileRead.nextInt();
 				switch (value) {
-					
+					case 0:
+						continue;
+					case 1:
+						tiles.get(y).add(new LavaTile(y, x, x * 30, y * 30));
+						break;
 				}
 			}
 		}
