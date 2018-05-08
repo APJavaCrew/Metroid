@@ -1,5 +1,17 @@
 package main;
 import net.java.games.input.*;
+import org.lwjgl.*;
+import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.*;
+import org.lwjgl.system.*;
+
+import java.nio.*;
+
+import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.*;
+import static org.lwjgl.system.MemoryUtil.*;
 public class Controller {
 	int NUM_BUTTONS=8;
 	// globals
@@ -240,8 +252,16 @@ public class Controller {
 	}
 	return buttons;
 	} // end of getButtons()
+/*
+
+	Controller[] controllers=(Controller[]) ControllerEnvironment.getDefaultEnvironment().getControllers();
+	Controller firstMouse=null;
+	for(int i=0; i<contollers.length&&firstMouse==null;i++)
+	{
+		
+	}*/
 	
-}
+	
 	
 
 
