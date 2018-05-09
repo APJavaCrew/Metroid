@@ -2,10 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="G:/AP Java/JInput/jinput.jar"/>
 	<classpathentry kind="lib" path="G:/AP Java/Lwjgl/lwjgl/lwjgl.jar"/>
 	<classpathentry kind="lib" path="G:/AP Java/Lwjgl/lwjgl/lwjgl-natives-windows.jar"/>
 	<classpathentry kind="lib" path="G:/AP Java/Lwjgl/lwjgl-glfw/lwjgl-glfw.jar"/>
 	<classpathentry kind="lib" path="G:/AP Java/Lwjgl/lwjgl-opengl/lwjgl-opengl.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/nolan/OneDrive/Desktop/jinput-2.0.5.jar"/>
+>>>>>>> origin/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>
