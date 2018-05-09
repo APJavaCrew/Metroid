@@ -15,7 +15,6 @@ import level.Room;
 public class Runner extends JPanel implements KeyListener {
 	
 	private Player player = new Player();
-	static Room test;
 	
 	public Runner() {
 		setSize(new Dimension(1280, 720));
@@ -25,8 +24,7 @@ public class Runner extends JPanel implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		test = new Room("test");
-		test.load();
+		Room test = new Room("test");
 		Runner game = new Runner();
 		
 		
@@ -45,8 +43,6 @@ public class Runner extends JPanel implements KeyListener {
 		g.setColor(new Color(255, 0, 255));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		player.draw(g);
-		test.draw(g);
-		player.checkCollision(this);
 		
 		repaint();
 	}
@@ -81,9 +77,5 @@ public class Runner extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void getRoom() {
-		//return Room;
 	}
 }
