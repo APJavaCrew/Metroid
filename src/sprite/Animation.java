@@ -65,7 +65,6 @@ public class Animation {
 	}
 	
 	public BufferedImage getSprite() {
-		System.out.println("Getting sprite at: " + currentFrame);
 		return frames.get(currentFrame);
 	}
 	

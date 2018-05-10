@@ -14,24 +14,24 @@ import sprite.SpriteSheet;
 public class Player extends Being {
 	
 	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 40, true);
 	Rectangle hitboxRect = new Rectangle(0, 0, walkLeft.getSprite().getWidth(), walkLeft.getSprite().getHeight()); //use this to translate the hitbox
 	Area hitbox = new Area(hitboxRect);
-	private int x, y; //position
+	private double x, y; //position
 	private double dx, dy; //horiz/vert speed
-	
+	Runner instance;
 	
 	public Player() {
 		
 		walkLeft.start();
 		
-		x = 0;
-		y = 0;
+		x = 500;
+		y = 500;
 		dx = 0;
 		dy = 0;
 	}
 	
-	public Player(int x, int y, double dx, double dy) {
+	public Player(double x, double y, double dx, double dy) {
 		this.x = x; 
 		this.y = y;
 		this.dx = dx;
@@ -42,7 +42,7 @@ public class Player extends Being {
 	public void draw(Graphics g) {
 		int newW = walkLeft.getSprite().getWidth() * 4, newH = walkLeft.getSprite().getHeight() * 4;
 		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
-		g.drawImage(temp, 200, 100, null);
+		g.drawImage(temp, (int) x, (int) y, null);
 		walkLeft.update();
 		move();
 	}
@@ -97,6 +97,13 @@ public class Player extends Being {
 		hitboxRect.x += dx;
 		hitboxRect.y += dy;
 		hitbox = new Area(hitboxRect);
+		
+		dx = instance.getAxis1()[3];
+		
+		if (instance.getButt1()[1]) {
+			jump();
+		}
+		
 	}
 	
 	public double getDx() {
@@ -112,6 +119,10 @@ public class Player extends Being {
 
 	public void setDy(double dy) {
 		this.dy = dy;
+	}
+	
+	public void getInstance(Runner in) {
+		instance = in;
 	}
 	
 }
