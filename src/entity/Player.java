@@ -14,7 +14,11 @@ import sprite.SpriteSheet;
 public class Player extends Being {
 	
 	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
+<<<<<<< HEAD
 	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 40, true);
+=======
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 45, true);
+>>>>>>> origin/ee
 	Rectangle hitboxRect = new Rectangle(0, 0, walkLeft.getSprite().getWidth(), walkLeft.getSprite().getHeight()); //use this to translate the hitbox
 	Area hitbox = new Area(hitboxRect);
 	private double x, y; //position
@@ -87,7 +91,7 @@ public class Player extends Being {
 	}
 	
 	public void checkCollision(Runner runner) {
-		//runner.
+		
 	}
 	
 	@Override

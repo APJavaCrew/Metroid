@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import entity.Tile;
 import tiles.LavaTile;
+import tiles.TestTile;
 
 /**
  * 
@@ -52,6 +53,9 @@ public class Room {
 			tiles.add(new ArrayList<Tile>());
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
+					case 99:
+						tiles.get(y).add(new TestTile(y, x, x * 30, y * 30));
+						break;
 					case 0:
 						continue;
 					case 1:

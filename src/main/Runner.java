@@ -122,7 +122,7 @@ public class Runner extends JPanel implements KeyListener {
 			player.left();
 		else if(KeyEvent.VK_D == 1 && KeyEvent.VK_A != 1)
 			player.right();
-			else if(KeyEvent.VK_D != 1 && KeyEvent.VK_A != 1) 
+		else if(KeyEvent.VK_D != 1 && KeyEvent.VK_A != 1) 
 			player.decelerate();
 		if(KeyEvent.VK_SPACE == 1 /* && [standing on ground] [temp -->]*/ && player.getDy() == 0)
 			player.jump();
