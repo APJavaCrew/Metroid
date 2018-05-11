@@ -6,6 +6,8 @@ import java.awt.Image;
 public abstract class Being extends Entity {
 
 	protected boolean isAlive = true;
+	protected double health;
+	
 	
 	public Being(double x, double y) {
 		super(x, y);
