@@ -40,7 +40,7 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
-		int newW = walkLeft.getSprite().getWidth() * 4, newH = walkLeft.getSprite().getHeight() * 4;
+		int newW = walkLeft.getSprite().getWidth() * 3, newH = walkLeft.getSprite().getHeight() * 3;
 		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
 		g.drawImage(temp, (int) x, (int) y, null);
 		walkLeft.update();
@@ -98,11 +98,15 @@ public class Player extends Being {
 		hitboxRect.y += dy;
 		hitbox = new Area(hitboxRect);
 		
-		dx = instance.getAxis1()[3];
+		dx = Math.pow(instance.getAxis1()[3], 3);
+		/*if(instance.getAxis1()[3] < 0)
+			dx *= -1;*/
 		
 		if (instance.getButt1()[1]) {
 			jump();
 		}
+		
+		//fall();
 		
 	}
 	

@@ -130,9 +130,6 @@ public class Runner extends JPanel implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		player.decelerate();
-		if(/*player is not on the ground [temp -->]*/true) {
-			player.fall();
-		}
 	}
 
 	@Override
@@ -189,6 +186,7 @@ public class Runner extends JPanel implements KeyListener {
 			pov[0][1] = cont[0].getPovX();
 			
 		}
+		System.out.println(axis[0][3]);
 	}
 
 	public boolean[][] getButt() {
