@@ -25,6 +25,8 @@ public class Runner extends JPanel implements KeyListener {
 	private double[][] pov = new double[4][2];
 	private boolean multiplayer = true;
 	
+	private static boolean controlConnect = false;
+	
 	double interpolation = 0;
 	final int TICKS_PER_SECOND = 60;
 	final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
@@ -52,12 +54,17 @@ public class Runner extends JPanel implements KeyListener {
 		for (int i = 0; i < Controllers.getControllerCount(); i++) {
 			if (Controllers.getController(i).getName().equals("MAYFLASH CameCube Controller Adapter")) {
 				contPos = i;
+				controlConnect = true;
 				break;
 			}
 		}
 		
-		for (int i = 0; i < 4; i++) {
-			cont[i] = Controllers.getController(contPos + i);
+		if (controlConnect) {
+			for (int i = 0; i < 4; i++) {
+				cont[i] = Controllers.getController(contPos + i);
+			}
+		} else {
+			System.err.println("Controllers not found!");
 		}
 		
 		test = new Room("test");
@@ -85,7 +92,8 @@ public class Runner extends JPanel implements KeyListener {
 		test.draw(g);
 		player.checkCollision(this);
 		
-		pollControllers();
+		if (controlConnect)
+			pollControllers();
 		
 		
 		double nextGameTick = System.currentTimeMillis();
@@ -97,13 +105,6 @@ public class Runner extends JPanel implements KeyListener {
 			loops++;
 			System.out.println(loops);
 		}
-		
-		if (!(System.currentTimeMillis() % 1000 == 0))
-			coolLoops++;
-		else
-			coolLoops = 0;
-		
-		System.out.println();
 		
 		repaint();
 		
@@ -150,6 +151,7 @@ public class Runner extends JPanel implements KeyListener {
 		if (multiplayer ) {
 			for (int i = 0; i < 4; i++) {
 				cont[i].poll();
+				cont[0].setDeadZone(3, (float) 0.1); 
 			}
 			
 			//X0, A1, B2, Y3, L4, R5, Z7, S9
