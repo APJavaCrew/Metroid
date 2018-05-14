@@ -35,6 +35,7 @@ public class Runner extends JPanel implements KeyListener {
 	int coolLoops = 0;
 	
 	public Runner() {
+		
 		setSize(new Dimension(1280, 720));
 		setPreferredSize(new Dimension(1280, 720));
 		setFocusable(true);
@@ -52,7 +53,7 @@ public class Runner extends JPanel implements KeyListener {
 		int contPos = 0;
 		
 		for (int i = 0; i < Controllers.getControllerCount(); i++) {
-			if (Controllers.getController(i).getName().equals("MAYFLASH CameCube Controller Adapter")) {
+			if (Controllers.getController(i).getName().equals("MAYFLASH GameCube Controller Adapter")) {
 				contPos = i;
 				controlConnect = true;
 				break;

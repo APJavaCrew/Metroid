@@ -5,7 +5,7 @@ import java.awt.geom.Area;
 
 public abstract class Entity {
 	
-	protected double x, y;
+	protected double x, y, dx, dy;
 	protected int w, h;
 	protected boolean removed = false;
 	
