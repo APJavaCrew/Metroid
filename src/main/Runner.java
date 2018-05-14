@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Area;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,12 +16,13 @@ import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Controller;
 
 import entity.Player;
+import entity.Tile;
 import level.Room;
 
 public class Runner extends JPanel implements KeyListener {
 	
 	private Player player = new Player();
-	static Room test;
+	static Room room;
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
 	private double[][] axis = new double[4][6];
@@ -68,8 +72,8 @@ public class Runner extends JPanel implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
-		test = new Room("test");
-		test.load();
+		room = new Room("test");
+		room.load();
 		Runner game = new Runner();
 		
 		JFrame frame = new JFrame();
@@ -90,8 +94,7 @@ public class Runner extends JPanel implements KeyListener {
 		g.setColor(new Color(255, 0, 255));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		player.draw(g);
-		test.draw(g);
-		player.checkCollision(this);
+		room.draw(g);
 		
 		if (controlConnect)
 			pollControllers();
@@ -129,8 +132,24 @@ public class Runner extends JPanel implements KeyListener {
 		
 	}
 	
-	public void getRoom() {
-		//return Room;
+	public Room getRoom() {
+		return room;
+	}
+	
+	public Area getRoomBounds() {
+		Area total = new Area();
+		
+		for (ArrayList<Tile> y : room.getTiles()) {
+			for (Tile x : y) {
+				try {
+					total.add(x.getHitBox());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return total;
 	}
 	
 	public void pollControllers() {

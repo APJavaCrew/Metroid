@@ -3,7 +3,6 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 
 import main.Constants;
@@ -29,7 +28,7 @@ public class Player extends Being {
 		walkLeft.start();
 		
 		x = 500;
-		y = 500;
+		y = 450;
 		dx = 0;
 		dy = 0;
 	}
@@ -80,9 +79,9 @@ public class Player extends Being {
 	}
 	
 	public void fall() {
-		if(dy < Constants.TERMINAL_VELOCITY) {/*&& player is not on the ground*/
+		if(dy < Constants.TERMINAL_VELOCITY && instance.getRoomBounds().intersects(hitbox.getBounds2D())) {
 			dy += Constants.GRAVITY_ACCEL;
-		} else if(dy >= Constants.TERMINAL_VELOCITY /*&& player is not on the ground*/) {
+		} else if(dy >= Constants.TERMINAL_VELOCITY && instance.getRoomBounds().intersects(hitbox.getBounds2D())) {
 			dy = Constants.TERMINAL_VELOCITY;
 		} else /*player is on the ground*/ {
 			dy = 0;
@@ -109,7 +108,7 @@ public class Player extends Being {
 			jump();
 		}
 		
-		//fall();
+		fall();
 		
 	}
 	

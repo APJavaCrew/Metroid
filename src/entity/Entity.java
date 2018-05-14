@@ -42,4 +42,6 @@ public abstract class Entity {
 	public double getW() { return this.w; }
 	public double getH() { return this.h; }
 	
+	public Area getHitBox() { return hitbox; }
+	
 }

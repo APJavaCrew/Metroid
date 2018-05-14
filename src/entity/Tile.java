@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.geom.Area;
 
 import sprite.SpriteSheet;
 
@@ -15,7 +16,7 @@ public class Tile extends Entity {
 	}
 	
 	public Tile(int xIndex, int yIndex, double x, double y) {
-		super(x, y, 20, 20);
+		super(x, y, 81, 85);
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
 	}

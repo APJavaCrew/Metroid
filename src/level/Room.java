@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.Tile;
-import tiles.LavaTile;
+import tiles.MetalTile;
 import tiles.TestTile;
 
 /**
@@ -34,6 +34,10 @@ public class Room {
 		}
 	}
 	
+	public ArrayList<ArrayList<Tile>> getTiles() {
+		return tiles;
+	}
+	
 	public void draw(Graphics g) {
 		for (ArrayList<Tile> a : tiles) {
 			for (Tile b : a) {
@@ -54,12 +58,12 @@ public class Room {
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
 					case 99:
-						tiles.get(y).add(new TestTile(y, x, x * 30, y * 30));
+						tiles.get(y).add(new TestTile(y, x, x * 81, y * 85));
 						break;
 					case 0:
 						continue;
 					case 1:
-						tiles.get(y).add(new LavaTile(y, x, x * 30, y * 30));
+						tiles.get(y).add(new MetalTile(y, x, x * 81, y * 85));
 						break;
 				}
 			}
