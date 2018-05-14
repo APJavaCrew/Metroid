@@ -65,7 +65,7 @@ public class Runner extends JPanel implements KeyListener {
 				cont[i] = Controllers.getController(contPos + i);
 			}
 		} else {
-			System.err.println("Controllers not found!");
+			System.err.println("CameCube controllers not found!");
 		}
 		
 		test = new Room("test");
@@ -95,17 +95,6 @@ public class Runner extends JPanel implements KeyListener {
 		
 		if (controlConnect)
 			pollControllers();
-		
-		
-		double nextGameTick = System.currentTimeMillis();
-		int loops = 0;
-		
-		while (System.currentTimeMillis() > nextGameTick &&
-				loops < MAX_FRAMESKIP) {
-			nextGameTick += SKIP_TICKS;
-			loops++;
-			System.out.println(loops);
-		}
 		
 		repaint();
 		
