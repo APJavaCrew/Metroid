@@ -7,8 +7,8 @@ import sprite.SpriteSheet;
 
 public class TestTile extends Tile {
 
-	public TestTile(int xIndex, int yIndex, double x, double y) {
-		super(xIndex, yIndex, x, y);
+	public TestTile(double x, double y) {
+		super(x, y);
 		this.sprite = new SpriteSheet("red.png", 20, 20);
 	}
 

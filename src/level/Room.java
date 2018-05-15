@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.Tile;
+import main.Runner;
 import tiles.MetalTile;
 import tiles.TestTile;
 
@@ -22,6 +23,7 @@ public class Room {
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
 	private File file;
 	Scanner fileRead;
+	Runner instance;
 	
 	public Room(String path) {
 		file = new File("levels/" + path);
@@ -58,16 +60,31 @@ public class Room {
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
 					case 99:
-						tiles.get(y).add(new TestTile(y, x, x * 81, y * 85));
+						tiles.get(y).add(new TestTile(x * 81, y * 85));
 						break;
 					case 0:
 						continue;
 					case 1:
-						tiles.get(y).add(new MetalTile(y, x, x * 81, y * 85));
+						tiles.get(y).add(new MetalTile(x * 81, y * 85));
 						break;
 				}
 			}
 		}
+	}
+	
+	public void updateInstance(Runner i) {
+		instance = i;
+	}
+	
+	public ArrayList<Tile> getIntersectingTiles() {
+		ArrayList<Tile> total = new ArrayList<Tile>();
+		for (ArrayList<Tile> e : tiles) {
+			for (Tile j : e) {
+				if (j.getHitBox().intersects(instance.getPlayer().getHitBox().getBounds2D()))
+					total.add(j);
+			}
+		}
+		return total;
 	}
 
 }

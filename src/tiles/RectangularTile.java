@@ -8,12 +8,12 @@ import entity.Tile;
 public class RectangularTile extends Tile {
 	
 	public RectangularTile() {
-		hitbox = new Area(new Rectangle(0, 0, 20, 20));
+		hitBox = new Area(new Rectangle(0, 0, 81, 85));
 	}
 	
-	public RectangularTile(int xIndex, int yIndex, double x, double y) {
-		super(xIndex, yIndex, x, y);
-		hitbox = new Area(new Rectangle((int) x, (int) y, 20, 20));
+	public RectangularTile(double x, double y) {
+		super(x, y);
+		hitBox = new Area(new Rectangle((int) x, (int) y, 81, 85));
 	}
 	
 }

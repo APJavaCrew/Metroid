@@ -9,7 +9,7 @@ public abstract class Entity {
 	protected int w, h;
 	protected boolean removed = false;
 	
-	protected Area hitbox;
+	protected Area hitBox;
 	
 	public Entity(double x, double y) {
 		this.x = x;
@@ -42,6 +42,6 @@ public abstract class Entity {
 	public double getW() { return this.w; }
 	public double getH() { return this.h; }
 	
-	public Area getHitBox() { return hitbox; }
+	public Area getHitBox() { return hitBox; }
 	
 }

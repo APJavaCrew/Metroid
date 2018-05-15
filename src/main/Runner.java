@@ -89,12 +89,13 @@ public class Runner extends JPanel implements KeyListener {
 	
 	@Override
 	public void paint(Graphics g) {
-		player.getInstance(this);
+		player.updateInstance(this);
+		room.updateInstance(this);
 		
 		g.setColor(new Color(255, 0, 255));
 		g.fillRect(0, 0, getWidth(), getHeight());
-		player.draw(g);
 		room.draw(g);
+		player.draw(g);
 		
 		if (controlConnect)
 			pollControllers();
@@ -111,19 +112,22 @@ public class Runner extends JPanel implements KeyListener {
 	@SuppressWarnings("unused")
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(KeyEvent.VK_A == 1 && KeyEvent.VK_D != 1)
-			player.left();
-		else if(KeyEvent.VK_D == 1 && KeyEvent.VK_A != 1)
-			player.right();
-		else if(KeyEvent.VK_D != 1 && KeyEvent.VK_A != 1) 
-			player.decelerate();
-		if(KeyEvent.VK_SPACE == 1 /* && [standing on ground] [temp -->]*/ && player.getDy() == 0)
+		int key = arg0.getKeyCode();
+		if(key == KeyEvent.VK_A)
+			axis[0][3] = -1;
+		else if(key == KeyEvent.VK_D)
+			axis[0][3] = 1;
+		if(key == KeyEvent.VK_SPACE)
 			player.jump();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		player.decelerate();
+		int key = arg0.getKeyCode();
+		if(key == KeyEvent.VK_A)
+			axis[0][3] = 0;
+		else if(key == KeyEvent.VK_D)
+			axis[0][3] = 0;
 	}
 
 	@Override
@@ -154,7 +158,7 @@ public class Runner extends JPanel implements KeyListener {
 	
 	public void pollControllers() {
 		
-		if (multiplayer ) {
+		if (multiplayer) {
 			for (int i = 0; i < 4; i++) {
 				cont[i].poll();
 				cont[0].setDeadZone(3, (float) 0.1); 
@@ -197,7 +201,6 @@ public class Runner extends JPanel implements KeyListener {
 			pov[0][1] = cont[0].getPovX();
 			
 		}
-		System.out.println(axis[0][3]);
 	}
 
 	public boolean[][] getButt() {
@@ -222,6 +225,10 @@ public class Runner extends JPanel implements KeyListener {
 	
 	public double[] getPov1() {
 		return pov[0];
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 	
 }

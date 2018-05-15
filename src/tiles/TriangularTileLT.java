@@ -10,7 +10,7 @@ public class TriangularTileLT extends Tile {
 	public TriangularTileLT() {
 		int[] xs = {0, 0, 20};
 		int[] ys = {0, 20, 0};
-		hitbox = new Area(new Polygon(xs, ys, 3));
+		hitBox = new Area(new Polygon(xs, ys, 3));
 	}
 	
 }
