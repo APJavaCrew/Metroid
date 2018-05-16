@@ -6,10 +6,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import entity.Tile;
 import main.Runner;
 import tiles.MetalTile;
 import tiles.TestTile;
+import tiles.Tile;
 
 /**
  * 
@@ -29,10 +29,8 @@ public class Room {
 		file = new File("levels/" + path);
 		try {
 			fileRead = new Scanner(file);
-			fileRead.useDelimiter("\\s*");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Error reading room file");
 		}
 	}
 	

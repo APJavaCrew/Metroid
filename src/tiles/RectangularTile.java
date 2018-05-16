@@ -3,8 +3,6 @@ package tiles;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
-import entity.Tile;
-
 public class RectangularTile extends Tile {
 	
 	public RectangularTile() {

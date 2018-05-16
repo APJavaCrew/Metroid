@@ -1,4 +1,4 @@
-package entity;
+package player;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,10 +7,12 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
+import entity.Being;
 import main.Constants;
 import main.Runner;
 import sprite.Animation;
 import sprite.SpriteSheet;
+import tiles.Tile;
 
 public class Player extends Being {
 	
@@ -30,7 +32,7 @@ public class Player extends Being {
 		
 		walkLeft.start();
 		
-		x = 500;
+		x = 100;
 		y = 450;
 		dx = 0;
 		dy = 0;
@@ -56,10 +58,12 @@ public class Player extends Being {
 	public void draw(Graphics g) {
 		int newW = walkLeft.getSprite().getWidth() * size, newH = walkLeft.getSprite().getHeight() * size;
 		Image temp = walkLeft.getSprite().getScaledInstance(newW, newH, Image.SCALE_REPLICATE);
-		g.setColor(new Color(255, 255, 255));
-		g.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
-		g.setColor(new Color(0, 255, 255));
-		g.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
+		
+//		g.setColor(new Color(255, 255, 255));
+//		g.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
+//		g.setColor(new Color(0, 255, 255));
+//		g.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
+		
 		g.drawImage(temp, (int) x, (int) y, null);
 		walkLeft.update();
 		move();

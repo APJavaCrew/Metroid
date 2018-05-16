@@ -2,7 +2,6 @@ package tiles;
 
 import java.awt.Graphics;
 
-import entity.Tile;
 import sprite.SpriteSheet;
 
 public class TestTile extends Tile {

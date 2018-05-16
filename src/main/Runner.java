@@ -13,11 +13,14 @@ import javax.swing.JPanel;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
+
+import entity.TestEnemy;
+
 import org.lwjgl.input.Controller;
 
-import entity.Player;
-import entity.Tile;
 import level.Room;
+import player.Player;
+import tiles.Tile;
 
 public class Runner extends JPanel implements KeyListener {
 	
@@ -37,6 +40,8 @@ public class Runner extends JPanel implements KeyListener {
 	final int MAX_FRAMESKIP = 5;
 	
 	int coolLoops = 0;
+	
+	TestEnemy testEnemy = new TestEnemy();
 	
 	public Runner() {
 		
@@ -96,6 +101,8 @@ public class Runner extends JPanel implements KeyListener {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		room.draw(g);
 		player.draw(g);
+		
+		testEnemy.draw(g);
 		
 		if (controlConnect)
 			pollControllers();

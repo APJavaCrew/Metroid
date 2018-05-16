@@ -3,8 +3,6 @@ package tiles;
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
-import entity.Tile;
-
 public class TriangularTileLB extends Tile {
 	
 	public TriangularTileLB() {

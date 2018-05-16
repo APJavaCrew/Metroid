@@ -1,9 +1,10 @@
-package entity;
+package tiles;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.geom.Area;
 
+import entity.Entity;
 import sprite.SpriteSheet;
 
 public class Tile extends Entity {

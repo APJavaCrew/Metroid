@@ -1,6 +1,5 @@
 package tiles;
 
-import entity.Tile;
 import sprite.SpriteSheet;
 
 public class LavaTileTri extends Tile {

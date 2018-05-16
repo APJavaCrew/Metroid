@@ -8,9 +8,8 @@ import sprite.SpriteSheet;
 
 public class TestEnemy extends Enemy {
 	
-	SpriteSheet sandman = new SpriteSheet("ZeroGravSuitStand.png", 32, 37);
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 300, true);
-	Rectangle hitbox = new Rectangle(0, 0, walkLeft.getSprite().getWidth(), walkLeft.getSprite().getHeight());
+	SpriteSheet sandman = new SpriteSheet("ZeroGravSuitStand.png", 24, 40);
+	Rectangle hitbox = new Rectangle(0, 0, sandman.getSpriteAt(0, 0).getWidth(), sandman.getSpriteAt(0, 0).getHeight());
 	private int x, y;
 	private double dx, dy;
 	int timer = 0;
@@ -33,8 +32,8 @@ public class TestEnemy extends Enemy {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		super.draw(g);
+		move();
+		g.drawImage(sandman.getSpriteAt(0, 0), (int) x, (int) y, null);
 	}
 
 	@Override
