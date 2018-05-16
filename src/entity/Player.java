@@ -104,11 +104,7 @@ public class Player extends Being {
 		}
 	}
 	
-	@Override
-	public void move() {
-		
-		dx = Math.pow(instance.getAxis1()[3], 3);
-		
+	private void checkCollision() {
 		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles();
 		if (tiles.size() > 0) {
 			for (Tile e : tiles) {
@@ -130,7 +126,21 @@ public class Player extends Being {
 			dx = 0;
 		if (stopR && dx > 0)
 			dx = 0;
+	}
+	
+	private void updateHitBoxes() {
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w, h - 5);
+		hitBox = new Area(hitBoxRect);
+		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
+		landBox = new Area(landBoxRect);
+	}
+	
+	@Override
+	public void move() {
 		
+		dx = Math.pow(instance.getAxis1()[3], 3);
+		
+		checkCollision();
 		
 		x += dx;
 		y += dy;
@@ -144,13 +154,6 @@ public class Player extends Being {
 		
 		fall();
 		
-	}
-	
-	private void updateHitBoxes() {
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w, h - 5);
-		hitBox = new Area(hitBoxRect);
-		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y + 1), w - 4, 5);
-		landBox = new Area(landBoxRect);		
 	}
 	
 	public double getDx() {
