@@ -65,10 +65,6 @@ public class SpriteSheet {
 		return sheet.getSubimage(xGrid * w, yGrid * h, w, h);
 	}
 	
-	public void animate() {
-		
-	}
-	
 	//First digit of xIndexes is # of sprites
 	//Separate indexes with '-'
 	public BufferedImage[] getSpritesAt(String xIndexesString, String yIndexesString) {

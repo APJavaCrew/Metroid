@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
 
+import camera.Camera;
 import entity.TestEnemy;
 
 import org.lwjgl.input.Controller;
@@ -25,6 +26,7 @@ import tiles.Tile;
 public class Runner extends JPanel implements KeyListener {
 	
 	private Player player = new Player();
+	private Camera camera = new Camera(0, 0);
 	static Room room;
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
