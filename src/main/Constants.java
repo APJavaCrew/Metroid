@@ -4,7 +4,7 @@ public class Constants {
 	
 	//dx = horizontal speed, dy = vertical speed
 	
-	public final static double GRAVITY_ACCEL = .05; //dy increments by this amount when not on the ground
+	public final static double GRAVITY_ACCEL = 0.075; //dy increments by this amount when not on the ground
 	public final static double RUN_ACCEL = .25; //dx increments by this amount when speeding up
 	public final static double BRAKE_ACCEL = .1; //dx increments by this amount when slowing down
 	

@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
+import beam.Beam;
 import entity.Being;
 import main.Constants;
 import main.Runner;
@@ -18,15 +19,14 @@ public class Player extends Being {
 	
 	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
 
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 40, true);
+	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 60, true);
 	
 	int size = 3;
 
-	
-	private double x, y; //position
-	private double dx, dy; //horiz/vert speed
 	private boolean stopL = false, stopR = false;
 	Runner instance;
+	
+	ArrayList<Beam> beams = new ArrayList<Beam>();
 	
 	public Player() {
 		
@@ -63,6 +63,7 @@ public class Player extends Being {
 //		g.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
 //		g.setColor(new Color(0, 255, 255));
 //		g.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
+//		g.fillRect(topBox.getBounds().x, topBox.getBounds().y, topBox.getBounds().width, topBox.getBounds().height);
 		
 		g.drawImage(temp, (int) x, (int) y, null);
 		walkLeft.update();
@@ -96,13 +97,15 @@ public class Player extends Being {
 	
 	public void jump() {
 		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
-			dy = -5;
+			dy = -6;
 	}
 	
 	public void fall() {
-		if(!instance.getRoomBounds().intersects(landBox.getBounds2D())) {
+		if(!instance.getRoomBounds().intersects(landBox.getBounds2D()) && !instance.getRoomBounds().intersects(topBox.getBounds2D())) {
 			dy += Constants.GRAVITY_ACCEL;
 		
+		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D())) {
+			dy = 0.15;
 		} else /*player is on the ground*/ {
 			dy = 0;
 		}
@@ -126,17 +129,21 @@ public class Player extends Being {
 			stopL = false;
 			stopR = false;
 		}
-		if (stopL && dx < 0)
+		if (stopL && stopR)
+			dy = -0.1;
+		else if (stopL && dx < 0)
 			dx = 0;
-		if (stopR && dx > 0)
+		else if (stopR && dx > 0)
 			dx = 0;
 	}
 	
 	private void updateHitBoxes() {
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w, h - 5);
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
 		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
 		landBox = new Area(landBoxRect);
+		Rectangle topBoxRect = new Rectangle((int) (x + 2), (int) y, w - 4, 5);
+		topBox = new Area(topBoxRect);
 	}
 	
 	@Override
@@ -177,6 +184,14 @@ public class Player extends Being {
 	
 	public void updateInstance(Runner in) {
 		instance = in;
+	}
+
+	public void fire() {
+		beams.add(new Beam(0, 1, y + 20));
+	}
+	
+	public ArrayList<Beam> getBeams() {
+		return beams;
 	}
 	
 }

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
 
+import beam.Beam;
 import entity.TestEnemy;
 
 import org.lwjgl.input.Controller;
@@ -35,6 +36,7 @@ public class Runner extends JPanel implements KeyListener {
 	private static boolean controlConnect = false;
 	
 	double interpolation = 0;
+	double loops = 0;
 	final int TICKS_PER_SECOND = 60;
 	final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 	final int MAX_FRAMESKIP = 5;
@@ -77,6 +79,8 @@ public class Runner extends JPanel implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
+		
+		
 		room = new Room("test");
 		room.load();
 		Runner game = new Runner();
@@ -94,21 +98,23 @@ public class Runner extends JPanel implements KeyListener {
 	
 	@Override
 	public void paint(Graphics g) {
-		player.updateInstance(this);
-		room.updateInstance(this);
-		
-		g.setColor(new Color(255, 0, 255));
-		g.fillRect(0, 0, getWidth(), getHeight());
-		room.draw(g);
-		player.draw(g);
-		
-		testEnemy.draw(g);
-		
-		if (controlConnect)
-			pollControllers();
-		
-		repaint();
-		
+			player.updateInstance(this);
+			room.updateInstance(this);
+			
+			g.setColor(new Color(255, 0, 255));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			room.draw(g);
+			player.draw(g);
+			
+			for (Beam beam : player.getBeams())
+				beam.draw(g);
+			
+			testEnemy.draw(g);
+			
+			if (controlConnect)
+				pollControllers();
+			
+			repaint();
 	}
 	
 	@Override
@@ -126,6 +132,8 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 1;
 		if(key == KeyEvent.VK_SPACE)
 			player.jump();
+		if (key == KeyEvent.VK_K)
+			player.fire();
 	}
 
 	@Override
