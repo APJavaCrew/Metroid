@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
 
-import beam.Beam;
 import camera.Camera;
 import entity.TestEnemy;
 
@@ -25,6 +24,7 @@ import org.lwjgl.input.Controller;
 import level.Room;
 import player.Player;
 import tiles.Tile;
+import weapon.Beam;
 
 public class Runner extends JPanel implements KeyListener {
 	

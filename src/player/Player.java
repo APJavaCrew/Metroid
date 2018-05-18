@@ -7,13 +7,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
-import beam.Beam;
 import entity.Being;
 import main.Constants;
 import main.Runner;
 import sprite.Animation;
 import sprite.SpriteSheet;
 import tiles.Tile;
+import weapon.Beam;
 
 public class Player extends Being {
 	
@@ -191,7 +191,7 @@ public class Player extends Being {
 	}
 
 	public void fire() {
-		beams.add(new Beam(40, 1, x - 10, y + 20));
+		beams.add(new Beam(30, 1, 1, x - 10, y + 20));
 		beams.get(beams.size() - 1).updateInstance(instance);
 	}
 	
