@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import entity.Entity;
 import main.Runner;
 import tiles.MetalTile;
 import tiles.TestTile;
@@ -74,11 +75,11 @@ public class Room {
 		instance = i;
 	}
 	
-	public ArrayList<Tile> getIntersectingTiles() {
+	public ArrayList<Tile> getIntersectingTiles(Entity ent) {
 		ArrayList<Tile> total = new ArrayList<Tile>();
 		for (ArrayList<Tile> e : tiles) {
 			for (Tile j : e) {
-				if (j.getHitBox().intersects(instance.getPlayer().getHitBox().getBounds2D()))
+				if (j.getHitBox().intersects(ent.getHitBox().getBounds2D()))
 					total.add(j);
 			}
 		}

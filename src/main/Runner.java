@@ -3,9 +3,11 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -134,8 +136,6 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 1;
 		if(key == KeyEvent.VK_SPACE)
 			player.jump();
-		if (key == KeyEvent.VK_K)
-			player.fire();
 	}
 
 	@Override
@@ -145,6 +145,8 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 0;
 		else if(key == KeyEvent.VK_D)
 			axis[0][3] = 0;
+		if (key == KeyEvent.VK_K)
+			player.fire();
 	}
 
 	@Override

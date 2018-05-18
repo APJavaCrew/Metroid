@@ -112,7 +112,7 @@ public class Player extends Being {
 	}
 	
 	private void checkCollision() {
-		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles();
+		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
 		if (tiles.size() > 0) {
 			for (Tile e : tiles) {
 				if (hitBox.intersects(e.getHitBox().getBounds2D())) {
@@ -165,6 +165,8 @@ public class Player extends Being {
 		
 		fall();
 		
+		updateBeams();
+		
 	}
 	
 	public double getDx() {
@@ -184,10 +186,21 @@ public class Player extends Being {
 	
 	public void updateInstance(Runner in) {
 		instance = in;
+		for (Beam b : beams)
+			b.updateInstance(in);
 	}
 
 	public void fire() {
-		beams.add(new Beam(0, 1, y + 20));
+		beams.add(new Beam(40, 1, x - 10, y + 20));
+		beams.get(beams.size() - 1).updateInstance(instance);
+	}
+	
+	public void updateBeams() {
+		for (int i = 0; i < beams.size(); i++) {
+			beams.get(i).updateInstance(instance);
+			if (!beams.get(i).isAlive())
+				beams.remove(beams.get(i));
+		}
 	}
 	
 	public ArrayList<Beam> getBeams() {
