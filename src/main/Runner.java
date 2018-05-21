@@ -10,6 +10,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,7 +27,7 @@ import player.Player;
 import tiles.Tile;
 import weapon.Beam;
 
-public class Runner extends JPanel implements KeyListener {
+public class Runner extends JComponent implements KeyListener {
 	
 	private Player player = new Player();
 	private Camera camera = new Camera(0, 0);
@@ -37,6 +38,8 @@ public class Runner extends JPanel implements KeyListener {
 	private double[][] pov = new double[4][2];
 	private boolean multiplayer = true;
 	
+	TestEnemy wow = new TestEnemy();
+	
 	private static boolean controlConnect = false;
 	
 	double interpolation = 0;
@@ -46,8 +49,6 @@ public class Runner extends JPanel implements KeyListener {
 	final int MAX_FRAMESKIP = 5;
 	
 	int coolLoops = 0;
-	
-	TestEnemy testEnemy = new TestEnemy();
 	
 	public Runner() {
 		
@@ -108,12 +109,12 @@ public class Runner extends JPanel implements KeyListener {
 			g.setColor(new Color(255, 0, 255));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			room.draw(g);
-			player.draw(g);
-			
+			wow.draw(g);
 			for (Beam beam : player.getBeams())
 				beam.draw(g);
+			player.draw(g);
 			
-			testEnemy.draw(g);
+			
 			
 			if (controlConnect)
 				pollControllers();
@@ -136,6 +137,8 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 1;
 		if(key == KeyEvent.VK_SPACE)
 			player.jump();
+		if (key == KeyEvent.VK_K)
+			player.charge();
 	}
 
 	@Override
@@ -145,8 +148,10 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 0;
 		else if(key == KeyEvent.VK_D)
 			axis[0][3] = 0;
-		if (key == KeyEvent.VK_K)
+		if (key == KeyEvent.VK_K) {
 			player.fire();
+			player.resetCharge();
+		}
 	}
 
 	@Override
