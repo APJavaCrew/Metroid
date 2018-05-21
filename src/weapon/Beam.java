@@ -1,4 +1,4 @@
-package beam;
+package weapon;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,10 +11,11 @@ import main.Runner;
 public class Beam extends Entity {
 	
 	private boolean alive;
-	private double angle, velModifier, b;
+	private double angle, velModifier, b, damage;
 	private Runner instance;
+	private WeaponBox weaponBox;
 	
-	public Beam(double deg, double velModifier, double x, double y) {
+	public Beam(double deg, double velModifier, double damage, double x, double y) {
 		alive = true;
 		angle = Math.toRadians(deg);
 		this.velModifier = velModifier;
@@ -23,9 +24,13 @@ public class Beam extends Entity {
 		this.x = x;
 		w = 20;
 		h = 20;
+		this.damage = damage;
+		
+		dx = 0;
+		dy = 0;
 		
 		hitBox = new Area(new Rectangle((int) x, (int) y, w, h));
-		
+		weaponBox = new WeaponBox(new Area(hitBox.getBounds2D()), damage);
 	}
 
 	@Override
@@ -46,8 +51,16 @@ public class Beam extends Entity {
 	}
 	
 	private void move() {
-		y -= Math.tan(angle);
-		x -= 2.0 * velModifier;
+		if (angle == Math.PI / 2.0) {
+			dy = -3 * velModifier;
+			dx = 0;
+		} else {
+			dy = Math.tan(angle);
+			dx = 2.0 * velModifier;
+		}
+		
+		y += dy;
+		x += dx;
 		
 		updateHitBox();
 		
