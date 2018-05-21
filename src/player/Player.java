@@ -111,7 +111,7 @@ public class Player extends Being {
 		}
 	}
 	
-	private void checkCollision() {
+	public void checkCollision() {
 		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
 		if (tiles.size() > 0) {
 			for (Tile e : tiles) {
