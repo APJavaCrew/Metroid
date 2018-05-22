@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.ArrayList;
+
+import tiles.Tile;
 
 public abstract class Being extends Entity {
 
@@ -37,6 +40,8 @@ public abstract class Being extends Entity {
 	}
 	
 	public abstract void move();
-	
+	public abstract void checkCollision(); 
+		
+		
 
 }
