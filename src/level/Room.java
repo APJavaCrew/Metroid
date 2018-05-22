@@ -19,20 +19,22 @@ import tiles.Tile;
  */
 public class Room {
 	
-	private double x, y;
+	private double x, y, w, h;
 	private int[][] tileTypes;
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
 	private File file;
 	Scanner fileRead;
 	Runner instance;
 	
-	public Room(String path) {
+	public Room(String path, double x, double y) {
 		file = new File("levels/" + path);
 		try {
 			fileRead = new Scanner(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		load();
 	}
 	
 	public ArrayList<ArrayList<Tile>> getTiles() {
@@ -59,16 +61,22 @@ public class Room {
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
 					case 99:
-						tiles.get(y).add(new TestTile(x * 81, y * 85));
+						tiles.get(y).add(new TestTile(this.x + x * 81, this.y + y * 85));
 						break;
 					case 0:
 						continue;
 					case 1:
-						tiles.get(y).add(new MetalTile(x * 81, y * 85));
+						tiles.get(y).add(new MetalTile(this.x + x * 81, this.y + y * 85));
 						break;
 				}
+				if (y == 1)
+					h += 81;
 			}
+			w += 81;
 		}
+		
+		System.out.println(w);
+		System.out.println(h);
 	}
 	
 	public void updateInstance(Runner i) {

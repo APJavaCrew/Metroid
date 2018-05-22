@@ -10,6 +10,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,7 +27,7 @@ import player.Player;
 import tiles.Tile;
 import weapon.Beam;
 
-public class Runner extends JPanel implements KeyListener {
+public class Runner extends JComponent implements KeyListener {
 	
 	private Player player = new Player();
 	private Camera camera = new Camera(0, 0);
@@ -38,16 +39,6 @@ public class Runner extends JPanel implements KeyListener {
 	private boolean multiplayer = true;
 	
 	private static boolean controlConnect = false;
-	
-	double interpolation = 0;
-	double loops = 0;
-	final int TICKS_PER_SECOND = 60;
-	final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-	final int MAX_FRAMESKIP = 5;
-	
-	int coolLoops = 0;
-	
-	TestEnemy testEnemy = new TestEnemy();
 	
 	public Runner() {
 		
@@ -83,10 +74,7 @@ public class Runner extends JPanel implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
-		
-		
-		room = new Room("test");
-		room.load();
+		room = new Room("test", 0, 0);
 		Runner game = new Runner();
 		
 		JFrame frame = new JFrame();
@@ -96,7 +84,6 @@ public class Runner extends JPanel implements KeyListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
 		
 	}
 	
@@ -109,11 +96,8 @@ public class Runner extends JPanel implements KeyListener {
 			g.fillRect(0, 0, getWidth(), getHeight());
 			room.draw(g);
 			player.draw(g);
-			
 			for (Beam beam : player.getBeams())
 				beam.draw(g);
-			
-			testEnemy.draw(g);
 			
 			if (controlConnect)
 				pollControllers();
@@ -136,6 +120,8 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 1;
 		if(key == KeyEvent.VK_SPACE)
 			player.jump();
+		if (key == KeyEvent.VK_K)
+			player.charge();
 	}
 
 	@Override
@@ -145,8 +131,10 @@ public class Runner extends JPanel implements KeyListener {
 			axis[0][3] = 0;
 		else if(key == KeyEvent.VK_D)
 			axis[0][3] = 0;
-		if (key == KeyEvent.VK_K)
+		if (key == KeyEvent.VK_K) {
 			player.fire();
+			player.resetCharge();
+		}
 	}
 
 	@Override
