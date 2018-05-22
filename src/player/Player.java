@@ -28,6 +28,7 @@ public class Player extends Being {
 	int size = 3;
 
 	private boolean stopL = false, stopR = false;
+	private boolean isOnGround = false;
 	
 	Runner instance;
 	
@@ -84,17 +85,38 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
+	    g.setColor(Color.WHITE);
+	    g.fillRect((int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(), 
+	    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
+	    g.setColor(new Color(0, 255, 255));
+	    g.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
+	    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
+	    g.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
+	    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
 		
 		AffineTransform at = new AffineTransform();
 	    at.translate(x, y);
 	    at.scale(size, size);
 	    g2d = (Graphics2D) g;
 	    g2d.setTransform(at);
-	    drawSprite(g2d);
+	    getSprite();
+	    g2d.drawImage(current.getSprite(), 0, 0, null);
 	    
 	    if (charging) {
 	    	g2d.setColor(new Color(255, 200, 0));
-	    	g2d.fillOval(-10, 20 / size, (int) (beamSize / size), (int) (beamSize / size));
+			int x, y, diam, rad;
+	    	switch (spriteMotion) {
+	    		case START:
+	    			break;
+	    		case WALKLEFT:
+	    			x = -10; y = 20 / size; diam = (int) ((beamSize + Math.random() * 3) / size); rad = diam / 2;
+	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	break;
+	    		case WALKRIGHT:
+	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	break;
+	    	}
 	    }
 		
 		walkLeft.update();
@@ -127,22 +149,29 @@ public class Player extends Being {
 		
 	}
 	
-	private void drawSprite(Graphics2D g2d) {
+	private void getSprite() {
 		SpriteMotion last = spriteMotion;
-		if (dx < 0 && dy == 0)
+		if (dx < 0 && isOnGround)
 			spriteMotion = spriteMotion.WALKLEFT;
-		else if (dx > 0 && dy == 0)
+		else if (dx > 0 && isOnGround)
 			spriteMotion = spriteMotion.WALKRIGHT;
 		
 		
 		switch (spriteMotion) {
 			case START:
-				g2d.drawImage(start.getSprite(), 0, 0, null);
+				current = start;
 				break;
 			case WALKLEFT:
-				g2d.drawImage(walkLeft.getSprite(), 0, 0, null);
+				current = walkLeft;
+				break;
+			case WALKRIGHT:
+				current = start;
 				break;
 		}
+		
+		if (last != spriteMotion)
+			current.restart();
+		
 	}
 	
 	public void jump() {
@@ -153,11 +182,12 @@ public class Player extends Being {
 	public void fall() {
 		if(!instance.getRoomBounds().intersects(landBox.getBounds2D()) && !instance.getRoomBounds().intersects(topBox.getBounds2D())) {
 			dy += Constants.GRAVITY_ACCEL;
-		
+			isOnGround = false;
 		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D())) {
 			dy = 0.15;
 		} else /*player is on the ground*/ {
 			dy = 0;
+			isOnGround = true;
 		}
 	}
 	
@@ -170,6 +200,9 @@ public class Player extends Being {
 						stopL = true;
 					else if (e.getX() > this.x)
 						stopR = true;
+					if (e.getY() > landBox.getBounds2D().getY()) {
+						dy = -0.1;
+					}
 				} else {
 					stopL = false;
 					stopR = false;
@@ -188,6 +221,8 @@ public class Player extends Being {
 	}
 	
 	private void updateHitBoxes() {
+		w = current.getSprite().getWidth() * size;
+		h = current.getSprite().getHeight() * size;
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
 		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
@@ -203,7 +238,16 @@ public class Player extends Being {
 	}
 
 	public void fire() {
-		beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+		switch (spriteMotion) {
+			case START:
+				break;
+			case WALKLEFT:
+				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				break;
+			case WALKRIGHT:
+				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				break;
+		}
 		beams.get(beams.size() - 1).updateInstance(instance);
 	}
 	
