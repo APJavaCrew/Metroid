@@ -20,8 +20,11 @@ import weapon.Beam;
 
 public class Player extends Being {
 	
-	SpriteSheet sandman = new SpriteSheet("SamWalkLeft.png", 32, 37);
-	Animation walkLeft = new Animation(sandman.getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 30, true);
+	Animation walkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
+			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 30, true);
+	Animation start = new Animation(new SpriteSheet("SamStand.png", 24, 40).getSpritesAt("1-0", "0"), 0, false);
+	Animation current = start;
+	
 	int size = 3;
 
 	private boolean stopL = false, stopR = false;
@@ -34,53 +37,64 @@ public class Player extends Being {
 	
 	private Graphics2D g2d;
 	
+	private enum SpriteMotion {
+		WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
+		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
+		START
+		
+	};
+	
+	SpriteMotion spriteMotion;
+	
 	public Player() {
 		
-		walkLeft.start();
+		spriteMotion = spriteMotion.START;
+		
+		current.start();
 		
 		x = 100;
 		y = 450;
 		dx = 0;
 		dy = 0;
 		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, walkLeft.getSprite().getWidth() * size, walkLeft.getSprite().getHeight() * size); //use this to translate the hitBox
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
 		
-		w = walkLeft.getSprite().getWidth() * size;
-		h = walkLeft.getSprite().getHeight() * size;
+		w = current.getSprite().getWidth() * size;
+		h = current.getSprite().getHeight() * size;
 	}
 	
 	public Player(double x, double y, double dx, double dy) {
+
+		spriteMotion = spriteMotion.START;
+		
+		walkLeft.start();
+		
 		this.x = x; 
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
 		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, walkLeft.getSprite().getWidth() * size, walkLeft.getSprite().getHeight() * size); //use this to translate the hitBox
+		w = current.getSprite().getWidth() * size;
+		h = current.getSprite().getHeight() * size;
+		
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		
-		BufferedImage temp = walkLeft.getSprite();
-
 		AffineTransform at = new AffineTransform();
-		if (instance.getAxis1()[3] >= 0) {
-			at.translate(x + w, y);
-			at.scale(-size, size);
-		} else {
-			at.translate(x, y);
-			at.scale(size, size);
-		}
-	    
+	    at.translate(x, y);
+	    at.scale(size, size);
 	    g2d = (Graphics2D) g;
 	    g2d.setTransform(at);
-	    g2d.drawImage(temp, 0, 0, null);
+	    drawSprite(g2d);
 	    
 	    if (charging) {
 	    	g2d.setColor(new Color(255, 200, 0));
-	    	g2d.fillOval(0, 50 / size, (int) (beamSize / size), (int) (beamSize / size));
+	    	g2d.fillOval(-10, 20 / size, (int) (beamSize / size), (int) (beamSize / size));
 	    }
 		
 		walkLeft.update();
@@ -91,7 +105,7 @@ public class Player extends Being {
 	public void move() {
 		
 		if (charging && beamSize < 30)
-			beamSize += 0.2;
+			beamSize += 0.05;
 		
 		dx = Math.pow(instance.getAxis1()[3], 3);
 		
@@ -113,29 +127,22 @@ public class Player extends Being {
 		
 	}
 	
-	public void left() {
-		if(Math.abs(dx) > Constants.MAX_RUN_SPEED) {
-			dx -= Constants.RUN_ACCEL;
-		} else {
-			dx = -1;
+	private void drawSprite(Graphics2D g2d) {
+		SpriteMotion last = spriteMotion;
+		if (dx < 0 && dy == 0)
+			spriteMotion = spriteMotion.WALKLEFT;
+		else if (dx > 0 && dy == 0)
+			spriteMotion = spriteMotion.WALKRIGHT;
+		
+		
+		switch (spriteMotion) {
+			case START:
+				g2d.drawImage(start.getSprite(), 0, 0, null);
+				break;
+			case WALKLEFT:
+				g2d.drawImage(walkLeft.getSprite(), 0, 0, null);
+				break;
 		}
-	}
-	
-	public void right() {
-		if(Math.abs(dx) < Constants.MAX_RUN_SPEED) {
-			dx += Constants.RUN_ACCEL;
-		} else {
-			dx = 1;
-		}
-	}
-	
-	public void decelerate() {
-		if(dx > Constants.BRAKE_DEADZONE)
-			dx -= Constants.BRAKE_ACCEL;
-		else if(dx < (-1 * Constants.BRAKE_DEADZONE))
-			dx += Constants.BRAKE_ACCEL;
-		else
-			dx = 0;
 	}
 	
 	public void jump() {
@@ -196,7 +203,7 @@ public class Player extends Being {
 	}
 
 	public void fire() {
-		beams.add(new Beam(0, 3, beamSize, x + w, y + 50));
+		beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
 		beams.get(beams.size() - 1).updateInstance(instance);
 	}
 	

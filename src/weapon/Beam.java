@@ -26,8 +26,8 @@ public class Beam extends Entity {
 		b = y;
 		this.y = y;
 		this.x = x;
-		w = size;
-		h = size - 5.0;
+		w = size + 5.0;
+		h = size;
 		this.size = size;
 		damage = Math.pow(2, size);
 		

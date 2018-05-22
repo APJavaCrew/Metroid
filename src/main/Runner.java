@@ -38,17 +38,7 @@ public class Runner extends JComponent implements KeyListener {
 	private double[][] pov = new double[4][2];
 	private boolean multiplayer = true;
 	
-	TestEnemy wow = new TestEnemy();
-	
 	private static boolean controlConnect = false;
-	
-	double interpolation = 0;
-	double loops = 0;
-	final int TICKS_PER_SECOND = 60;
-	final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-	final int MAX_FRAMESKIP = 5;
-	
-	int coolLoops = 0;
 	
 	public Runner() {
 		
@@ -84,10 +74,7 @@ public class Runner extends JComponent implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
-		
-		
-		room = new Room("test");
-		room.load();
+		room = new Room("test", 0, 0);
 		Runner game = new Runner();
 		
 		JFrame frame = new JFrame();
@@ -97,7 +84,6 @@ public class Runner extends JComponent implements KeyListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
 		
 	}
 	
@@ -109,12 +95,9 @@ public class Runner extends JComponent implements KeyListener {
 			g.setColor(new Color(255, 0, 255));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			room.draw(g);
-			wow.draw(g);
+			player.draw(g);
 			for (Beam beam : player.getBeams())
 				beam.draw(g);
-			player.draw(g);
-			
-			
 			
 			if (controlConnect)
 				pollControllers();
