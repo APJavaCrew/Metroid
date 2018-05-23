@@ -22,11 +22,12 @@ public class Room {
 	private double x, y, w, h;
 	private int[][] tileTypes;
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
-	private File file;
 	Scanner fileRead;
 	Runner instance;
 	
 	public Room(String path, double x, double y) {
+		
+		File file;
 		file = new File("levels/" + path);
 		try {
 			fileRead = new Scanner(file);
@@ -35,6 +36,7 @@ public class Room {
 		}
 		
 		load();
+		
 	}
 	
 	public ArrayList<ArrayList<Tile>> getTiles() {
@@ -74,9 +76,10 @@ public class Room {
 			}
 			w += 81;
 		}
-		
-		System.out.println(w);
-		System.out.println(h);
+	}
+	
+	public void addEnemies() {
+		instance.getEnemyManager().addFromFile("testEnemies");
 	}
 	
 	public void updateInstance(Runner i) {

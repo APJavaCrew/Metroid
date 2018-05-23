@@ -2,8 +2,10 @@ package enemy;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
@@ -17,16 +19,15 @@ import weapon.Beam;
 public class Geemer extends Enemy {
 	
 	Animation animation = Constants.geemerUR;
-	
-	Runner instance;
+	Graphics2D g2d;
 	
 	int size;
 	
-	public Geemer() {
+	public Geemer(double x, double y) {
 		animation.start();
 		
-		x = 100;
-		y = 450;
+		this.x = x;
+		this.y = y;
 		dx = 0;
 		dy = 0;
 		
@@ -45,17 +46,32 @@ public class Geemer extends Enemy {
 	
 	public void draw(Graphics g) {
 		
+		g2d = (Graphics2D) g;
+		
+		System.out.println(x);
 		if (Constants.SHOWHITBOXES) {
-			g.setColor(new Color(255, 255, 255));
-			g.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
-			g.setColor(new Color(0, 255, 255));
-			g.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
-			g.fillRect(topBox.getBounds().x, topBox.getBounds().y, topBox.getBounds().width, topBox.getBounds().height);
+			g2d.setColor(new Color(255, 255, 255));
+			g2d.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
+			g2d.setColor(new Color(0, 255, 255));
+			g2d.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
+			g2d.fillRect(topBox.getBounds().x, topBox.getBounds().y, topBox.getBounds().width, topBox.getBounds().height);
 		}
 		
-		g.drawImage(animation.getSprite(), (int) x, (int) y, null);
+		AffineTransform at = new AffineTransform();
+		at.translate(x, y);
+		at.scale(size, size);
+		g2d.setTransform(at);
+		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
+		
 		move();
+	}
+	
+	public void move() {
+		x += dx;
+		y += dy;
+		
+		checkCollision();
 	}
 	
 	public void checkCollision() {
@@ -72,7 +88,7 @@ public class Geemer extends Enemy {
 	}
 
 	private void fall() {
-		dy = Constants.GRAVITY_ACCEL;
+		dy += Constants.GRAVITY_ACCEL;
 	}
 	
 	public AttackBox getAttackBox() {

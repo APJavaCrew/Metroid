@@ -18,6 +18,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Controllers;
 
 import camera.Camera;
+import enemy.EnemyManager;
 import entity.TestEnemy;
 
 import org.lwjgl.input.Controller;
@@ -31,6 +32,7 @@ public class Runner extends JComponent implements KeyListener {
 	
 	private Player player = new Player();
 	private Camera camera = new Camera(0, 0);
+	private EnemyManager enemyManager = new EnemyManager();
 	static Room room;
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
@@ -39,6 +41,8 @@ public class Runner extends JComponent implements KeyListener {
 	private boolean multiplayer = true;
 	
 	private static boolean controlConnect = false;
+	
+	private boolean start = true;
 	
 	public Runner() {
 		
@@ -91,10 +95,16 @@ public class Runner extends JComponent implements KeyListener {
 	public void paint(Graphics g) {
 			player.updateInstance(this);
 			room.updateInstance(this);
+			enemyManager.updateEnemies(this);
+			
+			if (start)
+				room.addEnemies();
+			start = false;
 			
 			g.setColor(new Color(255, 0, 255));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			room.draw(g);
+			enemyManager.draw(g);
 			player.draw(g);
 			for (Beam beam : player.getBeams())
 				beam.draw(g);
@@ -236,6 +246,10 @@ public class Runner extends JComponent implements KeyListener {
 	
 	public Player getPlayer() {
 		return player;
+	}
+
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
 	}
 	
 }

@@ -22,10 +22,11 @@ public class Constants {
 	//Samus Animations
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 30, 1, true);
-	public final static Animation samStart = new Animation(new SpriteSheet("SamStand.png", 24, 40).getSpritesAt("1-0", "0"), 1, 0, false);
+	public final static Animation samStart = new Animation(new SpriteSheet("SamStart.png", 24, 40).getSpritesAt("3-0-1-2", "0-0-0"), 50, 1, true);
+
 	
 	//Enemy Animations
-	public static final Animation geemerUR = new Animation(new SpriteSheet("Geemer.png", 32, 37).getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 60, 1, true);
+	public static final Animation geemerUR = new Animation(new SpriteSheet("Geemer.png", 23, 15).getSpritesAt("3-0-1-2", "0-0-0"), 60, 1, true);
 	
 
 }

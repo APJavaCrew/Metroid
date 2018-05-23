@@ -40,5 +40,9 @@ public class Enemy extends Being {
 		
 	}
 	
+	public boolean isAlive() {
+		return isAlive;
+	}
+	
 
 }
