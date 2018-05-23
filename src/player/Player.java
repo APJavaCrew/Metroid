@@ -99,7 +99,7 @@ public class Player extends Being {
 	    at.scale(size, size);
 	    g2d = (Graphics2D) g;
 	    g2d.setTransform(at);
-	    getSprite();
+	    upDateSprite();
 	    g2d.drawImage(current.getSprite(), 0, 0, null);
 	    
 	    if (charging) {
@@ -149,7 +149,7 @@ public class Player extends Being {
 		
 	}
 	
-	private void getSprite() {
+	private void upDateSprite() {
 		SpriteMotion last = spriteMotion;
 		if (dx < 0 && isOnGround)
 			spriteMotion = spriteMotion.WALKLEFT;
