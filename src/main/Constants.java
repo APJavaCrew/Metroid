@@ -5,10 +5,12 @@ import sprite.SpriteSheet;
 
 public class Constants {
 	
-	//Physics Things
-	//dx = horizontal speed, dy = vertical speed
+	public static final boolean SHOWHITBOXES = false;
 	
-	public final static double GRAVITY_ACCEL = 0.075; //dy increments by this amount when not on the ground
+	//Physics Things
+	
+	//dx = horizontal speed, dy = vertical speed
+	public static final double GRAVITY_ACCEL = 0.075; //dy increments by this amount when not on the ground
 	public final static double RUN_ACCEL = .25; //dx increments by this amount when speeding up
 	public final static double BRAKE_ACCEL = .1; //dx increments by this amount when slowing down
 	
@@ -23,8 +25,7 @@ public class Constants {
 	public final static Animation samStart = new Animation(new SpriteSheet("SamStand.png", 24, 40).getSpritesAt("1-0", "0"), 1, 0, false);
 	
 	//Enemy Animations
-	
-	public static final boolean showHitBoxes = false;
+	public static final Animation geemerUR = new Animation(new SpriteSheet("Geemer.png", 32, 37).getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 60, 1, true);
 	
 
 }

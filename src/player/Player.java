@@ -83,7 +83,7 @@ public class Player extends Being {
 	@Override
 	public void draw(Graphics g) {
 		
-		if (Constants.showHitBoxes) {
+		if (Constants.SHOWHITBOXES) {
 		    g.setColor(Color.WHITE);
 		    g.fillRect((int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(), 
 		    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
