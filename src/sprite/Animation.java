@@ -27,12 +27,12 @@ public class Animation {
 		
 	}
 	
-	public Animation(BufferedImage[] frames, int frameDelay, boolean loop) {
+	public Animation(BufferedImage[] frames, int frameDelay, int animationSpeed, boolean loop) {
 		this.frameDelay = frameDelay;
 		this.stopped = true;
 		
 		frameCount = 0;
-		animationDirection = 1;
+		this.animationDirection = animationSpeed;
 		
 		for (int i = 0; i < frames.length; i++) {
 			this.frames.add(frames[i]);
