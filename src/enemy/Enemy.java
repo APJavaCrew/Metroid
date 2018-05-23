@@ -1,18 +1,17 @@
-package entity;
+package enemy;
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
+import entity.Being;
 import main.Runner;
 import weapon.Beam;
 
 public class Enemy extends Being {
-	protected Area attackbox;
+	protected AttackBox attackBox;
 	protected double x, y; //position
 	protected double dx, dy; //horiz/vert speed 
 	Runner instance;
-
-
 
 	@Override
 	public void move() {

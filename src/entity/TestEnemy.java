@@ -3,6 +3,7 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import enemy.Enemy;
 import sprite.Animation;
 import sprite.SpriteSheet;
 

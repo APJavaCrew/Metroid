@@ -20,10 +20,7 @@ import weapon.Beam;
 
 public class Player extends Being {
 	
-	Animation walkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
-			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 30, true);
-	Animation start = new Animation(new SpriteSheet("SamStand.png", 24, 40).getSpritesAt("1-0", "0"), 0, false);
-	Animation current = start;
+	Animation animation = Constants.samStart;
 	
 	int size = 3;
 
@@ -51,7 +48,7 @@ public class Player extends Being {
 		
 		spriteMotion = spriteMotion.START;
 		
-		current.start();
+		animation.start();
 		
 		x = 100;
 		y = 450;
@@ -61,23 +58,23 @@ public class Player extends Being {
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
 		
-		w = current.getSprite().getWidth() * size;
-		h = current.getSprite().getHeight() * size;
+		w = animation.getSprite().getWidth() * size;
+		h = animation.getSprite().getHeight() * size;
 	}
 	
 	public Player(double x, double y, double dx, double dy) {
 
 		spriteMotion = spriteMotion.START;
-		
-		walkLeft.start();
+
+		animation.start();
 		
 		this.x = x; 
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
 		
-		w = current.getSprite().getWidth() * size;
-		h = current.getSprite().getHeight() * size;
+		w = animation.getSprite().getWidth() * size;
+		h = animation.getSprite().getHeight() * size;
 		
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
@@ -85,22 +82,25 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
-	    g.setColor(Color.WHITE);
-	    g.fillRect((int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(), 
-	    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
-	    g.setColor(new Color(0, 255, 255));
-	    g.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
-	    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
-	    g.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
-	    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
+		
+		if (Constants.SHOWHITBOXES) {
+		    g.setColor(Color.WHITE);
+		    g.fillRect((int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(), 
+		    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
+		    g.setColor(new Color(0, 255, 255));
+		    g.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
+		    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
+		    g.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
+		    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
+		}
 		
 		AffineTransform at = new AffineTransform();
 	    at.translate(x, y);
 	    at.scale(size, size);
 	    g2d = (Graphics2D) g;
 	    g2d.setTransform(at);
-	    upDateSprite();
-	    g2d.drawImage(current.getSprite(), 0, 0, null);
+	    updateSprite();
+	    g2d.drawImage(animation.getSprite(), 0, 0, null);
 	    
 	    if (charging) {
 	    	g2d.setColor(new Color(255, 200, 0));
@@ -118,8 +118,7 @@ public class Player extends Being {
 	    	    	break;
 	    	}
 	    }
-		
-		walkLeft.update();
+	    
 		move();
 	}
 	
@@ -149,8 +148,9 @@ public class Player extends Being {
 		
 	}
 	
-	private void upDateSprite() {
+	private void updateSprite() {
 		SpriteMotion last = spriteMotion;
+		
 		if (dx < 0 && isOnGround)
 			spriteMotion = spriteMotion.WALKLEFT;
 		else if (dx > 0 && isOnGround)
@@ -159,18 +159,20 @@ public class Player extends Being {
 		
 		switch (spriteMotion) {
 			case START:
-				current = start;
+				animation = Constants.samStart;
 				break;
 			case WALKLEFT:
-				current = walkLeft;
+				animation = Constants.samWalkLeft;
 				break;
 			case WALKRIGHT:
-				current = start;
+				animation = Constants.samStart;
 				break;
 		}
 		
 		if (last != spriteMotion)
-			current.restart();
+			animation.restart();
+		else
+			animation.update();
 		
 	}
 	
@@ -221,8 +223,8 @@ public class Player extends Being {
 	}
 	
 	private void updateHitBoxes() {
-		w = current.getSprite().getWidth() * size;
-		h = current.getSprite().getHeight() * size;
+		w = animation.getSprite().getWidth() * size;
+		h = animation.getSprite().getHeight() * size;
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
 		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
