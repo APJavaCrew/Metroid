@@ -173,6 +173,8 @@ public class Player extends Being {
 		
 		
 		switch (spriteMotion) {
+			default:
+				break;
 			case START:
 				animation = Constants.samStart;
 				break;
@@ -180,7 +182,7 @@ public class Player extends Being {
 				animation = Constants.samWalkLeft;
 				break;
 			case WALKRIGHT:
-				animation = Constants.samStart;
+				animation = Constants.samWalkRight;
 				break;
 		}
 		
