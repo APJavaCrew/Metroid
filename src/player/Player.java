@@ -109,10 +109,18 @@ public class Player extends Being {
 	    		case START:
 	    			break;
 	    		case WALKLEFT:
-	    			x = -10; y = 20 / size; diam = (int) ((beamSize + Math.random() * 3) / size); rad = diam / 2;
+	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	break;
 	    		case WALKRIGHT:
+	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	break;
+	    		case STANDLEFT:
+	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	break;
+	    		case STANDRIGHT:
 	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	break;
@@ -129,6 +137,7 @@ public class Player extends Being {
 			beamSize += 0.05;
 		
 		dx = Math.pow(instance.getAxis1()[3], 3);
+		//System.out.println(instance.getAxis1()[3]);
 		
 		checkCollision();
 		
@@ -138,8 +147,9 @@ public class Player extends Being {
 		updateHitBoxes();
 		
 		
-		if (instance.getButt1()[1]) {
+		if (instance.getButt1()[2]) {
 			jump();
+			//System.out.println("jump");
 		}
 		
 		fall();
