@@ -65,6 +65,9 @@ public class Animation {
 	}
 	
 	public BufferedImage getSprite() {
+		if (currentFrame >= frames.size() - 1 && !loop)
+			stopped = true;
+		
 		return frames.get(currentFrame);
 	}
 	
@@ -76,13 +79,11 @@ public class Animation {
 				frameCount = 0;
 				currentFrame += animationDirection;
 				
-				if (currentFrame == frames.size() - 1)
+				if (currentFrame == frames.size() - 1 && loop)
 					currentFrame = 0;
-				else if (currentFrame < 0)
+				else if (currentFrame < 0 && loop)
 					currentFrame = frames.size() - 1;
 			}
-		} else if (loop) {
-			restart();
 		}
 	}
 	
@@ -90,4 +91,8 @@ public class Animation {
 		return frames.get(0);
 	}
 
+	public boolean hasStopped() {
+		return stopped;
+	}
+	
 }

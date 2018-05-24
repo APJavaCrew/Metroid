@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import main.Constants;
@@ -20,17 +21,34 @@ public class Geemer extends Enemy {
 	
 	Animation animation = Constants.geemerUR;
 	Graphics2D g2d;
+	AffineTransform at;
+	
+	Rectangle2D landBoxRect;
 	
 	int size;
+	
+	private boolean turning, falling;
+	
+	double angle = 0;
 	
 	enum SpriteMotion {
 		WALK, TURN
 	}
 	
+	enum Direction {
+		UP, RIGHT, DOWN, LEFT
+	}
+	
+	Direction direction = Direction.UP;
+	
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
 	public Geemer(double x, double y) {
-		animation.start();
+		
+		animation.restart();
+		
+		direction = Direction.UP;
+		spriteMotion = SpriteMotion.WALK;
 		
 		this.x = x;
 		this.y = y;
@@ -41,8 +59,18 @@ public class Geemer extends Enemy {
 		
 		health = 15;
 		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, animation.getSprite().getWidth() * size, animation.getSprite().getHeight() * size); //use this to translate the hitBox
+		falling = true;
+		
+		at = new AffineTransform();
+		at.translate(x, y);
+		at.scale(size, size);
+		at.rotate(angle, w / 2 / size, h / 2 / size);
+		
+		Rectangle hitBoxRect = new Rectangle(0, 5, animation.getSprite().getWidth(), animation.getSprite().getHeight()); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
+		hitBox.transform(at);
+		
+		landBoxRect = new Rectangle(0, 0, 0, 0);
 		
 		attackBox = new AttackBox(hitBox, 10);
 		
@@ -53,26 +81,63 @@ public class Geemer extends Enemy {
 	public void draw(Graphics g) {
 		
 		g2d = (Graphics2D) g;
-		
-		
-		
-		AffineTransform at = new AffineTransform();
+
+		at = new AffineTransform();
 		at.translate(x, y);
 		at.scale(size, size);
+		at.rotate(angle, w / 2 / size, h / 2 / size);
+		
 		g2d.setTransform(at);
 		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
+		
+		
 		if (Constants.SHOWHITBOXES) {
-			g.setColor(new Color(255, 255, 255));
-			g.fillRect(hitBox.getBounds().x - (int) x, hitBox.getBounds().y - (int) y, hitBox.getBounds().width / size, hitBox.getBounds().height / size);
-			g.setColor(new Color(0, 255, 255));
-			g.fillRect(landBox.getBounds().x - (int) x, landBox.getBounds().y - (int) y, landBox.getBounds().width / size, landBox.getBounds().height / size);
-			g.fillRect(topBox.getBounds().x - (int) x, topBox.getBounds().y - (int) y, topBox.getBounds().width / size, topBox.getBounds().height / size);
+			at = new AffineTransform();
+			at.translate(x, y);
+			at.scale(1, 1);
+			at.rotate(angle, w / 2, h / 2);
+			g2d.setTransform(at);
+			g2d.setColor(new Color(255, 255, 255, 175));
+		    g2d.fillRect(0, 0, w, h);
+		    g2d.setColor(new Color(0, 255, 255, 175));
+		    g2d.fillRect((int) landBoxRect.getX(), (int) landBoxRect.getY(), (int) landBoxRect.getWidth(),
+		    		(int) landBoxRect.getHeight());
 		}
 		move();
 	}
 	
 	public void move() {
+		if (!falling && !turning) {
+			switch (direction) {
+				default:
+					dy = 0;
+					dx = 1;
+					break;
+				case UP:
+					dy = 0;
+					dx = 1;
+					break;
+				case RIGHT:
+					dx = 0;
+					dy = 1;
+					break;
+				case DOWN:
+					dx = -1;
+					dy = 0;
+					break;
+				case LEFT:
+					dx = 0;
+					dy = -1;
+					break;
+			}
+		} else if (turning) {
+			dy = 0;
+			dx = 0;
+			turn();
+		} else
+			fall();
+		
 		x += dx;
 		y += dy;
 
@@ -81,23 +146,57 @@ public class Geemer extends Enemy {
 	}
 	
 	public void checkCollision() {
-		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
+		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(hitBox);
+		ArrayList<Tile> landTiles = instance.getRoom().getIntersectingTiles(landBox);
 		if (tiles.size() > 0) {
-			for (Tile e : tiles) {
-				if (landBox.intersects(e.getHitBox().getBounds2D())) {
-					dy = 0;
-				}
+			falling = false;
+			if (landTiles.size() == 0) {
+				turning = true;
 			}
+		} else {
+			falling = true;
 		}
-		else
-			fall();
+	}
+	
+	private void turn() {
+		
+		switch (direction) {
+			default:
+				break;
+			case UP:
+				angle += Math.PI / 2.0;
+				direction = Direction.RIGHT;
+				turning = false;
+				break;
+			case RIGHT:
+				angle += Math.PI / 2.0;
+				direction = Direction.DOWN;
+				turning = false;
+				break;
+			case DOWN:
+				angle += Math.PI / 2.0;
+				direction = Direction.LEFT;
+				turning = false;
+				break;
+			case LEFT:
+				angle += Math.PI / 2.0;
+				direction = Direction.UP;
+				turning = false;
+				break;
+		}
+		
 	}
 	
 	protected void updateHitBoxes() {
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
+		at = new AffineTransform();
+		at.translate(x, y);
+		at.rotate(angle, w / 2, h / 2);
+		Rectangle hitBoxRect = new Rectangle(0, 0, w, h);
 		hitBox = new Area(hitBoxRect);
-		Rectangle landBoxRect = new Rectangle((int) (x + w / 2 - 2), (int) (h + y - 5), 4, 5);
+		hitBox.transform(at);
+		landBoxRect = new Rectangle(12, h - 5, w - 24, 10);
 		landBox = new Area(landBoxRect);
+		landBox.transform(at);
 		
 		attackBox = new AttackBox(hitBox, 10);
 	}

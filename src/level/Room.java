@@ -1,6 +1,7 @@
 package level;
 
 import java.awt.Graphics;
+import java.awt.geom.Area;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -91,6 +92,17 @@ public class Room {
 		for (ArrayList<Tile> e : tiles) {
 			for (Tile j : e) {
 				if (j.getHitBox().intersects(ent.getHitBox().getBounds2D()))
+					total.add(j);
+			}
+		}
+		return total;
+	}
+	
+	public ArrayList<Tile> getIntersectingTiles(Area box) {
+		ArrayList<Tile> total = new ArrayList<Tile>();
+		for (ArrayList<Tile> e : tiles) {
+			for (Tile j : e) {
+				if (box.intersects(j.getHitBox().getBounds2D()))
 					total.add(j);
 			}
 		}

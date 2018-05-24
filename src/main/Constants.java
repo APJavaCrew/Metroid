@@ -5,7 +5,7 @@ import sprite.SpriteSheet;
 
 public class Constants {
 	
-	public static final boolean SHOWHITBOXES = true;
+	public static final boolean SHOWHITBOXES = false;
 	
 	//Physics Things
 	
@@ -26,7 +26,8 @@ public class Constants {
 
 	
 	//Enemy Animations
-	public static final Animation geemerUR = new Animation(new SpriteSheet("Geemer.png", 23, 15).getSpritesAt("3-0-1-2", "0-0-0"), 60, 1, true);
+	public static final Animation geemerUR = new Animation(new SpriteSheet("Geemer.png", 23, 15).getSpritesAt("3-0-1-2", "0-0-0"), 1, 1, true);
+	public static final Animation geemerTurn = new Animation(new SpriteSheet("GeemerTurn.png", 23, 24).getSpritesAt("3-0-1-2", "0-0-0"), 20, 1, false);
 	
 
 }

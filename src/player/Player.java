@@ -82,27 +82,32 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
-		
-		if (Constants.SHOWHITBOXES) {
-		    g.setColor(Color.WHITE);
-		    g.fillRect((int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(), 
-		    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
-		    g.setColor(new Color(0, 255, 255));
-		    g.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
-		    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
-		    g.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
-		    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
-		}
+	    g2d = (Graphics2D) g;
 		
 		AffineTransform at = new AffineTransform();
 	    at.translate(x, y);
 	    at.scale(size, size);
-	    g2d = (Graphics2D) g;
 	    g2d.setTransform(at);
 	    updateSprite();
 	    g2d.drawImage(animation.getSprite(), 0, 0, null);
 	    
+		if (Constants.SHOWHITBOXES) {
+		    AffineTransform bt = new AffineTransform();
+		    bt.translate(0, 0);
+		    bt.scale(1, 1);
+		    g2d.setTransform(bt);
+		    g2d.setColor(new Color(255, 255, 255, 175));
+		    g2d.fillRect( (int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(),
+		    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
+		    g2d.setColor(new Color(0, 255, 255, 175));
+		    g2d.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
+		    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
+		    g2d.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
+		    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
+		}
+	    
 	    if (charging) {
+	    	g2d.setTransform(at);
 	    	g2d.setColor(new Color(255, 200, 0));
 			int x, y, diam, rad;
 	    	switch (spriteMotion) {
