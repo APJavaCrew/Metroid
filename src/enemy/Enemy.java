@@ -22,7 +22,7 @@ public class Enemy extends Being {
 		
 	}
 	
-	private void updateHitBoxes() {
+	protected void updateHitBoxes() {
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
 		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
@@ -30,6 +30,7 @@ public class Enemy extends Being {
 		Rectangle topBoxRect = new Rectangle((int) (x + 2), (int) y, w - 4, 5);
 		topBox = new Area(topBoxRect);
 	}
+	
 	public void updateInstance(Runner in) {
 		instance = in;
 	}

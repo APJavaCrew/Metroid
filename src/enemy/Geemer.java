@@ -23,6 +23,12 @@ public class Geemer extends Enemy {
 	
 	int size;
 	
+	enum SpriteMotion {
+		WALK, TURN
+	}
+	
+	SpriteMotion spriteMotion = SpriteMotion.WALK;
+	
 	public Geemer(double x, double y) {
 		animation.start();
 		
@@ -48,14 +54,7 @@ public class Geemer extends Enemy {
 		
 		g2d = (Graphics2D) g;
 		
-		System.out.println(x);
-		if (Constants.SHOWHITBOXES) {
-			g2d.setColor(new Color(255, 255, 255));
-			g2d.fillRect(hitBox.getBounds().x, hitBox.getBounds().y, hitBox.getBounds().width, hitBox.getBounds().height);
-			g2d.setColor(new Color(0, 255, 255));
-			g2d.fillRect(landBox.getBounds().x, landBox.getBounds().y, landBox.getBounds().width, landBox.getBounds().height);
-			g2d.fillRect(topBox.getBounds().x, topBox.getBounds().y, topBox.getBounds().width, topBox.getBounds().height);
-		}
+		
 		
 		AffineTransform at = new AffineTransform();
 		at.translate(x, y);
@@ -63,14 +62,21 @@ public class Geemer extends Enemy {
 		g2d.setTransform(at);
 		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
-		
+		if (Constants.SHOWHITBOXES) {
+			g.setColor(new Color(255, 255, 255));
+			g.fillRect(hitBox.getBounds().x - (int) x, hitBox.getBounds().y - (int) y, hitBox.getBounds().width / size, hitBox.getBounds().height / size);
+			g.setColor(new Color(0, 255, 255));
+			g.fillRect(landBox.getBounds().x - (int) x, landBox.getBounds().y - (int) y, landBox.getBounds().width / size, landBox.getBounds().height / size);
+			g.fillRect(topBox.getBounds().x - (int) x, topBox.getBounds().y - (int) y, topBox.getBounds().width / size, topBox.getBounds().height / size);
+		}
 		move();
 	}
 	
 	public void move() {
 		x += dx;
 		y += dy;
-		
+
+		updateHitBoxes();
 		checkCollision();
 	}
 	
@@ -78,13 +84,22 @@ public class Geemer extends Enemy {
 		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
 		if (tiles.size() > 0) {
 			for (Tile e : tiles) {
-				if (hitBox.intersects(e.getHitBox().getBounds2D())) {
-					
+				if (landBox.intersects(e.getHitBox().getBounds2D())) {
+					dy = 0;
 				}
 			}
 		}
 		else
 			fall();
+	}
+	
+	protected void updateHitBoxes() {
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
+		hitBox = new Area(hitBoxRect);
+		Rectangle landBoxRect = new Rectangle((int) (x + w / 2 - 2), (int) (h + y - 5), 4, 5);
+		landBox = new Area(landBoxRect);
+		
+		attackBox = new AttackBox(hitBox, 10);
 	}
 
 	private void fall() {

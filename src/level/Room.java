@@ -82,8 +82,8 @@ public class Room {
 		instance.getEnemyManager().addFromFile("testEnemies");
 	}
 	
-	public void updateInstance(Runner i) {
-		instance = i;
+	public void updateInstance(Runner in) {
+		instance = in;
 	}
 	
 	public ArrayList<Tile> getIntersectingTiles(Entity ent) {

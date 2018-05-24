@@ -95,7 +95,6 @@ public class Runner extends JComponent implements KeyListener {
 	public void paint(Graphics g) {
 			player.updateInstance(this);
 			room.updateInstance(this);
-			enemyManager.updateEnemies(this);
 			
 			if (start)
 				room.addEnemies();
@@ -103,7 +102,9 @@ public class Runner extends JComponent implements KeyListener {
 			
 			g.setColor(new Color(255, 0, 255));
 			g.fillRect(0, 0, getWidth(), getHeight());
+			
 			room.draw(g);
+			enemyManager.updateEnemies(this);
 			enemyManager.draw(g);
 			player.draw(g);
 			for (Beam beam : player.getBeams())
