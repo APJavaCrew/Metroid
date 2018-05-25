@@ -64,18 +64,18 @@ public class Room {
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
 					case 99:
-						tiles.get(y).add(new TestTile(this.x + x * 81, this.y + y * 85));
+						tiles.get(y).add(new TestTile(this.x + x * 45, this.y + y * 45));
 						break;
 					case 0:
 						continue;
 					case 1:
-						tiles.get(y).add(new MetalTile(this.x + x * 81, this.y + y * 85));
+						tiles.get(y).add(new MetalTile(this.x + x * 45, this.y + y * 45));
 						break;
 				}
 				if (y == 1)
-					h += 81;
+					h += 45;
 			}
-			w += 81;
+			w += 45;
 		}
 	}
 	

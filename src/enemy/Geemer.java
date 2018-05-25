@@ -56,7 +56,7 @@ public class Geemer extends Enemy {
 		dx = 0;
 		dy = 0;
 		
-		size = 3;
+		size = 1;
 		
 		health = 15;
 		

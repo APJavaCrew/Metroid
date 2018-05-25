@@ -6,12 +6,12 @@ import java.awt.geom.Area;
 public class RectangularTile extends Tile {
 	
 	public RectangularTile() {
-		hitBox = new Area(new Rectangle(0, 0, 81, 85));
+		hitBox = new Area(new Rectangle(0, 0, 45, 45));
 	}
 	
 	public RectangularTile(double x, double y) {
 		super(x, y);
-		hitBox = new Area(new Rectangle((int) x, (int) y, 81, 85));
+		hitBox = new Area(new Rectangle((int) x, (int) y, 45, 45));
 	}
 	
 }
