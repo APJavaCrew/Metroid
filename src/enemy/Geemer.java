@@ -24,6 +24,7 @@ public class Geemer extends Enemy {
 	AffineTransform at;
 	
 	Rectangle2D landBoxRect;
+	Area rightBox;
 	
 	int size;
 	
@@ -71,6 +72,7 @@ public class Geemer extends Enemy {
 		hitBox.transform(at);
 		
 		landBoxRect = new Rectangle(0, 0, 0, 0);
+		rightBox = new Area(new Rectangle(0, 0, 0, 0));
 		
 		attackBox = new AttackBox(hitBox, 10);
 		
@@ -103,6 +105,7 @@ public class Geemer extends Enemy {
 		    g2d.setColor(new Color(0, 255, 255, 175));
 		    g2d.fillRect((int) landBoxRect.getX(), (int) landBoxRect.getY(), (int) landBoxRect.getWidth(),
 		    		(int) landBoxRect.getHeight());
+		    g2d.fillRect(w - 2, h / 2 - 5, 5, 10);
 		}
 		move();
 	}
@@ -191,12 +194,15 @@ public class Geemer extends Enemy {
 		at = new AffineTransform();
 		at.translate(x, y);
 		at.rotate(angle, w / 2, h / 2);
-		Rectangle hitBoxRect = new Rectangle(0, 0, w, h);
+		Rectangle2D hitBoxRect = new Rectangle(0, 0, w, h);
 		hitBox = new Area(hitBoxRect);
 		hitBox.transform(at);
 		landBoxRect = new Rectangle(12, h - 5, w - 24, 10);
 		landBox = new Area(landBoxRect);
 		landBox.transform(at);
+		
+		Rectangle2D rightBoxRect = new Rectangle(w - 2, h / 2 - 5, 5, 10);
+		rightBox = new Area(rightBoxRect);
 		
 		attackBox = new AttackBox(hitBox, 10);
 	}

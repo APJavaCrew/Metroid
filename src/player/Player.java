@@ -38,8 +38,7 @@ public class Player extends Being {
 	private enum SpriteMotion {
 		WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
 		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
-		START
-		
+		START, AIM_UP_L, AIM_UP_R
 	};
 	
 	SpriteMotion spriteMotion;
@@ -154,7 +153,6 @@ public class Player extends Being {
 		
 		if (instance.getButt1()[2]) {
 			jump();
-			//System.out.println("jump");
 		}
 		
 		fall();
@@ -167,9 +165,36 @@ public class Player extends Being {
 		SpriteMotion last = spriteMotion;
 		
 		if (dx < 0 && isOnGround)
-			spriteMotion = spriteMotion.WALKLEFT;
+			spriteMotion = SpriteMotion.WALKLEFT;
 		else if (dx > 0 && isOnGround)
-			spriteMotion = spriteMotion.WALKRIGHT;
+			spriteMotion = SpriteMotion.WALKRIGHT;
+		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
+			switch (last) {
+				default:
+					break;
+				case WALKLEFT:
+					y += (Constants.samWalkLeft.getSprite().getHeight() - Constants.samFireUpL.getSprite().getHeight()) * size;
+					spriteMotion = SpriteMotion.AIM_UP_L;
+					break;
+				case WALKRIGHT:
+					y += (Constants.samWalkRight.getSprite().getHeight() - Constants.samFireUpR.getSprite().getHeight()) * size;
+					spriteMotion = SpriteMotion.AIM_UP_R;
+					break;
+			}
+		} else if (instance.getAxis1()[2] == 0 && dx == 0 && isOnGround) {
+			switch(last) {
+				default:
+					break;
+				case AIM_UP_L:
+					y -= (Constants.samWalkLeft.getSprite().getHeight() - Constants.samFireUpL.getSprite().getHeight()) * size;
+					spriteMotion = SpriteMotion.WALKLEFT;
+					break;
+				case AIM_UP_R:
+					y -= (Constants.samWalkRight.getSprite().getHeight() - Constants.samFireUpR.getSprite().getHeight()) * size;
+					spriteMotion = SpriteMotion.WALKRIGHT;
+					break;
+			}
+		}
 		
 		
 		switch (spriteMotion) {
@@ -184,6 +209,11 @@ public class Player extends Being {
 			case WALKRIGHT:
 				animation = Constants.samWalkRight;
 				break;
+			case AIM_UP_L:
+				animation = Constants.samFireUpL;
+				break;
+			case AIM_UP_R:
+				animation = Constants.samFireUpR;
 		}
 		
 		if (last != spriteMotion)
@@ -266,6 +296,7 @@ public class Player extends Being {
 			case WALKRIGHT:
 				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
 				break;
+			
 		}
 		beams.get(beams.size() - 1).updateInstance(instance);
 	}

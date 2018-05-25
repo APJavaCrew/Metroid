@@ -133,6 +133,8 @@ public class Runner extends JComponent implements KeyListener {
 			player.jump();
 		if (key == KeyEvent.VK_K)
 			player.charge();
+		if (key == KeyEvent.VK_W)
+			axis[0][2] = -1;
 	}
 
 	@Override
@@ -146,6 +148,8 @@ public class Runner extends JComponent implements KeyListener {
 			player.fire();
 			player.resetCharge();
 		}
+		if (key == KeyEvent.VK_W)
+			axis[0][2] = 0;
 	}
 
 	@Override
