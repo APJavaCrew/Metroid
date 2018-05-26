@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import entity.Entity;
+import main.Constants;
 import main.Runner;
 import tiles.MetalTile;
 import tiles.TestTile;
@@ -64,12 +65,12 @@ public class Room {
 			for (int x = 0; x < tileTypes[0].length; x++) {
 				switch (tileTypes[y][x]) {
 					case 99:
-						tiles.get(y).add(new TestTile(this.x + x * 45, this.y + y * 45));
+						tiles.get(y).add(new TestTile(this.x + x * Constants.TILESIZE, this.y + y * Constants.TILESIZE));
 						break;
 					case 0:
 						continue;
 					case 1:
-						tiles.get(y).add(new MetalTile(this.x + x * 45, this.y + y * 45));
+						tiles.get(y).add(new MetalTile(this.x + x * Constants.TILESIZE, this.y + y * Constants.TILESIZE));
 						break;
 				}
 				if (y == 1)

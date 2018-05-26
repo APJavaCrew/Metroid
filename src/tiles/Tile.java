@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.geom.Area;
 
 import entity.Entity;
+import main.Constants;
 import sprite.SpriteSheet;
 
 public class Tile extends Entity {
@@ -21,7 +22,8 @@ public class Tile extends Entity {
 	
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite.getSheet().getScaledInstance(45, 45, 0), (int) x, (int) y, null);
+//		g.drawImage(sprite.getSheet(), (int) x, (int) y, null);
+		g.drawImage(sprite.getSheet(), (int) x, (int) y, Constants.TILESIZE, Constants.TILESIZE, null);
 	}
 	
 	public void setX(double x) {

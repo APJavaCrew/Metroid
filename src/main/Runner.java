@@ -3,11 +3,13 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -28,7 +30,7 @@ import player.Player;
 import tiles.Tile;
 import weapon.Beam;
 
-public class Runner extends JComponent implements KeyListener {
+public class Runner extends JFrame implements KeyListener {
 	
 	private Player player = new Player();
 	private Camera camera = new Camera(0, 0);
@@ -42,7 +44,12 @@ public class Runner extends JComponent implements KeyListener {
 	
 	private static boolean controlConnect = false;
 	
-	private boolean start = true;
+	private boolean start = true, isRunning = true;
+	private int fps = 60;
+	private int windowWidth = 1280, windowHeight = 720;
+	
+	BufferedImage backBuffer;
+	Insets insets;
 	
 	public Runner() {
 		
@@ -53,6 +60,12 @@ public class Runner extends JComponent implements KeyListener {
 	}
 
 	public static void main(String[] args) {
+		Runner game = new Runner();
+		game.run();
+		System.exit(0);
+	}
+	
+	private void init() {
 		try {
 			Controllers.create();
 		} catch (LWJGLException e) {
@@ -79,46 +92,70 @@ public class Runner extends JComponent implements KeyListener {
 		}
 		
 		room = new Room("test", 0, 0);
-		Runner game = new Runner();
 		
-		JFrame frame = new JFrame();
-		frame.add(game);
-		frame.pack();
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		setTitle("Metroid");
+		setSize(windowWidth, windowHeight);
+		setResizable(false);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		
+		insets = getInsets();
+		setSize(insets.left + windowWidth + insets.right, insets.top + windowHeight + insets.bottom);
+		
+		backBuffer = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
+		
+	}
+
+	private void run() {
+		init();
+		while (isRunning) {
+			long time = System.currentTimeMillis();
+			
+			update();
+			draw();
+			
+			time = (1000 / fps) - (System.currentTimeMillis() - time);
+			System.out.println(time);
+			if (time > 0) {
+				try {
+					Thread.sleep(time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void draw() {
+		Graphics g = getGraphics();
+		Graphics bbg = backBuffer.getGraphics();
+		
+		bbg.setColor(new Color(255, 0, 255));
+		bbg.fillRect(0, 0, windowWidth, windowHeight);
+
+		room.draw(bbg);
+		player.draw(bbg);
+		enemyManager.draw(bbg);
+		
+		for (int i = 0; i < player.getBeams().size(); i++)
+			player.getBeams().get(i).draw(bbg);
+		
+		g.drawImage(backBuffer, insets.left, insets.top, null);
 		
 	}
 	
-	@Override
-	public void paint(Graphics g) {
-			player.updateInstance(this);
-			room.updateInstance(this);
-			
-			if (start)
-				room.addEnemies();
-			start = false;
-			
-			g.setColor(new Color(255, 0, 255));
-			g.fillRect(0, 0, getWidth(), getHeight());
-			
-			room.draw(g);
-			enemyManager.updateEnemies(this);
-			enemyManager.draw(g);
-			player.draw(g);
-			for (Beam beam : player.getBeams())
-				beam.draw(g);
-			
-			if (controlConnect)
-				pollControllers();
-			
-			repaint();
-	}
-	
-	@Override
-	public void update(Graphics g) {
-		return;
+	private void update() {
+		player.updateInstance(this);
+		room.updateInstance(this);
+
+		if (start)
+			room.addEnemies();
+		start = false;
+		
+		enemyManager.updateEnemies(this);
+		
+		if (controlConnect)
+			pollControllers();
 	}
 
 	@SuppressWarnings("unused")

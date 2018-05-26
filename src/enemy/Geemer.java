@@ -29,7 +29,7 @@ public class Geemer extends Enemy {
 	
 	int turnWait = 0;
 	
-	int size;
+	int size = 3;
 	
 	private boolean turning, turningOtherWay, falling;
 	
@@ -78,7 +78,7 @@ public class Geemer extends Enemy {
 		dx = 0;
 		dy = 0;
 		
-		size = 1;
+		size = 3;
 		
 		health = 15;
 		

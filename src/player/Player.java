@@ -22,13 +22,14 @@ public class Player extends Being {
 	
 	Animation animation = Constants.samStart;
 	
-	int size = 1;
+	int size = 3;
 
 	private boolean stopL = false, stopR = false;
-	private boolean isOnGround = false;
+	private boolean isOnGround = false, firing;
 	
 	Runner instance;
 	
+	ArrayList<Beam> oldBeams = new ArrayList<Beam>();
 	ArrayList<Beam> beams = new ArrayList<Beam>();
 	private boolean charging = false;
 	private double beamSize = 20.0;
@@ -295,6 +296,9 @@ public class Player extends Being {
 	}
 
 	public void fire() {
+		
+		oldBeams = beams;
+		
 		switch (spriteMotion) {
 		/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
 		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
@@ -302,40 +306,41 @@ public class Player extends Being {
 			case START:
 				break;
 			case WALKLEFT:
-				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
 				break;
 			case WALKRIGHT:
-				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
 				break;
 			case JUMPSTILLLEFT:
-				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
 				break;
 			case JUMPSTILLRIGHT:
-				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
 				break;
 			case JUMPSPINLEFT:
-				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMPSTILLLEFT;
 				break;
 			case JUMPSPINRIGHT:
-				beams.add(new Beam(0, 3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, 10, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMPSTILLRIGHT;
 				break;
 			case STANDLEFT:
-				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
 				break;
 			case STANDRIGHT:
-				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_R:
-				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
 				break;
 			
 		}
-		beams.get(beams.size() - 1).updateInstance(instance);
+		
+		beams.get( beams.size() - 1 ).updateInstance(instance);
 	}
 	
 	public void charge() {
@@ -371,7 +376,7 @@ public class Player extends Being {
 	}
 	
 	public ArrayList<Beam> getBeams() {
-		return beams;
+		return oldBeams;
 	}
 	
 	public Graphics2D getGraphics() {

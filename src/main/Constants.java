@@ -20,6 +20,8 @@ public class Constants {
 	public final static double MAX_RUN_SPEED = .5; //cannot run faster than this
 	public final static double TERMINAL_VELOCITY = 1; //cannot fall faster than this
 	
+	public static final int TILESIZE = 60;
+	
 	//Samus Animations
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 30, 1, true);
