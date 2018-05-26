@@ -19,21 +19,24 @@ import weapon.Beam;
 
 public class Geemer extends Enemy {
 	
-	Animation animation = Constants.geemerUR;
+	Animation animation = Constants.geemerWalk;
+	Animation legs = Constants.geemerLegz;
 	Graphics2D g2d;
 	AffineTransform at;
 	
 	Rectangle2D landBoxRect;
 	Area rightBox;
 	
+	int turnWait = 0;
+	
 	int size;
 	
-	private boolean turning, falling;
+	private boolean turning, turningOtherWay, falling;
 	
 	double angle = 0;
 	
 	enum SpriteMotion {
-		WALK, TURN
+		WALK, DIE
 	}
 	
 	enum Direction {
@@ -44,11 +47,30 @@ public class Geemer extends Enemy {
 	
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
-	public Geemer(double x, double y) {
+	public Geemer(double x, double y, int direc) {
 		
 		animation.restart();
+		legs.restart();
 		
-		direction = Direction.UP;
+		switch (direc) {
+			default: break;
+			case 1:
+				direction = Direction.UP;
+				break;
+			case 2:
+				direction = Direction.RIGHT;
+				angle = Math.PI / 2.0;
+				break;
+			case 3:
+				direction = Direction.DOWN;
+				angle = Math.PI;
+				break;
+			case 4:
+				direction = Direction.LEFT;
+				angle = 3.0 * Math.PI / 2.0;
+				break;
+		}
+		
 		spriteMotion = SpriteMotion.WALK;
 		
 		this.x = x;
@@ -59,6 +81,8 @@ public class Geemer extends Enemy {
 		size = 3;
 		
 		health = 15;
+		
+		turnWait = 0;
 		
 		falling = true;
 		
@@ -76,8 +100,8 @@ public class Geemer extends Enemy {
 		
 		attackBox = new AttackBox(hitBox, 10);
 		
-		w = animation.getSprite().getWidth() * size;
-		h = animation.getSprite().getHeight() * size;
+		w = legs.getSprite().getWidth() * size;
+		h = legs.getSprite().getHeight() * size;
 	}
 	
 	public void draw(Graphics g) {
@@ -90,8 +114,10 @@ public class Geemer extends Enemy {
 		at.rotate(angle, w / 2 / size, h / 2 / size);
 		
 		g2d.setTransform(at);
+		g2d.drawImage(legs.getSprite(), 0, 0, null);
 		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
+		legs.update();
 		
 		
 		if (Constants.SHOWHITBOXES) {
@@ -105,13 +131,15 @@ public class Geemer extends Enemy {
 		    g2d.setColor(new Color(0, 255, 255, 175));
 		    g2d.fillRect((int) landBoxRect.getX(), (int) landBoxRect.getY(), (int) landBoxRect.getWidth(),
 		    		(int) landBoxRect.getHeight());
-		    g2d.fillRect(w - 2, h / 2 - 5, 5, 10);
+		    g2d.fillRect(w - 19, h / 2 - 5, 5, 10);
 		}
+		
 		move();
+		
 	}
 	
 	public void move() {
-		if (!falling && !turning) {
+		if (!falling && !turning && !turningOtherWay) {
 			switch (direction) {
 				default:
 					dy = 0;
@@ -138,6 +166,10 @@ public class Geemer extends Enemy {
 			dy = 0;
 			dx = 0;
 			turn();
+		} else if (turningOtherWay) {
+			dy = 0;
+			dx = 0;
+			turnOtherWay();
 		} else
 			fall();
 		
@@ -151,10 +183,14 @@ public class Geemer extends Enemy {
 	public void checkCollision() {
 		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(hitBox);
 		ArrayList<Tile> landTiles = instance.getRoom().getIntersectingTiles(landBox);
+		ArrayList<Tile> rightTiles = instance.getRoom().getIntersectingTiles(rightBox);
 		if (tiles.size() > 0) {
 			falling = false;
 			if (landTiles.size() == 0) {
 				turning = true;
+			} else if (rightTiles.size() > 0) {
+				turnWait = 0;
+				turningOtherWay = true;
 			}
 		} else {
 			falling = true;
@@ -167,26 +203,53 @@ public class Geemer extends Enemy {
 			default:
 				break;
 			case UP:
-				angle += Math.PI / 2.0;
 				direction = Direction.RIGHT;
-				turning = false;
 				break;
 			case RIGHT:
-				angle += Math.PI / 2.0;
 				direction = Direction.DOWN;
-				turning = false;
 				break;
 			case DOWN:
-				angle += Math.PI / 2.0;
 				direction = Direction.LEFT;
-				turning = false;
 				break;
 			case LEFT:
-				angle += Math.PI / 2.0;
 				direction = Direction.UP;
-				turning = false;
 				break;
 		}
+
+		angle += Math.PI / 2.0;
+
+		turning = false;
+		
+	}
+	
+	private void turnOtherWay() {
+		
+		if (turnWait == 0) {
+			switch (direction) {
+				default:
+					break;
+				case UP:
+					direction = Direction.LEFT;
+					break;
+				case RIGHT:
+					direction = Direction.UP;
+					break;
+				case DOWN:
+					direction = Direction.RIGHT;
+					break;
+				case LEFT:
+					direction = Direction.DOWN;
+					break;
+			}
+		}
+		
+		angle -= Math.PI / 2.0;
+		turningOtherWay = false;
+		
+		turnWait ++;
+		
+		if (turnWait == 10)
+			turnWait = 0;
 		
 	}
 	
@@ -201,8 +264,9 @@ public class Geemer extends Enemy {
 		landBox = new Area(landBoxRect);
 		landBox.transform(at);
 		
-		Rectangle2D rightBoxRect = new Rectangle(w - 2, h / 2 - 5, 5, 10);
+		Rectangle2D rightBoxRect = new Rectangle(w - 19, h / 2 - 5, 5, 10);
 		rightBox = new Area(rightBoxRect);
+		rightBox.transform(at);
 		
 		attackBox = new AttackBox(hitBox, 10);
 	}

@@ -12,6 +12,8 @@ public class EnemyManager {
 	
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	
+	Runner instance;
+	
 	public EnemyManager() {
 		
 	}
@@ -25,8 +27,10 @@ public class EnemyManager {
 			for (int i = 0; i < size; i++) {
 				switch (fileRead.nextInt()) {
 					case 1:
-						add(new Geemer(fileRead.nextInt(), fileRead.nextInt()));
+						add( new Geemer(fileRead.nextInt(), fileRead.nextInt(), fileRead.nextInt()) );
 						break;
+					case 2:
+						add( new Ripper(fileRead.nextInt(), fileRead.nextInt(), instance) );
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -39,6 +43,7 @@ public class EnemyManager {
 	}
 	
 	public void updateEnemies(Runner in) {
+		instance = in;
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).updateInstance(in);
 			

@@ -61,7 +61,7 @@ public class SpriteSheet {
 	
 	public BufferedImage getSpriteAt(int xGrid, int yGrid) {
 		if (sheet.equals(null))
-			sheet = null;
+			System.err.println("Sheet not loaded");
 		return sheet.getSubimage(xGrid * w, yGrid * h, w, h);
 	}
 	
