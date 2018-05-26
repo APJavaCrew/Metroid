@@ -24,7 +24,8 @@ public class Ripper extends Enemy {
 	Area frontBox;
 	
 	private boolean isLeft, turning;
-	int dir, size, turnWait;
+	int size, turnWait;
+	double dir;
 	
 	
 	public Ripper(double x, double y, Runner in) {
@@ -40,7 +41,7 @@ public class Ripper extends Enemy {
 		
 		animation.start();
 		
-		dir = -1;
+		dir = -0.75;
 		size = 3;
 		turnWait = 0;
 		
