@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.geom.Area;
 
 public abstract class Entity {

@@ -22,7 +22,7 @@ public class Player extends Being {
 	
 	Animation animation = Constants.samStart;
 	
-	int size = 3;
+	int size = 1;
 
 	private boolean stopL = false, stopR = false;
 	private boolean isOnGround = false;
@@ -37,7 +37,7 @@ public class Player extends Being {
 	
 	private enum SpriteMotion {
 		WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
-		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
+		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
 		START, AIM_UP_L, AIM_UP_R
 	};
 	
@@ -50,7 +50,7 @@ public class Player extends Being {
 		animation.start();
 		
 		x = 100;
-		y = 450;
+		y = 100;
 		dx = 0;
 		dy = 0;
 		
@@ -110,6 +110,9 @@ public class Player extends Being {
 	    	g2d.setColor(new Color(255, 200, 0));
 			int x, y, diam, rad;
 	    	switch (spriteMotion) {
+	    	/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
+		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
+		START, AIM_UP_L, AIM_UP_R*/
 	    		case START:
 	    			break;
 	    		case WALKLEFT:
@@ -198,6 +201,9 @@ public class Player extends Being {
 		
 		
 		switch (spriteMotion) {
+		/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
+		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
+		START, AIM_UP_L, AIM_UP_R*/
 			default:
 				break;
 			case START:
@@ -214,6 +220,8 @@ public class Player extends Being {
 				break;
 			case AIM_UP_R:
 				animation = Constants.samFireUpR;
+			
+				
 		}
 		
 		if (last != spriteMotion)
@@ -225,7 +233,7 @@ public class Player extends Being {
 	
 	public void jump() {
 		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
-			dy = -6;
+			dy = Constants.JUMP_SPEED;
 	}
 	
 	public void fall() {
@@ -288,12 +296,41 @@ public class Player extends Being {
 
 	public void fire() {
 		switch (spriteMotion) {
+		/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
+		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
+		START, AIM_UP_L, AIM_UP_R*/
 			case START:
 				break;
 			case WALKLEFT:
 				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
 				break;
 			case WALKRIGHT:
+				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				break;
+			case JUMPSTILLLEFT:
+				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				break;
+			case JUMPSTILLRIGHT:
+				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				break;
+			case JUMPSPINLEFT:
+				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				spriteMotion = SpriteMotion.JUMPSTILLLEFT;
+				break;
+			case JUMPSPINRIGHT:
+				beams.add(new Beam(0, 3, beamSize, x - 10, y + 20));
+				spriteMotion = SpriteMotion.JUMPSTILLRIGHT;
+				break;
+			case STANDLEFT:
+				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				break;
+			case STANDRIGHT:
+				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
+				break;
+			case AIM_UP_L:
+				beams.add(new Beam(0, -3, beamSize, x - 10, y + 20));
+				break;
+			case AIM_UP_R:
 				beams.add(new Beam(0, 3, beamSize, x + w, y + 20));
 				break;
 			

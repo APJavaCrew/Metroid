@@ -16,12 +16,12 @@ public class Tile extends Entity {
 	}
 	
 	public Tile(double x, double y) {
-		super(x, y, 81, 85);
+		super(x, y, 45, 45);
 	}
 	
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite.getSheet(), (int) x, (int) y, null);
+		g.drawImage(sprite.getSheet().getScaledInstance(45, 45, 0), (int) x, (int) y, null);
 	}
 	
 	public void setX(double x) {
