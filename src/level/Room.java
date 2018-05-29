@@ -10,6 +10,7 @@ import java.util.Scanner;
 import entity.Entity;
 import main.Constants;
 import main.Runner;
+import sprite.SpriteSheet;
 import tiles.MetalTile;
 import tiles.TestTile;
 import tiles.Tile;
@@ -19,13 +20,14 @@ import tiles.Tile;
  * @author Nolan Manor
  *
  */
-public class Room {
+public class Room extends Entity {
 	
-	private double x, y, w, h;
 	private int[][] tileTypes;
 	private ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();
 	Scanner fileRead;
 	Runner instance;
+	
+	SpriteSheet background;
 	
 	public Room(String path, double x, double y) {
 		
@@ -46,6 +48,7 @@ public class Room {
 	}
 	
 	public void draw(Graphics g) {
+		g.drawImage(background.getSheet(), (int) x, (int) y, w, h, null);
 		for (ArrayList<Tile> a : tiles) {
 			for (Tile b : a) {
 				b.draw(g);
@@ -54,6 +57,14 @@ public class Room {
 	}
 	
 	public void load() {
+		
+		switch(fileRead.nextInt()) {
+			default:
+				break;
+			case 1:
+				background = new SpriteSheet("LavaBack.png");
+		}
+		
 		tileTypes = new int[fileRead.nextInt()][fileRead.nextInt()];
 		for (int y = 0; y < tileTypes.length; y++) {
 			for (int x = 0; x < tileTypes[0].length; x++) {
@@ -74,10 +85,16 @@ public class Room {
 						break;
 				}
 				if (y == 1)
-					h += 45;
+					h += Constants.TILESIZE;
 			}
-			w += 45;
+			w += Constants.TILESIZE;
 		}
+		
+		w = tiles.size() * Constants.TILESIZE;
+		h = tiles.get(0).size() * Constants.TILESIZE;
+		
+		w = 1280;
+		h = 1000;
 	}
 	
 	public void addEnemies() {

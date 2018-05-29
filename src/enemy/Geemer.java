@@ -29,6 +29,7 @@ public class Geemer extends Enemy {
 	
 	int turnWait = 0;
 	
+	double speed = 3.0;
 	int size = 3;
 	
 	private boolean turning, turningOtherWay, falling;
@@ -143,23 +144,23 @@ public class Geemer extends Enemy {
 			switch (direction) {
 				default:
 					dy = 0;
-					dx = 1;
+					dx = speed;
 					break;
 				case UP:
 					dy = 0;
-					dx = 1;
+					dx = speed;
 					break;
 				case RIGHT:
 					dx = 0;
-					dy = 1;
+					dy = speed;
 					break;
 				case DOWN:
-					dx = -1;
+					dx = -speed;
 					dy = 0;
 					break;
 				case LEFT:
 					dx = 0;
-					dy = -1;
+					dy = -speed;
 					break;
 			}
 		} else if (turning) {

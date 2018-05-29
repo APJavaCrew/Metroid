@@ -25,7 +25,7 @@ public class Ripper extends Enemy {
 	
 	private boolean isLeft, turning;
 	int size, turnWait;
-	double dir;
+	double dir, speed = 3;
 	
 	
 	public Ripper(double x, double y, Runner in) {
@@ -82,7 +82,7 @@ public class Ripper extends Enemy {
 	public void move() {
 		
 		if (!turning)
-			dx = dir;
+			dx = dir * speed;
 		else
 			dx = 0;
 		

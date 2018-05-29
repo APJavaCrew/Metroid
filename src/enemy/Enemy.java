@@ -8,6 +8,7 @@ import main.Runner;
 import weapon.Beam;
 
 public class Enemy extends Being {
+	
 	protected AttackBox attackBox;
 	protected double x, y; //position
 	protected double dx, dy; //horiz/vert speed 
@@ -29,6 +30,7 @@ public class Enemy extends Being {
 		landBox = new Area(landBoxRect);
 		Rectangle topBoxRect = new Rectangle((int) (x + 2), (int) y, w - 4, 5);
 		topBox = new Area(topBoxRect);
+		attackBox.set(hitBox);
 	}
 	
 	public void updateInstance(Runner in) {

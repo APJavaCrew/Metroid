@@ -187,6 +187,8 @@ public class Runner extends JFrame implements KeyListener {
 		}
 		if (key == KeyEvent.VK_W)
 			axis[0][2] = 0;
+		if (key == KeyEvent.VK_ESCAPE)
+			isRunning = false;
 	}
 
 	@Override

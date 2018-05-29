@@ -22,8 +22,7 @@ public class Tile extends Entity {
 	
 	@Override
 	public void draw(Graphics g) {
-//		g.drawImage(sprite.getSheet(), (int) x, (int) y, null);
-		g.drawImage(sprite.getSheet(), (int) x, (int) y, Constants.TILESIZE, Constants.TILESIZE, null);
+		g.drawImage(sprite.getSheet(), (int) x, (int) y, null);
 	}
 	
 	public void setX(double x) {

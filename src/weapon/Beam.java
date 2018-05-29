@@ -12,7 +12,7 @@ import main.Runner;
 
 public class Beam extends Entity {
 	
-	private boolean alive;
+	private boolean removed;
 	private double angle, velModifier, b, damage, size, w, h;
 	private Runner instance;
 	private WeaponBox weaponBox;
@@ -20,7 +20,7 @@ public class Beam extends Entity {
 	Graphics2D g2d;
 	
 	public Beam(double deg, double velModifier, double size, double x, double y) {
-		alive = true;
+		removed = false;
 		angle = Math.toRadians(deg);
 		this.velModifier = velModifier;
 		b = y;
@@ -77,11 +77,11 @@ public class Beam extends Entity {
 		updateHitBox();
 		
 		if (instance.getRoomBounds().intersects(hitBox.getBounds2D()))
-			alive = false;
+			removed = true;
 	}
 	
 	public boolean isAlive() {
-		return alive;
+		return !removed;
 	}
 
 }

@@ -22,6 +22,8 @@ public class Player extends Being {
 	
 	Animation animation = Constants.samStart;
 	
+	Area leftBox, rightBox;
+	
 	int size = 3;
 
 	private boolean stopL = false, stopR = false;
@@ -32,7 +34,8 @@ public class Player extends Being {
 	ArrayList<Beam> oldBeams = new ArrayList<Beam>();
 	ArrayList<Beam> beams = new ArrayList<Beam>();
 	private boolean charging = false;
-	private double beamSize = 20.0;
+	private double beamSize = 5.0;
+	private double speed = 5.0;
 	
 	private Graphics2D g2d;
 	
@@ -97,19 +100,16 @@ public class Player extends Being {
 		    bt.scale(1, 1);
 		    g2d.setTransform(bt);
 		    g2d.setColor(new Color(255, 255, 255, 175));
-		    g2d.fillRect( (int) hitBox.getBounds2D().getX(), (int) hitBox.getBounds2D().getY(),
-		    		(int) hitBox.getBounds2D().getWidth(), (int) hitBox.getBounds2D().getHeight());
+		    g2d.fill(hitBox);
 		    g2d.setColor(new Color(0, 255, 255, 175));
-		    g2d.fillRect((int) landBox.getBounds2D().getX(), (int) landBox.getBounds2D().getY(), 
-		    		(int) landBox.getBounds2D().getWidth(), (int) landBox.getBounds2D().getHeight());
-		    g2d.fillRect((int) topBox.getBounds2D().getX(), (int) topBox.getBounds2D().getY(), 
-		    		(int) topBox.getBounds2D().getWidth(), (int) topBox.getBounds2D().getHeight());
+		    g2d.fill(topBox);
+		    g2d.fill(landBox);
 		}
 	    
-	    if (charging) {
-	    	g2d.setTransform(at);
+	    if (charging && beamSize > 7) {
 	    	g2d.setColor(new Color(255, 200, 0));
 			int x, y, diam, rad;
+			double rando;
 	    	switch (spriteMotion) {
 	    	/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
 		JUMPSPINLEFT, JUMPSPINRIGHT, STANDRIGHT, STANDLEFT,
@@ -117,20 +117,32 @@ public class Player extends Being {
 	    		case START:
 	    			break;
 	    		case WALKLEFT:
-	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+	    			x = -5; y = 10; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	rando = Math.random() * 2 + 1;
+	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case WALKRIGHT:
-	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+	    			x = w / size + 10; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	rando = Math.random() * 2 + 1;
+	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 	    	    	break;
 	    		case STANDLEFT:
 	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	rando = Math.random() * 2 + 1;
+	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case STANDRIGHT:
 	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	rando = Math.random() * 2 + 1;
+	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    	}
 	    }
@@ -142,9 +154,9 @@ public class Player extends Being {
 	public void move() {
 		
 		if (charging && beamSize < 30)
-			beamSize += 0.05;
+			beamSize += 0.5;
 		
-		dx = Math.pow(instance.getAxis1()[3], 3);
+		dx = Math.pow(instance.getAxis1()[3], 3) * speed;
 		//System.out.println(instance.getAxis1()[3]);
 		
 		checkCollision();
@@ -177,11 +189,9 @@ public class Player extends Being {
 				default:
 					break;
 				case WALKLEFT:
-					y += (Constants.samWalkLeft.getSprite().getHeight() - Constants.samFireUpL.getSprite().getHeight()) * size;
 					spriteMotion = SpriteMotion.AIM_UP_L;
 					break;
 				case WALKRIGHT:
-					y += (Constants.samWalkRight.getSprite().getHeight() - Constants.samFireUpR.getSprite().getHeight()) * size;
 					spriteMotion = SpriteMotion.AIM_UP_R;
 					break;
 			}
@@ -190,11 +200,9 @@ public class Player extends Being {
 				default:
 					break;
 				case AIM_UP_L:
-					y -= (Constants.samWalkLeft.getSprite().getHeight() - Constants.samFireUpL.getSprite().getHeight()) * size;
 					spriteMotion = SpriteMotion.WALKLEFT;
 					break;
 				case AIM_UP_R:
-					y -= (Constants.samWalkRight.getSprite().getHeight() - Constants.samFireUpR.getSprite().getHeight()) * size;
 					spriteMotion = SpriteMotion.WALKRIGHT;
 					break;
 			}
@@ -251,28 +259,23 @@ public class Player extends Being {
 	
 	public void checkCollision() {
 		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
+		stopL = false;
+		stopR = false;
 		if (tiles.size() > 0) {
 			for (Tile e : tiles) {
 				if (hitBox.intersects(e.getHitBox().getBounds2D())) {
-					if (e.getX() < this.x)
+					if (e.getX() + e.getW() < this.x)
 						stopL = true;
-					else if (e.getX() > this.x)
+					if (e.getX() > this.x + w)
 						stopR = true;
-					if (e.getY() > landBox.getBounds2D().getY()) {
-						dy = -0.1;
+					if (e.getY() < landBox.getBounds2D().getY() && landBox.intersects(e.getHitBox().getBounds2D())) {
+						y = e.getY() - h;
 					}
-				} else {
-					stopL = false;
-					stopR = false;
 				}
 			}
-		} else {
-			stopL = false;
-			stopR = false;
 		}
-		if (stopL && stopR)
-			dy = -0.1;
-		else if (stopL && dx < 0)
+		
+		if (stopL && dx < 0)
 			dx = 0;
 		else if (stopR && dx > 0)
 			dx = 0;
@@ -283,9 +286,9 @@ public class Player extends Being {
 		h = animation.getSprite().getHeight() * size;
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
-		Rectangle landBoxRect = new Rectangle((int) (x + 2), (int) (h + y - 5), w - 4, 5);
+		Rectangle landBoxRect = new Rectangle((int) (x + 3), (int) (h + y - 5), w - 6, 5);
 		landBox = new Area(landBoxRect);
-		Rectangle topBoxRect = new Rectangle((int) (x + 2), (int) y, w - 4, 5);
+		Rectangle topBoxRect = new Rectangle((int) (x + 3), (int) y, w - 6, 5);
 		topBox = new Area(topBoxRect);
 	}
 	
@@ -299,6 +302,9 @@ public class Player extends Being {
 		
 		oldBeams = beams;
 		
+		if (beamSize < 20)
+			beamSize = 20;
+		
 		switch (spriteMotion) {
 		/*WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
 		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
@@ -306,36 +312,36 @@ public class Player extends Being {
 			case START:
 				break;
 			case WALKLEFT:
-				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -15, beamSize, x - 10, y + 20));
 				break;
 			case WALKRIGHT:
-				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 15, beamSize, x + w, y + 20));
 				break;
 			case JUMPSTILLLEFT:
-				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -15, beamSize, x - 10, y + 20));
 				break;
 			case JUMPSTILLRIGHT:
-				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 15, beamSize, x + w, y + 20));
 				break;
 			case JUMPSPINLEFT:
-				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -15, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMPSTILLLEFT;
 				break;
 			case JUMPSPINRIGHT:
-				beams.add(new Beam(0, 10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, 15, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMPSTILLRIGHT;
 				break;
 			case STANDLEFT:
-				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, -15, beamSize, x - 10, y + 20));
 				break;
 			case STANDRIGHT:
-				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 15, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				beams.add(new Beam(0, -10, beamSize, x - 10, y + 20));
+				beams.add(new Beam(0, 90, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_R:
-				beams.add(new Beam(0, 10, beamSize, x + w, y + 20));
+				beams.add(new Beam(0, 90, beamSize, x + w, y + 20));
 				break;
 			
 		}
@@ -349,7 +355,7 @@ public class Player extends Being {
 	
 	public void resetCharge() {
 		charging = false;
-		beamSize = 20;
+		beamSize = 5.0;
 	}
 	
 	public void updateBeams() {
