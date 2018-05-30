@@ -32,10 +32,10 @@ import weapon.Beam;
 
 public class Runner extends JFrame implements KeyListener {
 	
-	private Player player = new Player();
-	private Camera camera = new Camera(0, 0);
-	private EnemyManager enemyManager = new EnemyManager();
-	static Room room;
+	private Player player = new Player(this);
+	private Camera camera = new Camera(1280 / 2, 720 / 2);
+	private EnemyManager enemyManager = new EnemyManager(this);
+	private Room room;
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
 	private double[][] axis = new double[4][6];
@@ -53,10 +53,6 @@ public class Runner extends JFrame implements KeyListener {
 	
 	public Runner() {
 		
-		setSize(new Dimension(1280, 720));
-		setPreferredSize(new Dimension(1280, 720));
-		setFocusable(true);
-		addKeyListener(this);
 	}
 
 	public static void main(String[] args) {
@@ -95,7 +91,9 @@ public class Runner extends JFrame implements KeyListener {
 		
 		setTitle("Metroid");
 		setSize(windowWidth, windowHeight);
-		setResizable(false);
+		setResizable(true);
+		setFocusable(true);
+		addKeyListener(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		
@@ -125,14 +123,17 @@ public class Runner extends JFrame implements KeyListener {
 			}
 		}
 	}
+
+	Graphics bbg;
 	
 	private void draw() {
+		
 		Graphics g = getGraphics();
-		Graphics bbg = backBuffer.getGraphics();
+		resetBackBuffer();
 		
 		bbg.setColor(new Color(255, 0, 255));
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
-
+		
 		room.draw(bbg);
 		player.draw(bbg);
 		enemyManager.draw(bbg);
@@ -145,6 +146,7 @@ public class Runner extends JFrame implements KeyListener {
 	}
 	
 	private void update() {
+		camera.updateInstance(this);
 		player.updateInstance(this);
 		room.updateInstance(this);
 
@@ -156,6 +158,18 @@ public class Runner extends JFrame implements KeyListener {
 		
 		if (controlConnect)
 			pollControllers();
+
+		camera.move();
+		
+	}
+	
+	public BufferedImage getBackBuffer() {
+		return backBuffer;
+	}
+	
+	public void resetBackBuffer() {
+		bbg = backBuffer.getGraphics();
+		bbg.translate( (int) camera.getXOffset(), (int) camera.getYOffset() );
 	}
 
 	@SuppressWarnings("unused")
@@ -294,6 +308,10 @@ public class Runner extends JFrame implements KeyListener {
 
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
+	}
+	
+	public Camera getCamera() {
+		return camera;
 	}
 	
 }

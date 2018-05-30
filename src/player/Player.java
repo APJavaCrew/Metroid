@@ -20,7 +20,10 @@ import weapon.Beam;
 
 public class Player extends Being {
 	
+	private double lastX, lastY;
+	
 	Animation animation = Constants.samStart;
+	Graphics2D g2d;
 	
 	Area leftBox, rightBox;
 	
@@ -37,8 +40,6 @@ public class Player extends Being {
 	private double beamSize = 5.0;
 	private double speed = 5.0;
 	
-	private Graphics2D g2d;
-	
 	private enum SpriteMotion {
 		WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
 		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
@@ -47,14 +48,15 @@ public class Player extends Being {
 	
 	SpriteMotion spriteMotion;
 	
-	public Player() {
+	public Player(Runner in) {
+		instance = in;
 		
 		spriteMotion = spriteMotion.START;
 		
 		animation.start();
 		
-		x = 100;
-		y = 100;
+		x = 1280 / 2 + 9;
+		y = 720 / 2;
 		dx = 0;
 		dy = 0;
 		
@@ -85,20 +87,22 @@ public class Player extends Being {
 	
 	@Override
 	public void draw(Graphics g) {
+		
 	    g2d = (Graphics2D) g;
 		
 		AffineTransform at = new AffineTransform();
 	    at.translate(x, y);
 	    at.scale(size, size);
-	    g2d.setTransform(at);
+	    g2d.transform(at);
+	    
 	    updateSprite();
-	    g2d.drawImage(animation.getSprite(), 0, 0, null);
+	    g.drawImage(animation.getSprite(), 0, 0, null);
 	    
 		if (Constants.SHOWHITBOXES) {
 		    AffineTransform bt = new AffineTransform();
 		    bt.translate(0, 0);
 		    bt.scale(1, 1);
-		    g2d.setTransform(bt);
+		    g2d.transform(bt);
 		    g2d.setColor(new Color(255, 255, 255, 175));
 		    g2d.fill(hitBox);
 		    g2d.setColor(new Color(0, 255, 255, 175));
@@ -107,7 +111,7 @@ public class Player extends Being {
 		}
 	    
 	    if (charging && beamSize > 7) {
-	    	g2d.setColor(new Color(255, 200, 0));
+	    	g.setColor(new Color(255, 200, 0));
 			int x, y, diam, rad;
 			double rando;
 	    	switch (spriteMotion) {
@@ -118,31 +122,31 @@ public class Player extends Being {
 	    			break;
 	    		case WALKLEFT:
 	    			x = -5; y = 10; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	g.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
-	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case WALKRIGHT:
 	    			x = w / size + 10; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	g.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
-	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
+	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 	    	    	break;
 	    		case STANDLEFT:
 	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	g.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
-	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case STANDRIGHT:
 	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+	    	    	g.fillOval(x - rad, y - rad, diam, diam);
+	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
-	    	    	g2d.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    	}
 	    }
@@ -158,6 +162,9 @@ public class Player extends Being {
 		
 		dx = Math.pow(instance.getAxis1()[3], 3) * speed;
 		//System.out.println(instance.getAxis1()[3]);
+		
+		lastX = x;
+		lastY = y;
 		
 		checkCollision();
 		
@@ -343,7 +350,7 @@ public class Player extends Being {
 			case AIM_UP_R:
 				beams.add(new Beam(0, 90, beamSize, x + w, y + 20));
 				break;
-			
+				
 		}
 		
 		beams.get( beams.size() - 1 ).updateInstance(instance);
@@ -366,6 +373,14 @@ public class Player extends Being {
 		}
 	}
 	
+	public double getLastX() {
+		return lastX;
+	}
+	
+	public double getLastY() {
+		return lastY;
+	}
+	
 	public double getDx() {
 		return dx;
 	}
@@ -383,10 +398,6 @@ public class Player extends Being {
 	
 	public ArrayList<Beam> getBeams() {
 		return oldBeams;
-	}
-	
-	public Graphics2D getGraphics() {
-		return g2d;
 	}
 	
 }

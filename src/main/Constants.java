@@ -5,7 +5,7 @@ import sprite.SpriteSheet;
 
 public class Constants {
 	
-	public static final boolean SHOWHITBOXES = true;
+	public static final boolean SHOWHITBOXES = false;
 	
 	//Physics Things
 	

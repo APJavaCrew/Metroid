@@ -1,6 +1,7 @@
 package enemy;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class EnemyManager {
 	
 	Runner instance;
 	
-	public EnemyManager() {
-		
+	public EnemyManager(Runner in) {
+		instance = in;
 	}
 	
 	public void addFromFile(String path) {
@@ -27,7 +28,7 @@ public class EnemyManager {
 			for (int i = 0; i < size; i++) {
 				switch (fileRead.nextInt()) {
 					case 1:
-						add( new Geemer(fileRead.nextInt(), fileRead.nextInt(), fileRead.nextInt()) );
+						add( new Geemer(fileRead.nextInt(), fileRead.nextInt(), fileRead.nextInt(), instance ) );
 						break;
 					case 2:
 						add( new Ripper(fileRead.nextInt(), fileRead.nextInt(), instance) );
@@ -57,8 +58,11 @@ public class EnemyManager {
 	}
 	
 	public void draw(Graphics g) {
-		for (Enemy e : enemies)
+		for (Enemy e : enemies) {
+			g = instance.getBackBuffer().getGraphics();
+			g.translate( (int) instance.getCamera().getXOffset(), (int) instance.getCamera().getYOffset());
 			e.draw(g);
+		}
 	}
 
 }

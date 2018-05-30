@@ -45,4 +45,9 @@ public abstract class Entity {
 	
 	public Area getHitBox() { return hitBox; }
 	
+	public void moveWithCam(double xOffset, double yOffset) {
+		x += xOffset;
+		y += yOffset;
+	}
+	
 }

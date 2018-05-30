@@ -48,7 +48,9 @@ public class Geemer extends Enemy {
 	
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
-	public Geemer(double x, double y, int direc) {
+	public Geemer(double x, double y, int direc, Runner in) {
+		
+		instance = in;
 		
 		animation.restart();
 		legs.restart();
@@ -114,7 +116,7 @@ public class Geemer extends Enemy {
 		at.scale(size, size);
 		at.rotate(angle, w / 2 / size, h / 2 / size);
 		
-		g2d.setTransform(at);
+		g2d.transform(at);
 		g2d.drawImage(legs.getSprite(), 0, 0, null);
 		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
