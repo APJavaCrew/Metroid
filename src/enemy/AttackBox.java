@@ -34,5 +34,8 @@ public class AttackBox extends Area {
 	public boolean isIntersectingPlayer() {
 		return instance.getPlayer().getHitBox().intersects(this.getBounds2D());
 	}
-	
+
+	public double getDamage() {
+		return damage;
+	}
 }
