@@ -17,7 +17,7 @@ public class Constants {
 	public final static double BONK_SPEED = 0.15; //dy is set to this when you bonk your head on a ceiling
 //	public final static double BRAKE_DEADZONE = .05; //dx will be set to zero if its absolute value is less than this
 //	public final static double MAX_RUN_SPEED = .5; //cannot run faster than this
-	public final static double TERMINAL_VELOCITY = 1; //cannot fall faster than this
+	public final static double TERMINAL_VELOCITY = 20; //cannot fall faster than this
 	public final static double BEAM_SPEED = 15; //speed at which fired beams travel (negative for left)
 	public final static double MAX_BEAM_SIZE = 20; //max beam size
 	public final static double KNOCKBACK_SPEED = .5; //speed at which Samus is knocked back when hit
