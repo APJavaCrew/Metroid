@@ -42,14 +42,6 @@ public class Player extends Being {
 	private double beamSize = 5.0;
 	private double speed = 5.0;
 	
-<<<<<<< HEAD
-	private enum SpriteMotion {
-		WALKLEFT, WALKRIGHT, JUMPSTILLLEFT, JUMPSTILLRIGHT,
-		JUMPSPINLEFT, JUMPSPINRIGHT, STANDLEFT, STANDRIGHT,
-		START, AIM_UP_L, AIM_UP_R
-=======
-	private Graphics2D g2d;
-	
 	private enum SpriteMotion { //34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
@@ -65,7 +57,6 @@ public class Player extends Being {
 		AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
 		AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
 		AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 	};
 	
 	SpriteMotion spriteMotion;
@@ -154,12 +145,6 @@ public class Player extends Being {
 			AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
 	    		case START:
 	    			break;
-<<<<<<< HEAD
-	    		case WALKLEFT:
-	    			x = -5; y = 10; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
 	    		case MORPH:
 	    			break;
 	    		case STAND_LEFT:
@@ -173,16 +158,8 @@ public class Player extends Being {
 	    			x = -5; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-<<<<<<< HEAD
-	    		case WALKRIGHT:
-	    			x = w / size + 10; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
 	    		case JUMP_LEFT:
 	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
@@ -208,16 +185,9 @@ public class Player extends Being {
 	    			x = w / size + 10; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 	    	    	break;
-<<<<<<< HEAD
-	    		case STANDLEFT:
-	    			x = -10; y = 20 / size; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
 	    		case JUMP_RIGHT:
 	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
@@ -250,21 +220,13 @@ public class Player extends Being {
 	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
-<<<<<<< HEAD
-	    		case STANDRIGHT:
-	    			x = w / size; y = 20 / size; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
 	    		case JUMP_UP_R:
 	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
@@ -663,10 +625,6 @@ public class Player extends Being {
 			case CROUCH_DOWN_RIGHT:
 				beams.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
-<<<<<<< HEAD
-				
-=======
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 		}
 		
 		beams.get( beams.size() - 1 ).updateInstance(instance);
@@ -689,7 +647,6 @@ public class Player extends Being {
 		}
 	}
 	
-<<<<<<< HEAD
 	public double getLastX() {
 		return lastX;
 	}
@@ -697,13 +654,7 @@ public class Player extends Being {
 	public double getLastY() {
 		return lastY;
 	}
-	
-	public double getDx() {
-		return dx;
-	}
-=======
 	public double getDx() {return dx;}
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 
 	public double getDy() {return dy;}
 	
@@ -713,9 +664,4 @@ public class Player extends Being {
 	
 	public ArrayList<Beam> getBeams() {return oldBeams;}
 	
-<<<<<<< HEAD
-=======
-	public Graphics2D getGraphics() {return g2d;}
-	
->>>>>>> 5b223abf7e8eaee705f4f4627149a05339c4f86a
 }

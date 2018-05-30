@@ -46,7 +46,7 @@ public class Beam extends Entity {
 		at.translate(x, y);
 		at.rotate(angle);
 		
-		g2d.setTransform(at);
+		g2d.transform(at);
 		g2d.setColor(new Color(255, 200, 0));
 		g2d.fillOval(0, 0, (int) w, (int) h);
 

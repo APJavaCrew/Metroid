@@ -54,7 +54,7 @@ public class ShriekBat extends Enemy {
 		at.translate(x, y);
 		at.scale(size, size);
 		
-		g2d.setTransform(at);
+		g2d.transform(at);
 		g2d.drawImage(animation.getSprite(), 0, 0, null);
 		
 		if (Constants.SHOWHITBOXES) {

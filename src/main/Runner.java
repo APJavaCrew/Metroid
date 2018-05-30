@@ -138,8 +138,10 @@ public class Runner extends JFrame implements KeyListener {
 		player.draw(bbg);
 		enemyManager.draw(bbg);
 		
-		for (int i = 0; i < player.getBeams().size(); i++)
+		for (int i = 0; i < player.getBeams().size(); i++) {
+			resetBackBuffer();
 			player.getBeams().get(i).draw(bbg);
+		}
 		
 		g.drawImage(backBuffer, insets.left, insets.top, null);
 		
