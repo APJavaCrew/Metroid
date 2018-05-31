@@ -37,7 +37,7 @@ public abstract class Entity {
 	public void setW(int w) { this.w = w; }
 	public void setH(int h) { this.h = h; }
 	
-	public abstract void draw(Graphics g);
+	protected void draw(Graphics g) {}
 	
 	public double getX() { return this.x; }
 	public double getY() { return this.y; }
@@ -51,9 +51,6 @@ public abstract class Entity {
 		y += yOffset;
 	}
 
-	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void draw(Graphics2D g);
 	
 }

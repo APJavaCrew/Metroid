@@ -17,8 +17,6 @@ public class Beam extends Entity {
 	private Runner instance;
 	private WeaponBox weaponBox;
 	
-	Graphics2D g2d;
-	
 	public Beam(double deg, double velModifier, double size, double x, double y) {
 		removed = false;
 		angle = Math.toRadians(deg);
@@ -39,17 +37,16 @@ public class Beam extends Entity {
 	}
 
 	@Override
-	public void draw(Graphics g) {
-		g2d = (Graphics2D) g;
+	public void draw(Graphics2D g) {
 		
 		AffineTransform at = new AffineTransform();
 		at.translate(x, y);
 		at.rotate(angle);
 		
-		g2d.transform(at);
-		g2d.setColor(new Color(255, 200, 0));
-		g2d.fillOval(0, 0, (int) w, (int) h);
-
+		g.transform(at);
+		g.setColor(new Color(255, 200, 0));
+		g.fillOval(0, 0, (int) w, (int) h);
+		
 		move();
 		
 	}

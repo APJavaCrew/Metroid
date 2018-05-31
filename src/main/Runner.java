@@ -92,7 +92,7 @@ public class Runner extends JFrame implements KeyListener {
 		
 		setTitle("Metroid");
 		setSize(windowWidth, windowHeight);
-		setResizable(true);
+		setResizable(false);
 		setFocusable(true);
 		addKeyListener(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -15,7 +15,6 @@ public class ShriekBat extends Enemy {
 	Animation animation;
 	
 	AffineTransform at;
-	Graphics2D g2d;
 	
 	Area viewBox;
 	int viewBoxW, viewBoxH;
@@ -46,23 +45,23 @@ public class ShriekBat extends Enemy {
 		
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		
-		g2d = (Graphics2D) g;
 		at = new AffineTransform();
 		at.translate(x, y);
 		at.scale(size, size);
 		
-		g2d.transform(at);
-		g2d.drawImage(animation.getSprite(), 0, 0, null);
+		g.transform(at);
+		g.drawImage(animation.getSprite(), 0, 0, null);
 		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
 			at.translate(x, y);
-			g2d.setColor(new Color(255, 255, 255, 175));
-			g2d.fill(hitBox);
-			g2d.setColor(new Color(255, 0, 0, 90));
-			g2d.fill(viewBox);
+			g.transform(at);
+			g.setColor(new Color(255, 255, 255, 175));
+			g.fill(hitBox);
+			g.setColor(new Color(255, 0, 0, 90));
+			g.fill(viewBox);
 		}
 		
 		move();
