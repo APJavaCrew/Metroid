@@ -663,5 +663,4 @@ public class Player extends Being {
 	public void setDy(double dy) {this.dy = dy;}
 	
 	public ArrayList<Beam> getBeams() {return oldBeams;}
-	
 }

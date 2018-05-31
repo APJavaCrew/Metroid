@@ -101,6 +101,7 @@ public class Runner extends JFrame implements KeyListener {
 		setSize(insets.left + windowWidth + insets.right, insets.top + windowHeight + insets.bottom);
 		
 		backBuffer = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
+		bbg = backBuffer.getGraphics();
 		
 	}
 
@@ -113,7 +114,7 @@ public class Runner extends JFrame implements KeyListener {
 			draw();
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
-			System.out.println(time);
+//			System.out.println(time);
 			if (time > 0) {
 				try {
 					Thread.sleep(time);
@@ -129,10 +130,12 @@ public class Runner extends JFrame implements KeyListener {
 	private void draw() {
 		
 		Graphics g = getGraphics();
-		resetBackBuffer();
 		
-		bbg.setColor(new Color(255, 0, 255));
+		bbg.translate(- windowWidth / 2, - windowHeight / 2);
+		bbg.setColor(new Color(0, 0, 0));
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
+		
+		resetBackBuffer();
 		
 		room.draw(bbg);
 		player.draw(bbg);

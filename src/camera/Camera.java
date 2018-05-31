@@ -20,6 +20,14 @@ public class Camera {
 		return y;
 	}
 	
+	public double getDX() {
+		return dx;
+	}
+	
+	public double getDY() {
+		return dy;
+	}
+	
 	public void updateInstance(Runner in) {
 		instance = in;
 	}

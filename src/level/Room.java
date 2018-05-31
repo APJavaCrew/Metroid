@@ -27,7 +27,8 @@ public class Room extends Entity {
 	Scanner fileRead;
 	Runner instance;
 	
-	SpriteSheet background;
+	SpriteSheet backgroundImage;
+	ArrayList<SpriteSheet> backgroundArray = new ArrayList<SpriteSheet>();
 	
 	public Room(String path, double x, double y) {
 		
@@ -48,12 +49,16 @@ public class Room extends Entity {
 	}
 	
 	public void draw(Graphics g) {
-		g.drawImage(background.getSheet(), (int) x, (int) y, w, h, null);
+		g.drawImage(backgroundImage.getSheet(), (int) x, (int) y, w, h, null);
 		for (ArrayList<Tile> a : tiles) {
 			for (Tile b : a) {
 				b.draw(g);
 			}
 		}
+	}
+	
+	private void translateBackground() {
+		
 	}
 	
 	public void load() {
@@ -62,7 +67,7 @@ public class Room extends Entity {
 			default:
 				break;
 			case 1:
-				background = new SpriteSheet("LavaBack.png");
+				backgroundImage = new SpriteSheet("LavaBack.png");
 		}
 		
 		tileTypes = new int[fileRead.nextInt()][fileRead.nextInt()];

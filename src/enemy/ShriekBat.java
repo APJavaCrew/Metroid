@@ -49,7 +49,6 @@ public class ShriekBat extends Enemy {
 	public void draw(Graphics g) {
 		
 		g2d = (Graphics2D) g;
-		x = 500; y = 500;
 		at = new AffineTransform();
 		at.translate(x, y);
 		at.scale(size, size);
