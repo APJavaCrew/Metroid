@@ -33,8 +33,10 @@ public class EnemyManager {
 						break;
 					case 2:
 						add( new Ripper(fileRead.nextInt(), fileRead.nextInt(), instance) );
+						break;
 					case 3:
 						add( new ShriekBat(fileRead.nextInt(), fileRead.nextInt()) );
+						break;
 				}
 			}
 		} catch (FileNotFoundException e) {
