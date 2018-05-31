@@ -196,28 +196,28 @@ public class Player extends Being {
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case AIM_UP_L:
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case JUMP_UP_L:
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case AIM_UP_R:
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case JUMP_UP_R:
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 	    	    	rando = Math.random() * 2 + 1;
@@ -553,10 +553,10 @@ public class Player extends Being {
 				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
 				break;
 			case AIM_UP_R:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
 				break;
 			case JUMP_UP_L:
 				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));

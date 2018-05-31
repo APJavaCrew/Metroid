@@ -13,6 +13,13 @@ public abstract class Being extends Entity {
 	protected boolean isAlive = true;
 	protected double health;
 	
+	public double getHealth() {
+		return health;
+	}
+
+	public void setHealth(double health) {
+		this.health = health;
+	}
 	protected Area landBox, topBox;
 	
 	public Being(double x, double y) {
