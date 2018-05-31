@@ -67,8 +67,8 @@ public class Player extends Being {
 		
 		animation.start();
 		
-		x = 1280 / 2 + 9;
-		y = 720 / 2;
+		x = 1280 / 2;
+		y = 500;
 		dx = 0;
 		dy = 0;
 		
@@ -109,6 +109,10 @@ public class Player extends Being {
 	    g.drawImage(animation.getSprite(), 0, 0, null);
 	    
 		if (Constants.SHOWHITBOXES) {
+			at = new AffineTransform();
+			at.translate(x, y);
+			at.scale(1, 1);
+			g.transform(at);
 		    g.setColor(new Color(255, 255, 255, 175));
 		    g.fill(hitBox);
 		    g.setColor(new Color(0, 255, 255, 175));

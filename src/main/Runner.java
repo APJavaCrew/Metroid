@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -34,7 +35,7 @@ import weapon.Beam;
 public class Runner extends JFrame implements KeyListener {
 	
 	private Player player = new Player(this);
-	private Camera camera = new Camera(1280 / 2, 720 / 2);
+	private Camera camera = new Camera(player.getX() - player.getW() / 2, player.getY() - 150);
 	private EnemyManager enemyManager = new EnemyManager(this);
 	private Room room;
 	static Controller[] cont = new Controller[4];
@@ -132,8 +133,8 @@ public class Runner extends JFrame implements KeyListener {
 		
 		Graphics g = getGraphics();
 		
-		bbg.translate(- windowWidth / 2, - windowHeight / 2);
-		
+		resetBackBuffer();
+		bbg.translate(0, 0);
 		bbg.setColor(new Color(0, 0, 0));
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
 		
@@ -175,7 +176,11 @@ public class Runner extends JFrame implements KeyListener {
 	}
 	
 	public void resetBackBuffer() {
+		AffineTransform at = new AffineTransform();
+		at.translate(0, 0);
+		at.scale(1, 1);
 		bbg = backBuffer.createGraphics();
+		bbg.transform(at);
 		bbg.translate( (int) camera.getXOffset(), (int) camera.getYOffset() );
 	}
 
