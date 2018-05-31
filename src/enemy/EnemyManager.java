@@ -25,7 +25,6 @@ public class EnemyManager {
 		try {
 			fileRead = new Scanner(file);
 			int size = fileRead.nextInt();
-			System.out.println(size);
 			for (int i = 0; i < size; i++) {
 				switch (fileRead.nextInt()) {
 					case 1:

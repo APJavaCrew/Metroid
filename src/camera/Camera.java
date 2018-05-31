@@ -5,11 +5,13 @@ import main.Runner;
 public class Camera {
 	
 	Runner instance;
-	private double x, y, dx, dy;
+	private double x, y, dx, dy, targetX, targetY;
 	
 	public Camera(double x, double y) {
 		this.x = x;
 		this.y = y;
+		targetX = x;
+		targetY = y;
 	}
 	
 	public double getXOffset() {
@@ -36,8 +38,11 @@ public class Camera {
 		dx = -(instance.getPlayer().getX() - instance.getPlayer().getLastX());
 		dy = -(instance.getPlayer().getY() - instance.getPlayer().getLastY());
 		
-		x += dx;
-		y += dy;
+		targetX += dx;
+		targetY += dy;
+		
+		x += (targetX - x) * 0.125;
+		y += (targetY - y) * 0.125;
 	}
 	
 }

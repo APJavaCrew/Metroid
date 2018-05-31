@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -101,7 +102,7 @@ public class Runner extends JFrame implements KeyListener {
 		setSize(insets.left + windowWidth + insets.right, insets.top + windowHeight + insets.bottom);
 		
 		backBuffer = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
-		bbg = backBuffer.getGraphics();
+		bbg = backBuffer.createGraphics();
 		
 	}
 
@@ -114,7 +115,7 @@ public class Runner extends JFrame implements KeyListener {
 			draw();
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
-//			System.out.println(time);
+			System.out.println(time);
 			if (time > 0) {
 				try {
 					Thread.sleep(time);
@@ -125,13 +126,14 @@ public class Runner extends JFrame implements KeyListener {
 		}
 	}
 
-	Graphics bbg;
+	Graphics2D bbg;
 	
 	private void draw() {
 		
 		Graphics g = getGraphics();
 		
 		bbg.translate(- windowWidth / 2, - windowHeight / 2);
+		
 		bbg.setColor(new Color(0, 0, 0));
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
 		
@@ -173,7 +175,7 @@ public class Runner extends JFrame implements KeyListener {
 	}
 	
 	public void resetBackBuffer() {
-		bbg = backBuffer.getGraphics();
+		bbg = backBuffer.createGraphics();
 		bbg.translate( (int) camera.getXOffset(), (int) camera.getYOffset() );
 	}
 
