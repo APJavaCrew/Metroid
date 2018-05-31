@@ -29,7 +29,7 @@ public class Constants {
 	//Samus Animations
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
-	public final static Animation samWalkRight = new Animation(new SpriteSheet("SamWalkRight.png", 32, 37).
+	public final static Animation samWalkRight = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samStart = new Animation(new SpriteSheet("SamStart.png", 24, 40).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samFireUpL = new Animation(new SpriteSheet("SamFireUpLeft.png", 22, 44).getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);

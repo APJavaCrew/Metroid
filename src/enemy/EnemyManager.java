@@ -1,6 +1,7 @@
 package enemy;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,9 +60,9 @@ public class EnemyManager {
 		
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		for (Enemy e : enemies) {
-			g = instance.getBackBuffer().getGraphics();
+			g = instance.getBackBuffer().createGraphics();
 			g.translate( (int) instance.getCamera().getXOffset(), (int) instance.getCamera().getYOffset());
 			e.draw(g);
 		}
