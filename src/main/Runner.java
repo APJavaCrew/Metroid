@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -52,6 +53,8 @@ public class Runner extends JFrame implements KeyListener {
 	BufferedImage backBuffer;
 	Insets insets;
 	
+	Font f = new Font("Arial", 1, 35);
+	
 	public Runner() {
 		
 	}
@@ -83,6 +86,7 @@ public class Runner extends JFrame implements KeyListener {
 		if (controlConnect) {
 			for (int i = 0; i < 4; i++) {
 				cont[i] = Controllers.getController(contPos + i);
+				System.out.println("CameCube controllers found!");
 			}
 		} else {
 			System.err.println("CameCube controllers not found!");
@@ -131,9 +135,9 @@ public class Runner extends JFrame implements KeyListener {
 	private void draw() {
 		
 		Graphics g = getGraphics();
-		
-		bbg.translate(- windowWidth / 2, - windowHeight / 2);
-		
+
+		bbg = backBuffer.createGraphics();
+		bbg.translate(0, 0);		
 		bbg.setColor(new Color(0, 0, 0));
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
 		
@@ -142,6 +146,12 @@ public class Runner extends JFrame implements KeyListener {
 		room.draw(bbg);
 		player.draw(bbg);
 		enemyManager.draw(bbg);
+		
+		bbg = backBuffer.createGraphics();
+		bbg.setFont(f);
+		bbg.translate(10, 35);
+		bbg.setColor(Color.white);
+		bbg.drawString("Health: " + player.getHealth(), 0, 0);
 		
 		for (int i = 0; i < player.getBeams().size(); i++) {
 			resetBackBuffer();

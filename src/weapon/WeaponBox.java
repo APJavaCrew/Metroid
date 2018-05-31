@@ -1,6 +1,6 @@
 package weapon;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Area;
 
 import entity.Entity;
@@ -15,7 +15,7 @@ public class WeaponBox extends Entity {
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		return;
 	}
 

@@ -11,13 +11,13 @@ import tiles.Tile;
 public abstract class Being extends Entity {
 
 	protected boolean isAlive = true;
-	protected double health;
+	protected int health;
 	
-	public double getHealth() {
+	public int getHealth() {
 		return health;
 	}
 
-	public void setHealth(double health) {
+	public void setHealth(int health) {
 		this.health = health;
 	}
 	protected Area landBox, topBox;

@@ -72,6 +72,8 @@ public class Player extends Being {
 		dx = 0;
 		dy = 0;
 		
+		setHealth(99);
+		
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
 		
