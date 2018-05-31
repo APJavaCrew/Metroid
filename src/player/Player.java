@@ -196,54 +196,30 @@ public class Player extends Being {
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case AIM_UP_L:
-<<<<<<< HEAD
 	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> origin/master
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case JUMP_UP_L:
-<<<<<<< HEAD
 	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> origin/master
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case AIM_UP_R:
-<<<<<<< HEAD
 	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> origin/master
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
 	    		case JUMP_UP_R:
-<<<<<<< HEAD
 	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g2d.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g2d.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-=======
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 	    	    	g.fillOval(x - rad, y - rad, diam, diam);
 	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
->>>>>>> origin/master
 	    	    	rando = Math.random() * 2 + 1;
 	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 	    	    	break;
