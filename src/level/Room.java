@@ -1,6 +1,7 @@
 package level;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Area;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,7 +49,7 @@ public class Room extends Entity {
 		return tiles;
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		g.drawImage(backgroundImage.getSheet(), (int) x, (int) y, w, h, null);
 		for (ArrayList<Tile> a : tiles) {
 			for (Tile b : a) {

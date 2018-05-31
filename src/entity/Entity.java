@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
@@ -48,6 +49,11 @@ public abstract class Entity {
 	public void moveWithCam(double xOffset, double yOffset) {
 		x += xOffset;
 		y += yOffset;
+	}
+
+	public void draw(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
