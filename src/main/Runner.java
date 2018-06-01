@@ -154,6 +154,7 @@ public class Runner extends JFrame implements KeyListener {
 			enemyManager.draw(bbg);
 			room.draw(bbg);
 		}
+		
 		player.draw(bbg);
 		
 		if (player.getHealth() > 0) {
@@ -164,9 +165,9 @@ public class Runner extends JFrame implements KeyListener {
 			bbg.drawString("Health: " + player.getHealth(), 0, 0);
 		}
 		
-		for (int i = 0; i < player.getBeams().size(); i++) {
+		for (int i = 0; i < player.getWeapons().size(); i++) {
 			resetBackBuffer();
-			player.getBeams().get(i).draw(bbg);
+			player.getWeapons().get(i).draw(bbg);
 		}
 		
 		g.drawImage(backBuffer, insets.left, insets.top, null);

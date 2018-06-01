@@ -3,16 +3,19 @@ package enemy;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.ArrayList;
 
 import entity.Being;
 import main.Runner;
 import weapon.Beam;
+import weapon.Weapon;
 
 public class Enemy extends Being {
 	
 	protected AttackBox attackBox;
 	protected double x, y; //position
-	protected double dx, dy; //horiz/vert speed 
+	protected double dx, dy; //horiz/vert speed
+	protected boolean isHurt = false;
 	Runner instance;
 
 	@Override
@@ -56,6 +59,23 @@ public class Enemy extends Being {
 	
 	public AttackBox getAttackBox() {
 		return attackBox;
+	}
+	
+	public void checkBeingHurt() {
+		if (instance != null) {
+			ArrayList<Weapon> beams = instance.getPlayer().getWeapons();
+			for (Weapon b : beams) {
+				if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
+					isHurt = true;
+					switch (b.getType()) {
+						default:
+							break;
+						case "power":
+							break;
+					}
+				}
+			}
+		}
 	}
 	
 

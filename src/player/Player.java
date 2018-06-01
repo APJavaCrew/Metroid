@@ -18,6 +18,7 @@ import sprite.Animation;
 import sprite.SpriteSheet;
 import tiles.Tile;
 import weapon.Beam;
+import weapon.Weapon;
 
 public class Player extends Being {
 	
@@ -35,8 +36,8 @@ public class Player extends Being {
 	
 	Runner instance;
 	
-	ArrayList<Beam> oldBeams = new ArrayList<Beam>();
-	ArrayList<Beam> beams = new ArrayList<Beam>();
+	ArrayList<Weapon> oldWeapons = new ArrayList<Weapon>();
+	ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	private boolean charging = false;
 	private boolean facingLeft;
 	private boolean isHurt = false, isHurtStart = false;
@@ -306,7 +307,7 @@ public class Player extends Being {
 		
 		fall();
 		
-		updateBeams();
+		updateWeapons();
 		
 	}
 	
@@ -534,13 +535,13 @@ public class Player extends Being {
 	
 	public void updateInstance(Runner in) {
 		instance = in;
-		for (Beam b : beams)
-			b.updateInstance(in);
+		for (Weapon w : weapons)
+			w.updateInstance(in);
 	}
 
 	public void fire() {
 		
-		oldBeams = beams;
+		oldWeapons = weapons;
 		
 		if (beamSize < Constants.MAX_BEAM_SIZE)
 			beamSize = Constants.MAX_BEAM_SIZE;
@@ -566,106 +567,106 @@ public class Player extends Being {
 			case MORPH:
 				break;
 			case JUMP_SPIN_LEFT:
-				beams.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_LEFT;
 				break;
 			case JUMP_SPIN_RIGHT:
-				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
 				break;
 			case STAND_LEFT:
-				beams.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case STAND_RIGHT:
-				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case WALK_LEFT:
-				beams.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_RIGHT:
-				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case CROUCH_LEFT:
-				beams.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_RIGHT:
-				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case JUMP_LEFT:
-				beams.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_RIGHT:
-				beams.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
+				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
 				break;
 			case AIM_UP_R:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
+				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
 				break;
 			case JUMP_UP_L:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_R:
-				beams.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_L:
-				beams.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_R:
-				beams.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_LEFT:
-				beams.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_LEFT:
-				beams.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_LEFT:
-				beams.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_LEFT:
-				beams.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_RIGHT:
-				beams.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_RIGHT:
-				beams.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_RIGHT:
-				beams.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_RIGHT:
-				beams.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_LEFT:
-				beams.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_LEFT:
-				beams.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_LEFT:
-				beams.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_LEFT:
-				beams.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_RIGHT:
-				beams.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_RIGHT:
-				beams.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_RIGHT:
-				beams.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_RIGHT:
-				beams.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 		}
 		
-		beams.get( beams.size() - 1 ).updateInstance(instance);
+		weapons.get( weapons.size() - 1 ).updateInstance(instance);
 	}
 	
 	private void checkHurt() {
@@ -700,11 +701,11 @@ public class Player extends Being {
 		beamSize = 5.0;
 	}
 	
-	public void updateBeams() {
-		for (int i = 0; i < beams.size(); i++) {
-			beams.get(i).updateInstance(instance);
-			if (!beams.get(i).isAlive())
-				beams.remove(beams.get(i));
+	public void updateWeapons() {
+		for (int i = 0; i < weapons.size(); i++) {
+			weapons.get(i).updateInstance(instance);
+			if (weapons.get(i).isRemoved())
+				weapons.remove(weapons.get(i));
 		}
 	}
 	
@@ -723,5 +724,5 @@ public class Player extends Being {
 
 	public void setDy(double dy) {this.dy = dy;}
 	
-	public ArrayList<Beam> getBeams() {return oldBeams;}
+	public ArrayList<Weapon> getWeapons() {return oldWeapons;}
 }
