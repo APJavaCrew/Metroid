@@ -27,19 +27,97 @@ public class Constants {
 
 
 	//Samus Animations
+	/*//34 states
+	START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+
+	STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+	STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+
+	AIM_UP_L, JUMP_UP_L, //up (facing left)
+	AIM_UP_R, JUMP_UP_R, //up (facing right)
+	JUMP_DOWN_L, //down (facing left)
+	JUMP_DOWN_R, //down (facing right)
+
+	AIM_UP_LEFT, WALK_UP_LEFT, JUMP_UP_LEFT, CROUCH_UP_LEFT, //up-left
+	AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
+	AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
+	AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
+	public final static Animation samStart = new Animation(new SpriteSheet("SamStart.png", 24, 40).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samJumpSpinLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samJumpSpinRight = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samStandLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
+//	public final static Animation samJumpLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samCrouchLeft = new Animation(new SpriteSheet("SamusCrouchLeft.png", 24, 25).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+//	public final static Animation samStandLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samWalkRight = new Animation(new SpriteSheet("SamWalkRight.png", 31, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
-	public final static Animation samStart = new Animation(new SpriteSheet("SamStart.png", 24, 40).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samFireUpL = new Animation(new SpriteSheet("SamFireUpLeft.png", 22, 44).getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
-	public final static Animation samFireUpR = new Animation(new SpriteSheet("SamFireUpRight.png", 22, 44).getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
-	public final static Animation samCrouchLeft = new Animation(new SpriteSheet("SamusCrouchLeft.png", 24, 25).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samCrouchRight = new Animation(new SpriteSheet("SamusCrouchRight.png", 24, 25).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samCrouchUpLeft = new Animation(new SpriteSheet("SamusCrouchUpLeft.png", 23, 30).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samCrouchUpRight = new Animation(new SpriteSheet("SamusCrouchUpRight.png", 23, 30).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samCrouchDownLeft = new Animation(new SpriteSheet("SamusCrouchDownLeft.png", 23, 25).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samCrouchDownRight = new Animation(new SpriteSheet("SamusCrouchDownRight.png", 23, 25).getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+//	public final static Animation samJumpRight = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samCrouchRight = new Animation(new SpriteSheet("SamusCrouchRight.png", 24, 25).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+	public final static Animation samFireUpL = new Animation(new SpriteSheet("SamFireUpLeft.png", 22, 44).
+			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
+//	public final static Animation samJumpUpL = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samFireUpR = new Animation(new SpriteSheet("SamFireUpRight.png", 22, 44).
+			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
+//	public final static Animation samJumpUpR = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samJumpDownL = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samJumpDownR = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+//	public final static Animation samMorph = new Animation(new SpriteSheet("SamX.png", x, y).
+//			getSpritesAt("", ""), 5, 1, true);
+	
+	
+	public final static Animation samCrouchUpLeft = new Animation(new SpriteSheet("SamusCrouchUpLeft.png", 23, 30).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+	public final static Animation samCrouchUpRight = new Animation(new SpriteSheet("SamusCrouchUpRight.png", 23, 30).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+	public final static Animation samCrouchDownLeft = new Animation(new SpriteSheet("SamusCrouchDownLeft.png", 23, 25).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+	public final static Animation samCrouchDownRight = new Animation(new SpriteSheet("SamusCrouchDownRight.png", 23, 25).
+			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	
 	
 	

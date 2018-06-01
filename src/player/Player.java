@@ -41,8 +41,8 @@ public class Player extends Being {
 	private double beamSize = 5.0;
 	private double speed = 5.0;
 	
-	private enum SpriteMotion { //36 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
+	private enum SpriteMotion { //34 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -127,8 +127,8 @@ public class Player extends Being {
 			int x, y, diam, rad;
 			double rando;
 	    	switch (spriteMotion) {
-	    	/*//36 states
-			START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
+	    	/*//34 states
+			START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
 			STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 			STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -249,9 +249,12 @@ public class Player extends Being {
 			facingLeft = false;
 
 		//System.out.println(instance.getAxis1()[3]);
+		System.out.println(isOnGround);
 		
 		lastX = x;
 		lastY = y;
+		
+		System.out.println(instance.getAxis1()[2]);
 		
 		checkCollision();
 		
@@ -278,7 +281,7 @@ public class Player extends Being {
 			spriteMotion = SpriteMotion.WALK_LEFT;
 		else if (dx > 0 && isOnGround)
 			spriteMotion = SpriteMotion.WALK_RIGHT;
-		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
+		else if (instance.getAxis1()[2] <= -0.9 /*&& dx == 0 */&& isOnGround) {
 			switch (last) {
 				default:
 					break;
@@ -289,7 +292,7 @@ public class Player extends Being {
 					spriteMotion = SpriteMotion.AIM_UP_R;
 					break;
 			}
-		} else if (instance.getAxis1()[2] == 0 && dx == 0 && isOnGround) {
+		} else if (instance.getAxis1()[2] == 0  /*&& dx == 0 */&& isOnGround) {
 			switch(last) {
 				default:
 					break;
@@ -299,8 +302,13 @@ public class Player extends Being {
 				case AIM_UP_R:
 					spriteMotion = SpriteMotion.WALK_RIGHT;
 					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.WALK_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.WALK_RIGHT;
 			}
-		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
+		} else if(instance.getAxis1()[2] >= 0.9/* && dx == 0 */&& isOnGround) {
 			switch(last) {
 			default:
 				break;
@@ -315,8 +323,8 @@ public class Player extends Being {
 		
 		
 		switch (spriteMotion) {
-		/*//36 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
+		/*//34 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -342,12 +350,6 @@ public class Player extends Being {
 //				animation = Constants.samX;
 //				break;
 //			case JUMP_SPIN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case HURT_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case HURT_RIGHT:
 //				animation = Constants.samX;
 //				break;
 //			case STAND_LEFT:
@@ -524,8 +526,8 @@ public class Player extends Being {
 			beamSize = Constants.MAX_BEAM_SIZE;
 		
 		switch (spriteMotion) {
-		/*//36 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
+		/*//34 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
