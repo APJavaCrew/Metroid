@@ -122,6 +122,7 @@ public class Runner extends JFrame implements KeyListener {
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
 			System.out.println(time);
+			
 			if (time > 0) {
 				try {
 					Thread.sleep(time);
@@ -147,16 +148,21 @@ public class Runner extends JFrame implements KeyListener {
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
 		
 		resetBackBuffer();
-		
-		room.draw(bbg);
+
+		if (player.isAlive()) {
+			room.drawBackground(bbg);
+			enemyManager.draw(bbg);
+			room.draw(bbg);
+		}
 		player.draw(bbg);
-		enemyManager.draw(bbg);
 		
-		bbg = backBuffer.createGraphics();
-		bbg.setFont(f);
-		bbg.translate(10, 35);
-		bbg.setColor(Color.white);
-		bbg.drawString("Health: " + player.getHealth(), 0, 0);
+		if (player.getHealth() > 0) {
+			bbg = backBuffer.createGraphics();
+			bbg.setFont(f);
+			bbg.translate(10, 35);
+			bbg.setColor(Color.white);
+			bbg.drawString("Health: " + player.getHealth(), 0, 0);
+		}
 		
 		for (int i = 0; i < player.getBeams().size(); i++) {
 			resetBackBuffer();

@@ -54,5 +54,9 @@ public class Enemy extends Being {
 		
 	}
 	
+	public AttackBox getAttackBox() {
+		return attackBox;
+	}
+	
 
 }
