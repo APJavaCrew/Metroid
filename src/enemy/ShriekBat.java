@@ -55,8 +55,6 @@ public class ShriekBat extends Enemy {
 		g.transform(at);
 		g.drawImage(animation.getSprite(), 0, 0, null);
 		
-		System.out.println("GREG");
-		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
 			at.translate(x, y);

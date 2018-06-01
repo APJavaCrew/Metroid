@@ -99,6 +99,7 @@ public class Runner extends JFrame implements KeyListener {
 		setSize(windowWidth, windowHeight);
 		setResizable(false);
 		setFocusable(true);
+		this.setBounds(0, 0, 80, 80);
 		addKeyListener(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
