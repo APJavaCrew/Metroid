@@ -273,9 +273,12 @@ public class Player extends Being {
 			facingLeft = false;
 
 		//System.out.println(instance.getAxis1()[3]);
+		System.out.println(isOnGround);
 		
 		lastX = x;
 		lastY = y;
+		
+		System.out.println(instance.getAxis1()[2]);
 		
 		checkCollision();
 		
@@ -317,7 +320,7 @@ public class Player extends Being {
 			spriteMotion = SpriteMotion.WALK_LEFT;
 		else if (dx > 0 && isOnGround)
 			spriteMotion = SpriteMotion.WALK_RIGHT;
-		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
+		else if (instance.getAxis1()[2] <= -0.9 /*&& dx == 0 */&& isOnGround) {
 			switch (last) {
 				default:
 					break;
@@ -328,7 +331,7 @@ public class Player extends Being {
 					spriteMotion = SpriteMotion.AIM_UP_R;
 					break;
 			}
-		} else if (instance.getAxis1()[2] == 0 && dx == 0 && isOnGround) {
+		} else if (instance.getAxis1()[2] == 0  /*&& dx == 0 */&& isOnGround) {
 			switch(last) {
 				default:
 					break;
@@ -338,6 +341,22 @@ public class Player extends Being {
 				case AIM_UP_R:
 					spriteMotion = SpriteMotion.WALK_RIGHT;
 					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.WALK_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.WALK_RIGHT;
+			}
+		} else if(instance.getAxis1()[2] >= 0.9/* && dx == 0 */&& isOnGround) {
+			switch(last) {
+			default:
+				break;
+			case WALK_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_LEFT;
+				break;
+			case WALK_RIGHT:
+				spriteMotion = SpriteMotion.CROUCH_RIGHT;
+				break;
 			}
 		}
 		
@@ -381,9 +400,9 @@ public class Player extends Being {
 //			case JUMP_LEFT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_LEFT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_LEFT:
+				animation = Constants.samCrouchLeft;
+				break;
 //			case STAND_RIGHT:
 //				animation = Constants.samX;
 //				break;
@@ -394,17 +413,17 @@ public class Player extends Being {
 //				animation = Constants.samX;
 //				break;
 //			case CROUCH_RIGHT:
-//				animation = Constants.samX;
+//				animation = Constants.samCrouchRight;
 //				break;
-			case AIM_UP_L:
-				animation = Constants.samFireUpL;
-				break;
+//			case AIM_UP_L:
+//				animation = Constants.samFireUpL;
+//				break;
 //			case JUMP_UP_L:
 //				animation = Constants.samX;
 //				break;
-			case AIM_UP_R:
-				animation = Constants.samFireUpR;
-				break;
+//			case AIM_UP_R:
+//				animation = Constants.samFireUpR;
+//				break;
 //			case JUMP_DOWN_L:
 //				animation = Constants.samX;
 //				break;
@@ -421,7 +440,7 @@ public class Player extends Being {
 //				animation = Constants.samX;
 //				break;
 //			case CROUCH_UP_LEFT:
-//				animation = Constants.samX;
+//				animation = Constants.samCrouchUpLeft;
 //				break;
 //			case AIM_UP_RIGHT:
 //				animation = Constants.samX;
@@ -432,9 +451,9 @@ public class Player extends Being {
 //			case JUMP_UP_RIGHT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_UP_RIGHT:
+				animation = Constants.samCrouchRight;
+				break;
 //			case AIM_DOWN_LEFT:
 //				animation = Constants.samX;
 //				break;
@@ -445,7 +464,7 @@ public class Player extends Being {
 //				animation = Constants.samX;
 //				break;
 //			case CROUCH_DOWN_LEFT:
-//				animation = Constants.samX;
+//				animation = Constants.samCrouchDownLeft;
 //				break;
 //			case AIM_DOWN_RIGHT:
 //				animation = Constants.samX;
@@ -457,7 +476,7 @@ public class Player extends Being {
 //				animation = Constants.samX;
 //				break;
 //			case CROUCH_DOWN_RIGHT:
-//				animation = Constants.samX;
+//				animation = Constants.samCrouchDownRight;
 //				break;
 		}
 		

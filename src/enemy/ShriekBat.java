@@ -30,7 +30,7 @@ public class ShriekBat extends Enemy {
 		dx = 0;
 		dy = 0;
 		dieTimeout = 0;
-		health = 15;
+		health = 25;
 		
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
