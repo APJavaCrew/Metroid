@@ -22,6 +22,7 @@ import weapon.Beam;
 public class Player extends Being {
 	
 	private double lastX, lastY;
+	private double hurtX, hurtY;
 	
 	Animation animation = Constants.samStart;
 	
@@ -38,8 +39,12 @@ public class Player extends Being {
 	ArrayList<Beam> beams = new ArrayList<Beam>();
 	private boolean charging = false;
 	private boolean facingLeft;
+	private boolean isHurt = false, isHurtStart = false;
 	private double beamSize = 5.0;
 	private double speed = 5.0;
+	
+	private int hurtTimeout = 0;
+	private int deathOpac = 0;
 	
 	private enum SpriteMotion { //34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
@@ -67,10 +72,12 @@ public class Player extends Being {
 		
 		animation.start();
 		
-		x = 1280 / 2 + 9;
-		y = 720 / 2;
+		x = 1280 / 2;
+		y = 500;
 		dx = 0;
 		dy = 0;
+		
+		setHealth(99);
 		
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
@@ -97,6 +104,21 @@ public class Player extends Being {
 		hitBox = new Area(hitBoxRect);
 	}
 	
+	private void drawDeath(Graphics2D g) {
+		g.setColor( new Color(0, 0, 0, deathOpac) );
+		if (deathOpac < 255)
+			deathOpac += 5;
+		else
+			isAlive = false;
+		AffineTransform at = new AffineTransform();
+		at.translate(instance.getCamera().getXOffset(), instance.getCamera().getYOffset());
+		g.transform(at);
+		g.fillRect(-instance.getWidth() / 2, -instance.getHeight() / 2, instance.getWidth(), instance.getHeight());
+		
+		move();
+		
+	}
+	
 	@Override
 	public void draw(Graphics2D g) {
 		
@@ -104,130 +126,138 @@ public class Player extends Being {
 	    at.translate(x, y);
 	    at.scale(size, size);
 	    g.transform(at);
-	    
-	    updateSprite();
-	    g.drawImage(animation.getSprite(), 0, 0, null);
-	    
-		if (Constants.SHOWHITBOXES) {
-		    g.setColor(new Color(255, 255, 255, 175));
-		    g.fill(hitBox);
-		    g.setColor(new Color(0, 255, 255, 175));
-		    g.fill(topBox);
-		    g.fill(landBox);
-		}
-	    
-	    if (charging && beamSize > 7) {
-	    	g.setColor(new Color(255, 200, 0));
-			int x, y, diam, rad;
-			double rando;
-	    	switch (spriteMotion) {
-	    	/*//34 states
-			START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
-
-			STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-			STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
-
-			AIM_UP_L, JUMP_UP_L, //up (facing left)
-			AIM_UP_R, JUMP_UP_R, //up (facing right)
-			JUMP_DOWN_L, //down (facing left)
-			JUMP_DOWN_R, //down (facing right)
-
-			AIM_UP_LEFT, WALK_UP_LEFT, JUMP_UP_LEFT, CROUCH_UP_LEFT, //up-left
-			AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
-			AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
-			AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
-	    		case START:
-	    			break;
-	    		case MORPH:
-	    			break;
-	    		case STAND_LEFT:
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case WALK_LEFT:
-	    			x = -5; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    		case JUMP_LEFT:
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case CROUCH_LEFT:
-	    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case STAND_RIGHT:
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case WALK_RIGHT:
-	    			x = w / size + 10; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
-	    	    	break;
-	    		case JUMP_RIGHT:
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case CROUCH_RIGHT:
-	    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case AIM_UP_L:
-	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case JUMP_UP_L:
-	    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case AIM_UP_R:
-	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		case JUMP_UP_R:
-	    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
-	    	    	g.fillOval(x - rad, y - rad, diam, diam);
-	    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
-	    	    	rando = Math.random() * 2 + 1;
-	    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
-	    	    	break;
-	    		
-	    	}
+	    if (health <= 0) {
+	    	drawDeath(g);
+	    } else {
+		    updateSprite();
+		    if (hurtTimeout > 5 || !isHurt)
+		    	g.drawImage(animation.getSprite(), 0, 0, null);
+		    
+			if (Constants.SHOWHITBOXES) {
+				at = new AffineTransform();
+				at.translate(x, y);
+				at.scale(1, 1);
+				g.transform(at);
+			    g.setColor(new Color(255, 255, 255, 175));
+			    g.fill(hitBox);
+			    g.setColor(new Color(0, 255, 255, 175));
+			    g.fill(topBox);
+			    g.fill(landBox);
+			}
+		    
+		    if (charging && beamSize > 7) {
+		    	g.setColor(new Color(255, 200, 0));
+				int x, y, diam, rad;
+				double rando;
+		    	switch (spriteMotion) {
+		    	/*//34 states
+				START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+	
+				STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+				STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+	
+				AIM_UP_L, JUMP_UP_L, //up (facing left)
+				AIM_UP_R, JUMP_UP_R, //up (facing right)
+				JUMP_DOWN_L, //down (facing left)
+				JUMP_DOWN_R, //down (facing right)
+	
+				AIM_UP_LEFT, WALK_UP_LEFT, JUMP_UP_LEFT, CROUCH_UP_LEFT, //up-left
+				AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
+				AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
+				AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
+		    		case START:
+		    			break;
+		    		case MORPH:
+		    			break;
+		    		case STAND_LEFT:
+		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_LEFT:
+		    			x = -5; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    		case JUMP_LEFT:
+		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case CROUCH_LEFT:
+		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case STAND_RIGHT:
+		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_RIGHT:
+		    			x = w / size + 10; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
+		    	    	break;
+		    		case JUMP_RIGHT:
+		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case CROUCH_RIGHT:
+		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case AIM_UP_L:
+		    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case JUMP_UP_L:
+		    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case AIM_UP_R:
+		    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case JUMP_UP_R:
+		    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		
+		    	}
+		    }
+		    
+			move();
 	    }
-	    
-		move();
 	}
 	
 	@Override
@@ -249,10 +279,25 @@ public class Player extends Being {
 		
 		checkCollision();
 		
+		if (isHurtStart) {
+			dx += (x - hurtX) * 0.5;
+			if (!instance.getRoomBounds().intersects(landBox.getBounds2D()))
+				dy = (y - hurtY) * 0.075;
+			else
+				dy = -7;
+		}
+		
+		if (health <= 0) {
+			dx = 0;
+			dy = 0;
+		}
+		
 		x += dx;
 		y += dy;
 		
 		updateHitBoxes();
+		
+		checkHurt();
 		
 		
 		if (instance.getButt1()[2]) {
@@ -621,6 +666,29 @@ public class Player extends Being {
 		}
 		
 		beams.get( beams.size() - 1 ).updateInstance(instance);
+	}
+	
+	private void checkHurt() {
+		if (!isHurt && instance.getEnemyManager().getAttackBoxes().size() > 0) {
+			for (AttackBox box : instance.getEnemyManager().getAttackBoxes() ) {
+				if ( box.intersects(hitBox.getBounds2D()) ) {
+					hurtTimeout = 0;
+					isHurt = true;
+					isHurtStart = true;
+					health -= box.getDamage();
+					
+					hurtX = box.getBounds2D().getX();
+					hurtY = box.getBounds2D().getY();
+					
+				}
+			}
+		} else if (isHurt) {
+			isHurtStart = false;
+			if (hurtTimeout < 50)
+				hurtTimeout++;
+			else
+				isHurt = false;
+		}
 	}
 	
 	public void charge() {

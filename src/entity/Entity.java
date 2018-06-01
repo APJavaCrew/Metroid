@@ -9,7 +9,6 @@ public abstract class Entity {
 	
 	protected double x, y, dx, dy;
 	protected int w, h;
-	protected boolean removed = false;
 	
 	protected Area hitBox;
 	

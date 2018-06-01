@@ -15,8 +15,6 @@ import tiles.Tile;
 
 public class Ripper extends Enemy {
 	
-	Graphics2D g2d;
-	
 	Animation animation;
 	
 	AffineTransform at;
@@ -53,25 +51,25 @@ public class Ripper extends Enemy {
 		at.scale(1, 1);
 		hitBox = new Area(new Rectangle(0, 0, w, h));
 		frontBox = new Area(new Rectangle(-3, h / 2 - 5, 5, 10));
+		attackBox = new AttackBox(hitBox, 10);
 	}
 	
-	public void draw(Graphics g) {
-		g2d = (Graphics2D) g;
+	public void draw(Graphics2D g) {
 		
 		at = new AffineTransform();
 		at.translate(x, y);
 		at.scale(size, size);
-		g2d.transform(at);
-		g2d.drawImage(animation.getSprite(), 0, 0, null);
+		g.transform(at);
+		g.drawImage(animation.getSprite(), 0, 0, null);
 		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
 			
-			g2d.setTransform(at);
-			g2d.setColor(new Color(255, 255, 255, 175));
-			g2d.fill(hitBox);
-			g2d.setColor(new Color(0, 255, 255, 175));
-			g2d.fill(frontBox);
+			g.setTransform(at);
+			g.setColor(new Color(255, 255, 255, 175));
+			g.fill(hitBox);
+			g.setColor(new Color(0, 255, 255, 175));
+			g.fill(frontBox);
 		}
 		
 		animation.update();
@@ -134,6 +132,8 @@ public class Ripper extends Enemy {
 		
 		frontBox.transform(at);
 		hitBox.transform(at);
+		
+		attackBox.set(hitBox);
 	}
 	
 }

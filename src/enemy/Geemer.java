@@ -21,7 +21,7 @@ public class Geemer extends Enemy {
 	
 	Animation animation = Constants.geemerWalk;
 	Animation legs = Constants.geemerLegz;
-	Graphics2D g2d;
+	
 	AffineTransform at;
 	
 	Rectangle2D landBoxRect;
@@ -107,18 +107,15 @@ public class Geemer extends Enemy {
 		h = legs.getSprite().getHeight() * size;
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		
-		g2d = (Graphics2D) g;
-
 		at = new AffineTransform();
 		at.translate(x, y);
-		at.scale(size, size);
-		at.rotate(angle, w / 2 / size, h / 2 / size);
-		
-		g2d.transform(at);
-		g2d.drawImage(legs.getSprite(), 0, 0, null);
-		g2d.drawImage(animation.getSprite(), 0, 0, null);
+		at.rotate(angle, w / 2, h / 2);
+
+		g.transform(at);
+		g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+		g.drawImage(animation.getSprite(), 0, 0, w, h, null);
 		animation.update();
 		legs.update();
 		
@@ -126,15 +123,12 @@ public class Geemer extends Enemy {
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
 			at.translate(x, y);
-			at.scale(1, 1);
-			at.rotate(angle, w / 2, h / 2);
-			g2d.setTransform(at);
-			g2d.setColor(new Color(255, 255, 255, 175));
-		    g2d.fillRect(0, 0, w, h);
-		    g2d.setColor(new Color(0, 255, 255, 175));
-		    g2d.fillRect((int) landBoxRect.getX(), (int) landBoxRect.getY(), (int) landBoxRect.getWidth(),
-		    		(int) landBoxRect.getHeight());
-		    g2d.fillRect(w - 19, h / 2 - 5, 5, 10);
+			g.transform(at);
+			g.setColor(new Color(255, 255, 255, 175));
+		    g.fill(hitBox);
+		    g.setColor(new Color(0, 255, 255, 175));
+		    g.fill(landBox);
+		    g.fill(rightBox);
 		}
 		
 		move();

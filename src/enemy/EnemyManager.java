@@ -1,6 +1,7 @@
 package enemy;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,19 +53,29 @@ public class EnemyManager {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).updateInstance(in);
 			
-			if (!enemies.get(i).isAlive())
+			if (!enemies.get(i).isAlive()) {
+				System.out.println("death ;)");
 				enemies.remove(i);
+			}
 			
 		}
 		
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		for (Enemy e : enemies) {
-			g = instance.getBackBuffer().getGraphics();
+			g = instance.getBackBuffer().createGraphics();
 			g.translate( (int) instance.getCamera().getXOffset(), (int) instance.getCamera().getYOffset());
 			e.draw(g);
 		}
+	}
+	
+	public ArrayList<AttackBox> getAttackBoxes() {
+		ArrayList<AttackBox> boxes = new ArrayList<AttackBox>();
+		for (Enemy e : enemies) {
+			boxes.add(e.getAttackBox());
+		}
+		return boxes;
 	}
 
 }

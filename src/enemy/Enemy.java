@@ -1,5 +1,6 @@
 package enemy;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
@@ -45,6 +46,16 @@ public class Enemy extends Being {
 	
 	public boolean isAlive() {
 		return isAlive;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public AttackBox getAttackBox() {
+		return attackBox;
 	}
 	
 
