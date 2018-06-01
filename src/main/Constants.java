@@ -126,6 +126,8 @@ public class Constants {
 	
 	public static final Animation shriekBat = new Animation( new SpriteSheet("ShriekBatCronch.png", 28, 24).getSpritesAt("2-0-1", "0-0"), 30, 1, true );
 
+	public static final Animation dragon = new Animation( new SpriteSheet("DragonEnemy.png", 29, 32)
+			.getSpritesAt("4-1-2-3-0", "0-0-0-0"), 30, 1, false );
 
 
 }

@@ -7,17 +7,27 @@ import java.util.ArrayList;
 
 import entity.Being;
 import main.Runner;
+import sprite.Animation;
 import weapon.Beam;
 import weapon.Weapon;
 
 public class Enemy extends Being {
 	
+	Animation animation;
+	
 	protected AttackBox attackBox;
 	protected double x, y; //position
 	protected double dx, dy; //horiz/vert speed
-	protected boolean isHurt = false, isFrozen;
+	protected boolean isHurt = false, isFrozen = false;
 	protected int hurtTimeout;
 	Runner instance;
+	
+	public Enemy(double x, double y) {
+		this.x = x;
+		this.y = y;
+		dx = 0;
+		dy = 0;
+	}
 	
 	@Override
 	public void move() {

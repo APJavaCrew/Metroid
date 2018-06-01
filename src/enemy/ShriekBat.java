@@ -22,13 +22,12 @@ public class ShriekBat extends Enemy {
 	
 	public ShriekBat(double x, double y) {
 		
+		super(x, y);
 		animation = Constants.shriekBat;
 		animation.start();
 		
-		this.x = x; this.y = y;
 		size = 3;
-		dx = 0;
-		dy = 0;
+		
 		dieTimeout = 0;
 		health = 25;
 		

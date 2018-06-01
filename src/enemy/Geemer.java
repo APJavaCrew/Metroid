@@ -49,7 +49,7 @@ public class Geemer extends Enemy {
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
 	public Geemer(double x, double y, int direc, Runner in) {
-		
+		super(x, y);
 		instance = in;
 		
 		animation.restart();
@@ -75,11 +75,6 @@ public class Geemer extends Enemy {
 		}
 		
 		spriteMotion = SpriteMotion.WALK;
-		
-		this.x = x;
-		this.y = y;
-		dx = 0;
-		dy = 0;
 		
 		size = 3;
 		

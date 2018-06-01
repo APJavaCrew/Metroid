@@ -28,11 +28,11 @@ public class Ripper extends Enemy {
 	
 	public Ripper(double x, double y, Runner in) {
 		
+		super(x, y);
+		
 		instance = in;
 		
 		animation = Constants.ripperL;
-		
-		this.x = x; this.y = y;
 		
 		w = animation.getSprite().getWidth();
 		h = animation.getSprite().getHeight();
