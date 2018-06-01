@@ -64,8 +64,8 @@ public class Ripper extends Enemy {
 		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
-			
-			g.setTransform(at);
+			at.translate(0, 0);
+			g.transform(at);
 			g.setColor(new Color(255, 255, 255, 175));
 			g.fill(hitBox);
 			g.setColor(new Color(0, 255, 255, 175));

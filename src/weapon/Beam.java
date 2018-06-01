@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 
+import enemy.AttackBox;
 import entity.Entity;
 import main.Runner;
 
@@ -25,7 +26,7 @@ public class Beam extends Weapon {
 		w = size + 5.0;
 		h = size;
 		this.size = size;
-		damage = Math.pow(2, size);
+		damage = 0.555555555555556 * Math.pow(1.116123174, size);
 		
 		color = new Color(0, 0, 0); 
 		
@@ -72,6 +73,10 @@ public class Beam extends Weapon {
 		
 		if (instance.getRoomBounds().intersects(hitBox.getBounds2D()))
 			isRemoved = true;
+		for (AttackBox box : instance.getEnemyManager().getAttackBoxes()) {
+			if (box.intersects(hitBox.getBounds2D()))
+				isRemoved = true;
+		}
 	}
 	
 	public boolean isAlive() {

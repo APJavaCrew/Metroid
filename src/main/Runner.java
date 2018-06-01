@@ -24,7 +24,6 @@ import org.lwjgl.input.Controllers;
 
 import camera.Camera;
 import enemy.EnemyManager;
-import entity.TestEnemy;
 
 import org.lwjgl.input.Controller;
 
@@ -121,7 +120,7 @@ public class Runner extends JFrame implements KeyListener {
 			draw();
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
-			System.out.println(time);
+//			System.out.println(time);
 			
 			if (time > 0) {
 				try {

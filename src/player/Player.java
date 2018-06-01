@@ -17,7 +17,7 @@ import main.Runner;
 import sprite.Animation;
 import sprite.SpriteSheet;
 import tiles.Tile;
-import weapon.Beam;
+import weapon.PowerBeam;
 import weapon.Weapon;
 
 public class Player extends Being {
@@ -136,8 +136,7 @@ public class Player extends Being {
 		    
 			if (Constants.SHOWHITBOXES) {
 				at = new AffineTransform();
-				at.translate(x, y);
-				at.scale(1, 1);
+				at.translate(0, 0);
 				g.transform(at);
 			    g.setColor(new Color(255, 255, 255, 175));
 			    g.fill(hitBox);
@@ -567,102 +566,102 @@ public class Player extends Being {
 			case MORPH:
 				break;
 			case JUMP_SPIN_LEFT:
-				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_LEFT;
 				break;
 			case JUMP_SPIN_RIGHT:
-				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
 				break;
 			case STAND_LEFT:
-				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case STAND_RIGHT:
-				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case WALK_LEFT:
-				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_RIGHT:
-				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case CROUCH_LEFT:
-				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_RIGHT:
-				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case JUMP_LEFT:
-				weapons.add(new Beam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_RIGHT:
-				weapons.add(new Beam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
+				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
 				break;
 			case AIM_UP_R:
-				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
+				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
 				break;
 			case JUMP_UP_L:
-				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_R:
-				weapons.add(new Beam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_L:
-				weapons.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_R:
-				weapons.add(new Beam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_LEFT:
-				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_LEFT:
-				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_LEFT:
-				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_LEFT:
-				weapons.add(new Beam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_RIGHT:
-				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_RIGHT:
-				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_RIGHT:
-				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_RIGHT:
-				weapons.add(new Beam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_LEFT:
-				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_LEFT:
-				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_LEFT:
-				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_LEFT:
-				weapons.add(new Beam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_RIGHT:
-				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_RIGHT:
-				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_RIGHT:
-				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_RIGHT:
-				weapons.add(new Beam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 		}
 		

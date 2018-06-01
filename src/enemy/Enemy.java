@@ -15,9 +15,10 @@ public class Enemy extends Being {
 	protected AttackBox attackBox;
 	protected double x, y; //position
 	protected double dx, dy; //horiz/vert speed
-	protected boolean isHurt = false;
+	protected boolean isHurt = false, isFrozen;
+	protected int hurtTimeout;
 	Runner instance;
-
+	
 	@Override
 	public void move() {
 		y=0;
@@ -67,15 +68,21 @@ public class Enemy extends Being {
 			for (Weapon b : beams) {
 				if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
 					isHurt = true;
+					health -= b.getWeaponBox().getDamage();
+					hurtTimeout = 0;
 					switch (b.getType()) {
 						default:
 							break;
-						case "power":
+						case "ice":
+							isFrozen = true;
 							break;
 					}
 				}
 			}
 		}
+		
+		if (health <= 0)
+			isAlive = false;
 	}
 	
 

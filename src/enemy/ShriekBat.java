@@ -30,21 +30,22 @@ public class ShriekBat extends Enemy {
 		dx = 0;
 		dy = 0;
 		dieTimeout = 0;
+		health = 15;
 		
-		w = animation.getSprite().getWidth();
-		h = animation.getSprite().getHeight();
+		w = animation.getSprite().getWidth() * size;
+		h = animation.getSprite().getHeight() * size;
 		
 		at = new AffineTransform();
 		at.translate(x, y);
 		
-		hitBox = new Area(new Rectangle(0, 5, w, h - 5) );
+		hitBox = new Area(new Rectangle(0, 0, w, h) );
 		hitBox.transform(at);
 
 		landBox = new Area(new Rectangle(w / 2 - 1, h, 2, 3));
 		landBox.transform(at);
 		
 		viewBoxW = 300; viewBoxH = 500;
-		viewBox = new Area( new Rectangle(0, 0, viewBoxW, viewBoxH) );
+		viewBox = new Area( new Rectangle(-viewBoxW / 2, 0, viewBoxW, viewBoxH) );
 		viewBox.transform(at);
 		
 		attackBox = new AttackBox(hitBox, 10);
@@ -53,18 +54,24 @@ public class ShriekBat extends Enemy {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		
-		at = new AffineTransform();
-		at.translate(x, y);
-		at.scale(size, size);
-		
-		g.transform(at);
-		g.drawImage(animation.getSprite(), 0, 0, null);
+		if (!isHurt) {
+			at = new AffineTransform();
+			at.translate(x, y);
+	
+			g.transform(at);
+			g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+			animation.update();
+		} else {
+			if (hurtTimeout < 1)
+				hurtTimeout++;
+			else
+				isHurt = false;
+		}
 		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
-			at.translate(x, y);
-			g.transform(at);
+			at.translate(0, 0);
+			g.setTransform(at);
 			g.setColor(new Color(255, 255, 255, 175));
 			g.fill(hitBox);
 			g.setColor(new Color(255, 0, 0, 50));
@@ -86,7 +93,7 @@ public class ShriekBat extends Enemy {
 		else if (instance.getPlayer().getHitBox().intersects(viewBox.getBounds2D()))
 			attack();
 		
-		
+		checkBeingHurt();
 		animation.update();
 	}
 	
@@ -94,7 +101,7 @@ public class ShriekBat extends Enemy {
 		double playerX = instance.getPlayer().getX();
 		
 		dx = (playerX - x) * 0.025;
-		dy = 5;
+		dy = 6;
 
 	}
 	
@@ -113,7 +120,7 @@ public class ShriekBat extends Enemy {
 	public void updateHitBoxes() {
 		at = new AffineTransform();
 		at.translate(x, y);
-		Rectangle hitBoxRect = new Rectangle(0, 5, w, h - 10);
+		Rectangle hitBoxRect = new Rectangle(0, 0, w, h);
 		hitBox = new Area(hitBoxRect);
 		hitBox.transform(at);
 		landBox = new Area(new Rectangle(w / 2 - 1, h, 2, 3));

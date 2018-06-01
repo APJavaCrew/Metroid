@@ -109,15 +109,22 @@ public class Geemer extends Enemy {
 	
 	public void draw(Graphics2D g) {
 		
-		at = new AffineTransform();
-		at.translate(x, y);
-		at.rotate(angle, w / 2, h / 2);
-
-		g.transform(at);
-		g.drawImage(legs.getSprite(), 0, 0, w, h, null);
-		g.drawImage(animation.getSprite(), 0, 0, w, h, null);
-		animation.update();
-		legs.update();
+		if (!isHurt) {
+			at = new AffineTransform();
+			at.translate(x, y);
+			at.rotate(angle, w / 2, h / 2);
+	
+			g.transform(at);
+			g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+			g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+			animation.update();
+			legs.update();
+		} else {
+			if (hurtTimeout < 1)
+				hurtTimeout++;
+			else
+				isHurt = false;
+		}
 		
 		
 		if (Constants.SHOWHITBOXES) {
@@ -175,6 +182,7 @@ public class Geemer extends Enemy {
 
 		updateHitBoxes();
 		checkCollision();
+		checkBeingHurt();
 	}
 	
 	public void checkCollision() {

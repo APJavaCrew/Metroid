@@ -27,7 +27,7 @@ public class Constants {
 
 
 	//Samus Animations
-	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 32, 37).
+	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samWalkRight = new Animation(new SpriteSheet("SamWalkRight.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
@@ -35,7 +35,7 @@ public class Constants {
 	public final static Animation samFireUpL = new Animation(new SpriteSheet("SamFireUpLeft.png", 22, 44).getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samFireUpR = new Animation(new SpriteSheet("SamFireUpRight.png", 22, 44).getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public static final Animation samHurtL = new Animation (new SpriteSheet("SamHurtLeft.png", 27, 34).getSpritesAt("2-0-1", "0-0"), 10, 1, false);
-
+	
 	
 	//Enemy Animations
 	public static final Animation geemerWalk = new Animation(new SpriteSheet("Geemer.png", 23, 15).getSpritesAt("3-0-1-2", "0-0-0"), 1, 1, true);
