@@ -50,12 +50,15 @@ public class Room extends Entity {
 	}
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(backgroundImage.getSheet(), (int) x, (int) y, w, h, null);
 		for (ArrayList<Tile> a : tiles) {
 			for (Tile b : a) {
 				b.draw(g);
 			}
 		}
+	}
+	
+	public void drawBackground(Graphics2D g) {
+		g.drawImage(backgroundImage.getSheet(), (int) x, (int) y, w, h, null);
 	}
 	
 	private void translateBackground() {

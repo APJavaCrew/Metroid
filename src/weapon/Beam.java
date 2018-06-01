@@ -10,15 +10,13 @@ import java.awt.geom.Area;
 import entity.Entity;
 import main.Runner;
 
-public class Beam extends Entity {
+public class Beam extends Weapon {
 	
-	private boolean removed;
 	private double angle, velModifier, b, damage, size, w, h;
-	private Runner instance;
-	private WeaponBox weaponBox;
+	Color color;
 	
 	public Beam(double deg, double velModifier, double size, double x, double y) {
-		removed = false;
+		isRemoved = false;
 		angle = Math.toRadians(deg);
 		this.velModifier = velModifier;
 		b = y;
@@ -29,11 +27,13 @@ public class Beam extends Entity {
 		this.size = size;
 		damage = Math.pow(2, size);
 		
+		color = new Color(0, 0, 0); 
+		
 		dx = 0;
 		dy = 0;
 		
 		hitBox = new Area(new Rectangle((int) x, (int) y, (int) w, (int) h));
-		weaponBox = new WeaponBox(new Area(hitBox.getBounds2D()), damage);
+		weaponBox = new WeaponBox(hitBox, damage);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class Beam extends Entity {
 		at.rotate(angle);
 		
 		g.transform(at);
-		g.setColor(new Color(255, 200, 0));
+		g.setColor(color);
 		g.fillOval(0, 0, (int) w, (int) h);
 		
 		move();
@@ -53,10 +53,7 @@ public class Beam extends Entity {
 	
 	private void updateHitBox() {
 		hitBox = new Area(new Rectangle((int) x, (int) y, (int) w, (int) h));
-	}
-	
-	public void updateInstance(Runner in) {
-		instance = in;
+		weaponBox.set(hitBox);
 	}
 	
 	private void move() {
@@ -74,11 +71,15 @@ public class Beam extends Entity {
 		updateHitBox();
 		
 		if (instance.getRoomBounds().intersects(hitBox.getBounds2D()))
-			removed = true;
+			isRemoved = true;
 	}
 	
 	public boolean isAlive() {
-		return !removed;
+		return !isRemoved;
+	}
+	
+	protected void setColor(Color c) {
+		color = c;
 	}
 
 }

@@ -53,8 +53,10 @@ public class EnemyManager {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).updateInstance(in);
 			
-			if (!enemies.get(i).isAlive())
+			if (!enemies.get(i).isAlive()) {
+				System.out.println("death ;)");
 				enemies.remove(i);
+			}
 			
 		}
 		
@@ -66,6 +68,14 @@ public class EnemyManager {
 			g.translate( (int) instance.getCamera().getXOffset(), (int) instance.getCamera().getYOffset());
 			e.draw(g);
 		}
+	}
+	
+	public ArrayList<AttackBox> getAttackBoxes() {
+		ArrayList<AttackBox> boxes = new ArrayList<AttackBox>();
+		for (Enemy e : enemies) {
+			boxes.add(e.getAttackBox());
+		}
+		return boxes;
 	}
 
 }
