@@ -41,8 +41,8 @@ public class Player extends Being {
 	private double beamSize = 5.0;
 	private double speed = 5.0;
 	
-	private enum SpriteMotion { //34 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+	private enum SpriteMotion { //36 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -127,8 +127,8 @@ public class Player extends Being {
 			int x, y, diam, rad;
 			double rando;
 	    	switch (spriteMotion) {
-	    	/*//34 states
-			START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+	    	/*//36 states
+			START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
 
 			STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 			STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -300,12 +300,23 @@ public class Player extends Being {
 					spriteMotion = SpriteMotion.WALK_RIGHT;
 					break;
 			}
+		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
+			switch(last) {
+			default:
+				break;
+			case WALK_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_LEFT;
+				break;
+			case WALK_RIGHT:
+				spriteMotion = SpriteMotion.CROUCH_RIGHT;
+				break;
+			}
 		}
 		
 		
 		switch (spriteMotion) {
-		/*//34 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+		/*//36 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
@@ -333,6 +344,12 @@ public class Player extends Being {
 //			case JUMP_SPIN_RIGHT:
 //				animation = Constants.samX;
 //				break;
+//			case HURT_LEFT:
+//				animation = Constants.samX;
+//				break;
+//			case HURT_RIGHT:
+//				animation = Constants.samX;
+//				break;
 //			case STAND_LEFT:
 //				animation = Constants.samX;
 //				break;
@@ -342,9 +359,9 @@ public class Player extends Being {
 //			case JUMP_LEFT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_LEFT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_LEFT:
+				animation = Constants.samCrouchLeft;
+				break;
 //			case STAND_RIGHT:
 //				animation = Constants.samX;
 //				break;
@@ -354,9 +371,9 @@ public class Player extends Being {
 //			case JUMP_RIGHT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_RIGHT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_RIGHT:
+				animation = Constants.samCrouchRight;
+				break;
 			case AIM_UP_L:
 				animation = Constants.samFireUpL;
 				break;
@@ -381,9 +398,9 @@ public class Player extends Being {
 //			case JUMP_UP_LEFT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_UP_LEFT:
+				animation = Constants.samCrouchUpLeft;
+				break;
 //			case AIM_UP_RIGHT:
 //				animation = Constants.samX;
 //				break;
@@ -393,9 +410,9 @@ public class Player extends Being {
 //			case JUMP_UP_RIGHT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_UP_RIGHT:
+				animation = Constants.samCrouchRight;
+				break;
 //			case AIM_DOWN_LEFT:
 //				animation = Constants.samX;
 //				break;
@@ -405,9 +422,9 @@ public class Player extends Being {
 //			case JUMP_DOWN_LEFT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_DOWN_LEFT:
+				animation = Constants.samCrouchDownLeft;
+				break;
 //			case AIM_DOWN_RIGHT:
 //				animation = Constants.samX;
 //				break;
@@ -417,9 +434,9 @@ public class Player extends Being {
 //			case JUMP_DOWN_RIGHT:
 //				animation = Constants.samX;
 //				break;
-//			case CROUCH_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
+			case CROUCH_DOWN_RIGHT:
+				animation = Constants.samCrouchDownRight;
+				break;
 		}
 		
 		if (last != spriteMotion)
@@ -507,8 +524,8 @@ public class Player extends Being {
 			beamSize = Constants.MAX_BEAM_SIZE;
 		
 		switch (spriteMotion) {
-		/*//34 states
-		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
+		/*//36 states
+		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT, HURT_LEFT, HURT_RIGHT,  //no direction/etc.
 
 		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
 		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
