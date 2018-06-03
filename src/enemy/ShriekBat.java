@@ -108,10 +108,11 @@ public class ShriekBat extends Enemy {
 		dx = 0;
 		dy = 0;
 		
-		if (dieTimeout < 120)
+		if (dieTimeout < 60)
 			dieTimeout++;
-		else
+		else {
 			isAlive = false;
+		}
 		
 	}
 	
