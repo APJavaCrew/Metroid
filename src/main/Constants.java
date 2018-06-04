@@ -128,6 +128,10 @@ public class Constants {
 
 	public static final Animation dragon = new Animation( new SpriteSheet("DragonEnemy.png", 29, 32)
 			.getSpritesAt("4-1-2-3-0", "0-0-0-0"), 30, 1, false );
+	
+	
+	//Misc
+	public static final int BLINK_TIME = 35;
 
 
 }

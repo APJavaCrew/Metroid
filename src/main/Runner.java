@@ -114,7 +114,7 @@ public class Runner extends JFrame implements KeyListener {
 
 	private void run() {
 		init();
-		while (!opening.isFinished()) {
+		while (!opening.isFinished() && isRunning) {
 			long time = System.currentTimeMillis();
 			
 			drawOpening();
@@ -129,6 +129,7 @@ public class Runner extends JFrame implements KeyListener {
 				}
 			}
 		}
+		
 		while (isRunning) {
 			long time = System.currentTimeMillis();
 			
@@ -234,33 +235,46 @@ public class Runner extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
-		if(key == KeyEvent.VK_A)
-			axis[0][3] = -1;
-		else if(key == KeyEvent.VK_D)
-			axis[0][3] = 1;
-		if(key == KeyEvent.VK_SPACE)
-			player.jump();
-		if (key == KeyEvent.VK_K)
-			player.charge();
-		if (key == KeyEvent.VK_W)
-			axis[0][2] = -1;
+		
+		if (opening.isFinished()) {
+			if(key == KeyEvent.VK_A)
+				axis[0][3] = -1;
+			else if(key == KeyEvent.VK_D)
+				axis[0][3] = 1;
+			if(key == KeyEvent.VK_SPACE)
+				player.jump();
+			if (key == KeyEvent.VK_K)
+				player.charge();
+			if (key == KeyEvent.VK_W)
+				axis[0][2] = -1;
+		} else {
+			if (key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN)
+				opening.changeSelection();
+			if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_K)
+				opening.select();
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
-		if(key == KeyEvent.VK_A)
-			axis[0][3] = 0;
-		else if(key == KeyEvent.VK_D)
-			axis[0][3] = 0;
-		if (key == KeyEvent.VK_K) {
-			player.fire();
-			player.resetCharge();
+		
+		if (opening.isFinished()) {
+			if(key == KeyEvent.VK_A)
+				axis[0][3] = 0;
+			else if(key == KeyEvent.VK_D)
+				axis[0][3] = 0;
+			if (key == KeyEvent.VK_K) {
+				player.fire();
+				player.resetCharge();
+			}
+			if (key == KeyEvent.VK_W)
+				axis[0][2] = 0;
+			if (key == KeyEvent.VK_ESCAPE)
+				isRunning = false;
+		} else {
+			
 		}
-		if (key == KeyEvent.VK_W)
-			axis[0][2] = 0;
-		if (key == KeyEvent.VK_ESCAPE)
-			isRunning = false;
 	}
 
 	@Override
