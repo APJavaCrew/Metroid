@@ -38,6 +38,7 @@ public class Runner extends JFrame implements KeyListener {
 	private Camera camera = new Camera(player.getX() - player.getW() / 2, player.getY() - 150);
 	private EnemyManager enemyManager = new EnemyManager(this);
 	private Room room;
+	private Opening opening = new Opening();
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
 	private double[][] axis = new double[4][6];
@@ -113,6 +114,21 @@ public class Runner extends JFrame implements KeyListener {
 
 	private void run() {
 		init();
+		while (!opening.isFinished()) {
+			long time = System.currentTimeMillis();
+			
+			drawOpening();
+			
+			time = (1000 / fps) - (System.currentTimeMillis() - time);
+			
+			if (time > 0) {
+				try {
+					Thread.sleep(time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		while (isRunning) {
 			long time = System.currentTimeMillis();
 			
@@ -133,6 +149,16 @@ public class Runner extends JFrame implements KeyListener {
 	}
 
 	Graphics2D bbg;
+	
+	private void drawOpening() {
+		Graphics g = getGraphics();
+		bbg = backBuffer.createGraphics();
+		
+		opening.draw(bbg);
+
+		g.drawImage(backBuffer, insets.left, insets.top, null);
+		
+	}
 	
 	private void draw() {
 		
@@ -168,7 +194,7 @@ public class Runner extends JFrame implements KeyListener {
 			resetBackBuffer();
 			player.getWeapons().get(i).draw(bbg);
 		}
-		
+
 		g.drawImage(backBuffer, insets.left, insets.top, null);
 		
 	}
