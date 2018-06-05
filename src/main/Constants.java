@@ -14,7 +14,7 @@ public class Constants {
 //	public final static double RUN_ACCEL = .25; //dx increments by this amount when speeding up
 //	public final static double BRAKE_ACCEL = .1; //dx increments by this amount when slowing down
 	public final static double JUMP_SPEED = -20; //dy is initially set to this value when jumping
-	public final static double BONK_SPEED = 0.15; //dy is set to this when you bonk your head on a ceiling
+	public final static double BONK_SPEED = 2; //dy is set to this when you bonk your head on a ceiling
 //	public final static double BRAKE_DEADZONE = .05; //dx will be set to zero if its absolute value is less than this
 //	public final static double MAX_RUN_SPEED = .5; //cannot run faster than this
 	public final static double TERMINAL_VELOCITY = 20; //cannot fall faster than this

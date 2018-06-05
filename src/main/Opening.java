@@ -67,7 +67,7 @@ public class Opening {
 		g.setColor(new Color(0, 0, 0, rando));
 		g.fillRect(0, 0, 1280, 720);
 		
-		g.setColor(new Color(170, 120, 200));
+		g.setColor(new Color(170, 90, 200));
 		g.setFont(font);
 		g.drawString("Metroid", x, y);
 		
@@ -132,6 +132,10 @@ public class Opening {
 	
 	public boolean isFinished() {
 		return isFinished;
+	}
+	
+	public void restart() {
+		isFinished = false;
 	}
 
 }
