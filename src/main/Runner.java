@@ -38,6 +38,7 @@ public class Runner extends JFrame implements KeyListener {
 	private Camera camera = new Camera(player.getX() - player.getW() / 2, player.getY() - 150);
 	private EnemyManager enemyManager = new EnemyManager(this);
 	private Room room;
+	private Opening opening = new Opening();
 	static Controller[] cont = new Controller[4];
 	private boolean butt[][] = new boolean[4][10];
 	private double[][] axis = new double[4][6];
@@ -113,6 +114,22 @@ public class Runner extends JFrame implements KeyListener {
 
 	private void run() {
 		init();
+		while (!opening.isFinished() && isRunning) {
+			long time = System.currentTimeMillis();
+			
+			drawOpening();
+			
+			time = (1000 / fps) - (System.currentTimeMillis() - time);
+			
+			if (time > 0) {
+				try {
+					Thread.sleep(time);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		while (isRunning) {
 			long time = System.currentTimeMillis();
 			
@@ -133,6 +150,16 @@ public class Runner extends JFrame implements KeyListener {
 	}
 
 	Graphics2D bbg;
+	
+	private void drawOpening() {
+		Graphics g = getGraphics();
+		bbg = backBuffer.createGraphics();
+		
+		opening.draw(bbg);
+
+		g.drawImage(backBuffer, insets.left, insets.top, null);
+		
+	}
 	
 	private void draw() {
 		
@@ -168,7 +195,7 @@ public class Runner extends JFrame implements KeyListener {
 			resetBackBuffer();
 			player.getWeapons().get(i).draw(bbg);
 		}
-		
+
 		g.drawImage(backBuffer, insets.left, insets.top, null);
 		
 	}
@@ -208,33 +235,46 @@ public class Runner extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
-		if(key == KeyEvent.VK_A)
-			axis[0][3] = -1;
-		else if(key == KeyEvent.VK_D)
-			axis[0][3] = 1;
-		if(key == KeyEvent.VK_SPACE)
-			player.jump();
-		if (key == KeyEvent.VK_K)
-			player.charge();
-		if (key == KeyEvent.VK_W)
-			axis[0][2] = -1;
+		
+		if (opening.isFinished()) {
+			if(key == KeyEvent.VK_A)
+				axis[0][3] = -1;
+			else if(key == KeyEvent.VK_D)
+				axis[0][3] = 1;
+			if(key == KeyEvent.VK_SPACE)
+				player.jump();
+			if (key == KeyEvent.VK_K)
+				player.charge();
+			if (key == KeyEvent.VK_W)
+				axis[0][2] = -1;
+		} else {
+			if (key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN)
+				opening.changeSelection();
+			if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_K)
+				opening.select();
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
-		if(key == KeyEvent.VK_A)
-			axis[0][3] = 0;
-		else if(key == KeyEvent.VK_D)
-			axis[0][3] = 0;
-		if (key == KeyEvent.VK_K) {
-			player.fire();
-			player.resetCharge();
+		
+		if (opening.isFinished()) {
+			if(key == KeyEvent.VK_A)
+				axis[0][3] = 0;
+			else if(key == KeyEvent.VK_D)
+				axis[0][3] = 0;
+			if (key == KeyEvent.VK_K) {
+				player.fire();
+				player.resetCharge();
+			}
+			if (key == KeyEvent.VK_W)
+				axis[0][2] = 0;
+			if (key == KeyEvent.VK_ESCAPE)
+				isRunning = false;
+		} else {
+			
 		}
-		if (key == KeyEvent.VK_W)
-			axis[0][2] = 0;
-		if (key == KeyEvent.VK_ESCAPE)
-			isRunning = false;
 	}
 
 	@Override
