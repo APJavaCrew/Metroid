@@ -54,7 +54,7 @@ public class Constants {
 //			getSpritesAt("", ""), 5, 1, true);
 //	public final static Animation samAimLeft = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
-	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 33, 37).
+	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 //	public final static Animation samJumpLeft = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
