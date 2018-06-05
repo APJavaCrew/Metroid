@@ -49,7 +49,8 @@ public class Runner extends JFrame implements KeyListener {
 	
 	private boolean start = true, isRunning = true;
 	private int fps = 60;
-	private int windowWidth = 1280, windowHeight = 720;
+	public int windowWidth = 1280, windowHeight = 720;
+	private int deathDelay = 180;
 	
 	BufferedImage backBuffer;
 	Insets insets;
@@ -114,37 +115,50 @@ public class Runner extends JFrame implements KeyListener {
 
 	private void run() {
 		init();
-		while (!opening.isFinished() && isRunning) {
-			long time = System.currentTimeMillis();
-			
-			drawOpening();
-			
-			time = (1000 / fps) - (System.currentTimeMillis() - time);
-			
-			if (time > 0) {
-				try {
-					Thread.sleep(time);
-				} catch (Exception e) {
-					e.printStackTrace();
+		while (isRunning) {
+			while (!opening.isFinished()) {
+				long time = System.currentTimeMillis();
+				
+				drawOpening();
+				
+				time = (1000 / fps) - (System.currentTimeMillis() - time);
+				
+				if (time > 0) {
+					try {
+						Thread.sleep(time);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
-		}
-		
-		while (isRunning) {
-			long time = System.currentTimeMillis();
 			
-			update();
-			draw();
-			
-			time = (1000 / fps) - (System.currentTimeMillis() - time);
-//			System.out.println(time);
-			
-			if (time > 0) {
-				try {
-					Thread.sleep(time);
-				} catch (Exception e) {
-					e.printStackTrace();
+			while (isRunning) {
+				long time = System.currentTimeMillis();
+				
+				update();
+				draw();
+				
+				time = (1000 / fps) - (System.currentTimeMillis() - time);
+	//			System.out.println(time);
+				
+				if (time > 0) {
+					try {
+						Thread.sleep(time);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+				
+				if (!player.isAlive()) {
+					if (deathDelay > 0)
+						deathDelay--;
+					if (deathDelay <= 0) {
+						deathDelay = 180;
+						opening.restart();
+						break;
+					}
+				}
+				
 			}
 		}
 	}

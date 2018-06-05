@@ -27,7 +27,7 @@ public class Player extends Being {
 	
 	Animation animation = Constants.samStart;
 	
-	Area leftBox, rightBox;
+	Area leftBox, rightBox, ascendBox;
 	
 	int size = 3;
 
@@ -85,6 +85,9 @@ public class Player extends Being {
 		
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
+		
+		
+		
 	}
 	
 	public Player(double x, double y, double dx, double dy) {
@@ -271,14 +274,9 @@ public class Player extends Being {
 			facingLeft = true;
 		else if(dx > 0)
 			facingLeft = false;
-
-		//System.out.println(instance.getAxis1()[3]);
-		System.out.println(isOnGround);
 		
 		lastX = x;
 		lastY = y;
-		
-		System.out.println(instance.getAxis1()[2]);
 		
 		checkCollision();
 		
