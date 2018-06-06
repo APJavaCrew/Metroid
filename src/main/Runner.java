@@ -94,7 +94,7 @@ public class Runner extends JFrame implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
-		room = new Room("Room1", 0, 0);
+		room = new Room("Test", 0, 0);
 		
 		setTitle("Metroid");
 		setSize(windowWidth, windowHeight);

@@ -29,7 +29,8 @@ public class Player extends Being {
 	
 	Area leftBox, rightBox, ascendBox;
 	
-	int size = 3;
+	double size = 2.5;
+	double w, h;
 
 	private boolean stopL = false, stopR = false;
 	private boolean isOnGround = false, firing;
@@ -80,11 +81,11 @@ public class Player extends Being {
 		
 		setHealth(99);
 		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, (int) (w * size), (int) (h * size)); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
-		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) (y + 5), 5, h - 10);
+		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) (y + 5), 5, (int) (h - 10));
 		rightBox = new Area(rightBoxRect);
-		Rectangle leftBoxRect = new Rectangle((int) x, (int) (y + 5), 5, h - 10);
+		Rectangle leftBoxRect = new Rectangle((int) x, (int) (y + 5), 5, (int) (h - 10));
 		leftBox = new Area(leftBoxRect);
 		Rectangle ascendBoxRect = new Rectangle((int) (x + w / 2 - 3), (int) (y + h - 10), 6, 5);
 		ascendBox = new Area(ascendBoxRect);
@@ -96,23 +97,23 @@ public class Player extends Being {
 		
 	}
 	
-	public Player(double x, double y, double dx, double dy) {
-
-		spriteMotion = spriteMotion.START;
-
-		animation.start();
-		
-		this.x = x; 
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		
-		w = animation.getSprite().getWidth() * size;
-		h = animation.getSprite().getHeight() * size;
-		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
-		hitBox = new Area(hitBoxRect);
-	}
+//	public Player(double x, double y, double dx, double dy) {
+//
+//		spriteMotion = spriteMotion.START;
+//
+//		animation.start();
+//		
+//		this.x = x; 
+//		this.y = y;
+//		this.dx = dx;
+//		this.dy = dy;
+//		
+//		w = animation.getSprite().getWidth() * size;
+//		h = animation.getSprite().getHeight() * size;
+//		
+//		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
+//		hitBox = new Area(hitBoxRect);
+//	}
 	
 	private void drawDeath(Graphics2D g) {
 		g.setColor( new Color(0, 0, 0, deathOpac) );
@@ -179,83 +180,83 @@ public class Player extends Being {
 		    		case MORPH:
 		    			break;
 		    		case STAND_LEFT:
-		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = -10; y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_LEFT:
-		    			x = -5; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = -5; y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    		case JUMP_LEFT:
-		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = -10; y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_LEFT:
-		    			x = -10; y = 20 / size + 5; diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = -10; y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case STAND_RIGHT:
-		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_RIGHT:
-		    			x = w / size + 10; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 		    	    	break;
 		    		case JUMP_RIGHT:
-		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_RIGHT:
-		    			x = w / size; y = 20 / size + 5; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case AIM_UP_L:
-		    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size - 15); y = (int) (20 / size - 9); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case JUMP_UP_L:
-		    			x = w / size - 15; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size - 15); y = (int) (20 / size - 9); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case AIM_UP_R:
-		    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size - 7); y = (int) (20 / size - 9); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case JUMP_UP_R:
-		    			x = w / size - 7; y = 20 / size - 9; diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size - 7); y = (int) (20 / size - 9); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -530,7 +531,8 @@ public class Player extends Being {
 		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()))
 			stopR = true;
 		
-		if (instance.getRoomBounds().intersects(ascendBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(ascendBox.getBounds2D()) &&
+				!instance.getRoomBounds().intersects(topBox.getBounds2D()))
 			dy = -2;
 		else if (stopL && dx < 0)
 			dx = 0;
@@ -542,18 +544,19 @@ public class Player extends Being {
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
 		
-		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
+		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, (int) w, (int) h - 10);
 		hitBox = new Area(hitBoxRect);
-		Rectangle landBoxRect = new Rectangle((int) (x + 3), (int) (h + y - 5), w - 6, 5);
+		Rectangle landBoxRect = new Rectangle((int) x + 5, (int) (h + y - 5), (int) w - 10, 6);
 		landBox = new Area(landBoxRect);
-		Rectangle topBoxRect = new Rectangle((int) (x + 3), (int) y, w - 6, 5);
+		Rectangle topBoxRect = new Rectangle((int) x + 5, (int) y - 1, (int) w - 10, 6);
 		topBox = new Area(topBoxRect);
-		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) (y + 5), 5, h - 10);
+		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) y, 6, (int) h);
 		rightBox = new Area(rightBoxRect);
-		Rectangle leftBoxRect = new Rectangle((int) x, (int) (y + 5), 5, h - 10);
+		Rectangle leftBoxRect = new Rectangle((int) x, (int) y, 5, (int) h);
 		leftBox = new Area(leftBoxRect);
-		Rectangle ascendBoxRect = new Rectangle((int) (x + w / 2 - 3), (int) (y + h - 10), 6, 5);
+		Rectangle ascendBoxRect = new Rectangle((int) (x + w / 2 - 3), (int) (y + h - 5), 6, 5);
 		ascendBox = new Area(ascendBoxRect);
+		
 	}
 	
 	public void updateInstance(Runner in) {

@@ -67,7 +67,7 @@ public class Opening {
 		g.setColor(new Color(0, 0, 0, rando));
 		g.fillRect(0, 0, 1280, 720);
 		
-		g.setColor(new Color(170, 90, 200));
+		g.setColor(new Color(145, 50, 200));
 		g.setFont(font);
 		g.drawString("Metroid", x, y);
 		
@@ -113,6 +113,11 @@ public class Opening {
 			
 			g.setColor(Color.CYAN);
 			g.drawString("K", 1000, 200);
+			g.drawString("W", 995, 275);
+			g.drawString("A S D", 952, 320);
+			g.drawString("SPACE", 933, 400);
+			g.drawString("J & L", 963, 500);
+			
 		}
 		
 	}
