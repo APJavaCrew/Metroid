@@ -86,7 +86,7 @@ public class Constants {
 //			getSpritesAt("", ""), 5, 1, true);
 //	public final static Animation samJumpUpRight = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
-	public final static Animation samCrouchUpLeft = new Animation(new SpriteSheet("SamusCrouchUpLeft.png", 23, 30).
+	public final static Animation samCrouchUpLeft = new Animation(new SpriteSheet("SamCrouchUpLeft.png", 23, 30).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimUpRight = new Animation(new SpriteSheet("SamAimUpRight.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
@@ -94,7 +94,7 @@ public class Constants {
 //			getSpritesAt("", ""), 5, 1, true);
 //	public final static Animation samJumpUpRight = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
-	public final static Animation samCrouchUpRight = new Animation(new SpriteSheet("SamusCrouchUpRight.png", 23, 30).
+	public final static Animation samCrouchUpRight = new Animation(new SpriteSheet("SamCrouchUpRight.png", 23, 30).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownLeft = new Animation(new SpriteSheet("SamAimDownLeft.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
@@ -102,7 +102,7 @@ public class Constants {
 //			getSpritesAt("", ""), 5, 1, true);
 //	public final static Animation samJumpDownLeft = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
-	public final static Animation samCrouchDownLeft = new Animation(new SpriteSheet("SamusCrouchDownLeft.png", 23, 25).
+	public final static Animation samCrouchDownLeft = new Animation(new SpriteSheet("SamCrouchDownLeft.png", 23, 25).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownRight = new Animation(new SpriteSheet("SamAimDownRight.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
@@ -110,7 +110,7 @@ public class Constants {
 //			getSpritesAt("", ""), 5, 1, true);
 //	public final static Animation samJumpDownRight = new Animation(new SpriteSheet("SamX.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
-	public final static Animation samCrouchDownRight = new Animation(new SpriteSheet("SamusCrouchDownRight.png", 23, 25).
+	public final static Animation samCrouchDownRight = new Animation(new SpriteSheet("SamCrouchDownRight.png", 23, 25).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	
 	
