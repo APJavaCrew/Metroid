@@ -82,6 +82,12 @@ public class Player extends Being {
 		
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y, w * size, h * size); //use this to translate the hitBox
 		hitBox = new Area(hitBoxRect);
+		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) (y + 5), 5, h - 10);
+		rightBox = new Area(rightBoxRect);
+		Rectangle leftBoxRect = new Rectangle((int) x, (int) (y + 5), 5, h - 10);
+		leftBox = new Area(leftBoxRect);
+		Rectangle ascendBoxRect = new Rectangle((int) (x + w / 2 - 3), (int) (y + h - 10), 6, 5);
+		ascendBox = new Area(ascendBoxRect);
 		
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
@@ -497,7 +503,7 @@ public class Player extends Being {
 				dy += Constants.GRAVITY_ACCEL;
 			}
 			isOnGround = false;
-		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D())) {
+		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D()) && !isOnGround) {
 			dy = Constants.BONK_SPEED;
 		} else /*player is on the ground*/ {
 			dy = 0;
@@ -515,24 +521,18 @@ public class Player extends Being {
 
 	
 	public void checkCollision() {
-		ArrayList<Tile> tiles = instance.getRoom().getIntersectingTiles(this);
 		stopL = false;
 		stopR = false;
-		if (tiles.size() > 0) {
-			for (Tile e : tiles) {
-				if (hitBox.intersects(e.getHitBox().getBounds2D())) {
-					if (e.getX() + e.getW() < this.x)
-						stopL = true;
-					if (e.getX() > this.x + w)
-						stopR = true;
-					if (e.getY() < landBox.getBounds2D().getY() && landBox.intersects(e.getHitBox().getBounds2D())) {
-						y = e.getY() - h;
-					}
-				}
-			}
-		}
 		
-		if (stopL && dx < 0)
+		if (instance.getRoomBounds().intersects(leftBox.getBounds2D()))
+			stopL = true;
+		
+		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()))
+			stopR = true;
+		
+		if (instance.getRoomBounds().intersects(ascendBox.getBounds2D()))
+			dy = -2;
+		else if (stopL && dx < 0)
 			dx = 0;
 		else if (stopR && dx > 0)
 			dx = 0;
@@ -541,12 +541,19 @@ public class Player extends Being {
 	private void updateHitBoxes() {
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
+		
 		Rectangle hitBoxRect = new Rectangle((int) x, (int) y + 5, w, h - 10);
 		hitBox = new Area(hitBoxRect);
 		Rectangle landBoxRect = new Rectangle((int) (x + 3), (int) (h + y - 5), w - 6, 5);
 		landBox = new Area(landBoxRect);
 		Rectangle topBoxRect = new Rectangle((int) (x + 3), (int) y, w - 6, 5);
 		topBox = new Area(topBoxRect);
+		Rectangle rightBoxRect = new Rectangle((int) (x + w - 5), (int) (y + 5), 5, h - 10);
+		rightBox = new Area(rightBoxRect);
+		Rectangle leftBoxRect = new Rectangle((int) x, (int) (y + 5), 5, h - 10);
+		leftBox = new Area(leftBoxRect);
+		Rectangle ascendBoxRect = new Rectangle((int) (x + w / 2 - 3), (int) (y + h - 10), 6, 5);
+		ascendBox = new Area(ascendBoxRect);
 	}
 	
 	public void updateInstance(Runner in) {
