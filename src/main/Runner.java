@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -13,8 +14,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,6 +63,8 @@ public class Runner extends JFrame implements KeyListener {
 	
 	Font f = new Font("Arial", 1, 35);
 	
+	Clip gameTrack;
+	
 	public Runner() {
 		
 	}
@@ -68,6 +76,7 @@ public class Runner extends JFrame implements KeyListener {
 	}
 	
 	private void init() {
+		
 		try {
 			Controllers.create();
 		} catch (LWJGLException e) {
@@ -111,6 +120,20 @@ public class Runner extends JFrame implements KeyListener {
 		backBuffer = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB);
 		bbg = backBuffer.createGraphics();
 		
+		try {
+			f = Font.createFont(Font.TRUETYPE_FONT, new File("Serpentine-Bold.otf")).deriveFont((float) 35);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/kraidLayer.wav"));
+			gameTrack = AudioSystem.getClip();
+			gameTrack.open(stream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void run() {
@@ -131,6 +154,9 @@ public class Runner extends JFrame implements KeyListener {
 					}
 				}
 			}
+			
+			opening.stopPlayingMusic();
+			gameTrack.loop(-1);
 			
 			while (isRunning) {
 				long time = System.currentTimeMillis();
@@ -160,6 +186,9 @@ public class Runner extends JFrame implements KeyListener {
 				}
 				
 			}
+			
+			gameTrack.stop();
+			gameTrack.setFramePosition(0);
 		}
 	}
 
@@ -398,6 +427,10 @@ public class Runner extends JFrame implements KeyListener {
 	
 	public Camera getCamera() {
 		return camera;
+	}
+	
+	public void startTrack() {
+		gameTrack.loop(-1);
 	}
 	
 }

@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import sprite.SpriteSheet;
 
 public class Opening {
@@ -25,11 +29,27 @@ public class Opening {
 	
 	private SpriteSheet opening = new SpriteSheet("Metroid Intro.png", 576, 268);
 	
+	private Clip theme, lightning;
+	
 	public Opening() {
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new File("Serpentine-Bold.otf")).deriveFont((float) 150);
 			bigFont = Font.createFont(Font.TRUETYPE_FONT, new File("Serpentine-Bold.otf")).deriveFont((float) 165);
 			smallFont = Font.createFont(Font.TRUETYPE_FONT, new File("Serpentine-Bold.otf")).deriveFont((float) 45);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/titleTheme.wav"));
+			theme = AudioSystem.getClip();
+			theme.open(stream);
+			theme.loop(-1);
+			
+			AudioInputStream lightStream = AudioSystem.getAudioInputStream(new File("Music/lightning.wav"));
+			lightning = AudioSystem.getClip();
+			lightning.open(lightStream);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,6 +71,10 @@ public class Opening {
 			
 			shadowDelay = 20;
 			shadowOpac = 320;
+			
+			lightning.setFramePosition((int) (Math.random() * 7500));
+			lightning.start();
+			
 		}
 		
 		if (shadowDelay > 0) {
@@ -122,6 +146,10 @@ public class Opening {
 		
 	}
 	
+	public void stopPlayingMusic() {
+		theme.stop();
+	}
+	
 	public void select() {
 		if (isStartSelect)
 			isFinished = true;
@@ -141,6 +169,7 @@ public class Opening {
 	
 	public void restart() {
 		isFinished = false;
+		theme.loop(0);
 	}
 
 }
