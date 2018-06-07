@@ -56,12 +56,13 @@ public class SpriteSheet {
 		
 		return newImage;
 		
-		
 	}
 	
 	public BufferedImage getSpriteAt(int xGrid, int yGrid) {
-		if (sheet.equals(null))
+		if (sheet == null) {
 			System.err.println("Sheet not loaded");
+			return new SpriteSheet("red.png", 30, 30).getSheet();
+		}
 		return sheet.getSubimage(xGrid * w, yGrid * h, w, h);
 	}
 	
