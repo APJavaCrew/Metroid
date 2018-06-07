@@ -3,7 +3,13 @@ package enemy;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 
 import entity.Being;
 import main.Runner;
@@ -80,6 +86,17 @@ public class Enemy extends Being {
 					isHurt = true;
 					health -= b.getWeaponBox().getDamage();
 					hurtTimeout = 0;
+					
+					try {
+						AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/enemyHurt.wav"));
+						Clip hurts = AudioSystem.getClip();
+						hurts.open(stream);
+						hurts.start();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					
 					switch (b.getType()) {
 						default:
 							break;

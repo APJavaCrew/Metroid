@@ -8,7 +8,12 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import enemy.AttackBox;
 import entity.Being;
@@ -29,7 +34,9 @@ public class Player extends Being {
 	
 	Area leftBox, rightBox, ascendBox;
 	
-	double size = 2.5;
+	Clip chargeStart, chargeLoop;
+	
+	double size = 2.7;
 	double w, h;
 
 	private boolean stopL = false, stopR = false;
@@ -93,7 +100,19 @@ public class Player extends Being {
 		w = animation.getSprite().getWidth() * size;
 		h = animation.getSprite().getHeight() * size;
 		
-		
+		try {
+			
+			AudioInputStream chargeLStr = AudioSystem.getAudioInputStream(new File("Music/chargeLoop.wav"));
+			chargeLoop = AudioSystem.getClip();
+			chargeLoop.open(chargeLStr);
+			
+			AudioInputStream chargeSStr = AudioSystem.getAudioInputStream(new File("Music/chargeStart.wav"));
+			chargeStart = AudioSystem.getClip();
+			chargeStart.open(chargeSStr);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -275,6 +294,14 @@ public class Player extends Being {
 		
 		if (charging && beamSize < 30)
 			beamSize += 0.5;
+		
+		if (charging && beamSize == 8.5) {
+			chargeStart.setFramePosition(0);
+			chargeStart.start();
+		}
+		
+		if (charging && beamSize >= 30)
+			chargeLoop.loop(-1);
 		
 		dx = Math.pow(instance.getAxis1()[3], 3) * speed;
 		if(dx < 0)
@@ -693,6 +720,10 @@ public class Player extends Being {
 		}
 		
 		weapons.get( weapons.size() - 1 ).updateInstance(instance);
+		
+		chargeLoop.stop();
+		chargeStart.stop();
+		
 	}
 	
 	private void checkHurt() {
