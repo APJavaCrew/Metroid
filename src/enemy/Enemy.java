@@ -81,28 +81,30 @@ public class Enemy extends Being {
 	public void checkBeingHurt() {
 		if (instance != null) {
 			ArrayList<Weapon> beams = instance.getPlayer().getWeapons();
-			for (Weapon b : beams) {
-				if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
-					isHurt = true;
-					health -= b.getWeaponBox().getDamage();
-					hurtTimeout = 0;
-					
-					try {
-						AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/enemyHurt.wav"));
-						Clip hurts = AudioSystem.getClip();
-						hurts.open(stream);
-						hurts.start();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-					
-					switch (b.getType()) {
-						default:
-							break;
-						case "ice":
-							isFrozen = true;
-							break;
+			if (beams != null) {
+				for (Weapon b : beams) {
+					if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
+						isHurt = true;
+						health -= b.getWeaponBox().getDamage();
+						hurtTimeout = 0;
+						
+						try {
+							AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/enemyHurt.wav"));
+							Clip hurts = AudioSystem.getClip();
+							hurts.open(stream);
+							hurts.start();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+						
+						switch (b.getType()) {
+							default:
+								break;
+							case "ice":
+								isFrozen = true;
+								break;
+						}
 					}
 				}
 			}
