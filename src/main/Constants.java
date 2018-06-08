@@ -76,10 +76,10 @@ public class Constants {
 			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samJumpUpR = new Animation(new SpriteSheet("SamJumpUpR.png", 14, 48).
 			getSpritesAt("1-0", "0"), 5, 1, true);
-//	public final static Animation samJumpDownL = new Animation(new SpriteSheet("SamJumpDownL.png", x, y).
-//			getSpritesAt("1-0", "0"), 5, 1, true);
-//	public final static Animation samJumpDownR = new Animation(new SpriteSheet("SamJumpDownR.png", x, y).
-//			getSpritesAt("1-0", "0"), 5, 1, true);
+	public final static Animation samJumpDownL = new Animation(new SpriteSheet("SamJumpDownL.png", 22, 34).
+			getSpritesAt("1-0", "0"), 5, 1, true);
+	public final static Animation samJumpDownR = new Animation(new SpriteSheet("SamJumpDownR.png", 22, 34).
+			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samAimUpLeft = new Animation(new SpriteSheet("SamAimUpLeft.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 //	public final static Animation samWalkUpLeft = new Animation(new SpriteSheet("SamX.png", x, y).

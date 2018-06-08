@@ -462,12 +462,12 @@ public class Player extends Being {
 		case JUMP_UP_R:
 			animation = Constants.samJumpUpR;
 			break;
-//		case JUMP_DOWN_L:
-//			animation = Constants.samJumpDownL;
-//			break;
-//		case JUMP_DOWN_R:
-//			animation = Constants.samJumpDownR;
-//			break;
+		case JUMP_DOWN_L:
+			animation = Constants.samJumpDownL;
+			break;
+		case JUMP_DOWN_R:
+			animation = Constants.samJumpDownR;
+			break;
 		case AIM_UP_LEFT:
 			animation = Constants.samAimUpLeft;
 			break;
