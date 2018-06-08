@@ -86,6 +86,7 @@ public class Ripper extends Enemy {
 	public void move() {
 		
 		checkTink();
+		checkIfFrozen();
 		
 		if (!turning)
 			dx = dir * speed;
@@ -148,7 +149,7 @@ public class Ripper extends Enemy {
 		ArrayList<Weapon> weapons = instance.getPlayer().getWeapons();
 		
 		for (Weapon w : weapons) {
-			if (w.getWeaponBox().intersects(attackBox.getBounds2D())) {
+			if (w.getWeaponBox().intersects(attackBox.getBounds2D()) && !w.getType().equals("ice")) {
 				try {
 					AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/tink.wav"));
 					Clip tink = AudioSystem.getClip();
