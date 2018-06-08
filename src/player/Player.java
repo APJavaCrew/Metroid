@@ -204,27 +204,27 @@ public class Player extends Being {
 		    		case MORPH:
 		    			break;
 		    		case AIM_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 25); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_LEFT:
-		    			x = -(int) (w / size - 35); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 35); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    		case JUMP_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 25); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -245,7 +245,7 @@ public class Player extends Being {
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 		    	    	break;
 		    		case JUMP_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -354,9 +354,35 @@ public class Player extends Being {
 		SpriteMotion last = spriteMotion;
 		
 		if (dx < 0 && isOnGround)
-			spriteMotion = SpriteMotion.WALK_LEFT;
+			switch(last) {
+				default:
+					spriteMotion = SpriteMotion.WALK_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_UP_LEFT;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_DOWN_LEFT;
+					break;
+			}
 		else if (dx > 0 && isOnGround)
-			spriteMotion = SpriteMotion.WALK_RIGHT;
+			switch(last) {
+			default:
+				spriteMotion = SpriteMotion.WALK_RIGHT;
+				break;
+			case CROUCH_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_RIGHT;
+				break;
+			case CROUCH_UP_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_UP_RIGHT;
+				break;
+			case CROUCH_DOWN_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
+				break;
+		}
 		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
 			switch (last) {//add crouch states > aim l/r
 				default:
@@ -436,24 +462,24 @@ public class Player extends Being {
 				case AIM_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_RIGHT;
 					break;
-				case CROUCH_LEFT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
-				case CROUCH_RIGHT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
-				case CROUCH_UP_LEFT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
-				case CROUCH_UP_RIGHT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
-				case CROUCH_DOWN_LEFT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
-				case CROUCH_DOWN_RIGHT:
-					spriteMotion = SpriteMotion.MORPH;
-					break;
+//				case CROUCH_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_UP_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_UP_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_DOWN_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_DOWN_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
 			}
 			
 		}
@@ -587,7 +613,7 @@ public class Player extends Being {
 			animation.update();
 	}
 		
-	
+
 	
 	public void jump() {
 		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
@@ -708,22 +734,22 @@ public class Player extends Being {
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
 				break;
 			case AIM_LEFT:
-				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 14));
 				break;
 			case AIM_RIGHT:
-				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 14));
 				break;
 			case WALK_LEFT:
-				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 17));
 				break;
 			case WALK_RIGHT:
-				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 17));
 				break;
 			case CROUCH_LEFT:
-				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 21));
 				break;
 			case CROUCH_RIGHT:
-				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 21));
 				break;
 			case JUMP_LEFT:
 				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
