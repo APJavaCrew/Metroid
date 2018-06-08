@@ -382,7 +382,7 @@ public class Player extends Being {
 				case CROUCH_RIGHT:
 					spriteMotion = SpriteMotion.WALK_RIGHT;
 			}
-		} else if(instance.getAxis1()[2] >= 0.9/* && dx == 0 */&& isOnGround) {
+		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
 			switch(last) {
 			default:
 				break;
