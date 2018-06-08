@@ -6,12 +6,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import main.Constants;
 import main.Runner;
 import sprite.Animation;
 import tiles.Tile;
+import weapon.Weapon;
 
 public class Ripper extends Enemy {
 	
@@ -79,6 +85,8 @@ public class Ripper extends Enemy {
 	
 	public void move() {
 		
+		checkTink();
+		
 		if (!turning)
 			dx = dir * speed;
 		else
@@ -134,6 +142,25 @@ public class Ripper extends Enemy {
 		hitBox.transform(at);
 		
 		attackBox.set(hitBox);
+	}
+	
+	public void checkTink() {
+		ArrayList<Weapon> weapons = instance.getPlayer().getWeapons();
+		
+		for (Weapon w : weapons) {
+			if (w.getWeaponBox().intersects(attackBox.getBounds2D())) {
+				try {
+					AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/tink.wav"));
+					Clip tink = AudioSystem.getClip();
+					tink.open(stream);
+					tink.start();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("woah");
+			}
+		}
+		
 	}
 	
 }
