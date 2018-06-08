@@ -110,10 +110,17 @@ public class Geemer extends Enemy {
 			at.rotate(angle, w / 2, h / 2);
 	
 			g.transform(at);
-			g.drawImage(legs.getSprite(), 0, 0, w, h, null);
-			g.drawImage(animation.getSprite(), 0, 0, w, h, null);
-			animation.update();
-			legs.update();
+			if (!isFrozen) {
+				g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				animation.update();
+				legs.update();
+			} else {
+				g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				g.setColor(new Color(0, 210, 255, 100));
+				g.fillRect(0, 0, w, h);
+			}
 		} else {
 			if (hurtTimeout < 1)
 				hurtTimeout++;
@@ -171,6 +178,8 @@ public class Geemer extends Enemy {
 			turnOtherWay();
 		} else
 			fall();
+		
+		checkIfFrozen();
 		
 		x += dx;
 		y += dy;

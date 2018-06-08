@@ -28,7 +28,7 @@ public class Enemy extends Being {
 	protected int hurtTimeout;
 	Runner instance;
 	
-	private int frozenDelay = 600;
+	private int frozenDelay = 300;
 	
 	public Enemy(double x, double y) {
 		this.x = x;
@@ -86,9 +86,6 @@ public class Enemy extends Being {
 			if (beams != null && !instance.getPlayer().removingWeapon) {
 				for (Weapon b : beams) {
 					if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
-						isHurt = true;
-						health -= b.getWeaponBox().getDamage();
-						hurtTimeout = 0;
 						
 						try {
 							AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/enemyHurt.wav"));
@@ -99,13 +96,16 @@ public class Enemy extends Being {
 							e.printStackTrace();
 						}
 						
+						isHurt = true;
+						health -= b.getWeaponBox().getDamage();
+						hurtTimeout = 0;
 						
 						switch (b.getType()) {
 							default:
 								break;
 							case "ice":
 								isFrozen = true;
-								frozenDelay = 600;
+								frozenDelay = 300;
 								break;
 						}
 					}
@@ -128,6 +128,8 @@ public class Enemy extends Being {
 				isFrozen = false;
 				frozenDelay = 10;
 			}
+			
+			System.out.println("frez");
 			
 		}
 	}
