@@ -15,6 +15,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import com.sun.glass.events.KeyEvent;
+
 import enemy.AttackBox;
 import entity.Being;
 import main.Constants;
@@ -356,7 +358,7 @@ public class Player extends Being {
 		else if (dx > 0 && isOnGround)
 			spriteMotion = SpriteMotion.WALK_RIGHT;
 		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
-			switch (last) {
+			switch (last) {//add crouch states > aim l/r
 				default:
 					break;
 				case WALK_LEFT:
@@ -365,34 +367,95 @@ public class Player extends Being {
 				case WALK_RIGHT:
 					spriteMotion = SpriteMotion.AIM_UP_R;
 					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.AIM_UP_L;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.AIM_UP_R;
+					break;
+				case MORPH:
+					if(facingLeft) {
+						spriteMotion = SpriteMotion.CROUCH_LEFT;
+						break;
+					}
+					else {
+						spriteMotion = SpriteMotion.CROUCH_RIGHT;
+						break;
+					}
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case CROUCH_UP_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case CROUCH_DOWN_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+					
 			}
-		} else if (instance.getAxis1()[2] == 0  /*&& dx == 0 */&& isOnGround) {
+		} else if (instance.getAxis1()[2] == 0  && dx == 0 && isOnGround) {
 			switch(last) {
 				default:
 					break;
 				case AIM_UP_L:
-					spriteMotion = SpriteMotion.WALK_LEFT;
+					spriteMotion = SpriteMotion.AIM_LEFT;
 					break;
 				case AIM_UP_R:
-					spriteMotion = SpriteMotion.WALK_RIGHT;
+					spriteMotion = SpriteMotion.AIM_RIGHT;
 					break;
-				case CROUCH_LEFT:
-					spriteMotion = SpriteMotion.WALK_LEFT;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
 					break;
-				case CROUCH_RIGHT:
-					spriteMotion = SpriteMotion.WALK_RIGHT;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+					
 			}
 		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
 			switch(last) {
-			default:
-				break;
-			case WALK_LEFT:
-				spriteMotion = SpriteMotion.CROUCH_LEFT;
-				break;
-			case WALK_RIGHT:
-				spriteMotion = SpriteMotion.CROUCH_RIGHT;
-				break;
+				default:
+					break;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_UP_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_DOWN_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
 			}
+			
 		}
 		
 		
@@ -522,8 +585,9 @@ public class Player extends Being {
 			animation.restart();
 		else
 			animation.update();
-		
 	}
+		
+	
 	
 	public void jump() {
 		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
@@ -543,6 +607,14 @@ public class Player extends Being {
 			dy = 0;
 			isOnGround = true;
 		}
+	}
+	
+	public void aimUp() {
+		return;
+	}
+	
+	public void aimDown() {
+		return;
 	}
 
 	public void damage(AttackBox attackBox) {
@@ -784,6 +856,7 @@ public class Player extends Being {
 	public double getLastY() {
 		return lastY;
 	}
+	
 	public double getDx() {return dx;}
 
 	public double getDy() {return dy;}
