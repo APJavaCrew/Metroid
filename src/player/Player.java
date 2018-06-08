@@ -60,8 +60,8 @@ public class Player extends Being {
 	private enum SpriteMotion { //34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -185,8 +185,8 @@ public class Player extends Being {
 		    	/*//34 states
 				START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 	
-				STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-				STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+				AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+				AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 	
 				AIM_UP_L, JUMP_UP_L, //up (facing left)
 				AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -201,7 +201,7 @@ public class Player extends Being {
 		    			break;
 		    		case MORPH:
 		    			break;
-		    		case STAND_LEFT:
+		    		case AIM_LEFT:
 		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
@@ -228,7 +228,7 @@ public class Player extends Being {
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
-		    		case STAND_RIGHT:
+		    		case AIM_RIGHT:
 		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
@@ -400,8 +400,8 @@ public class Player extends Being {
 		/*//34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -611,8 +611,8 @@ public class Player extends Being {
 		/*//34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -635,10 +635,10 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
 				break;
-			case STAND_LEFT:
+			case AIM_LEFT:
 				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
-			case STAND_RIGHT:
+			case AIM_RIGHT:
 				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case WALK_LEFT:
