@@ -58,8 +58,14 @@ public class ShriekBat extends Enemy {
 			at.translate(x, y);
 	
 			g.transform(at);
-			g.drawImage(animation.getSprite(), 0, 0, w, h, null);
-			animation.update();
+			if (!isFrozen) {
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				animation.update();
+			} else {
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				g.setColor(new Color(0, 210, 255, 100));
+				g.fillRect(0, 0, w, h);
+			}
 		} else {
 			if (hurtTimeout < 1)
 				hurtTimeout++;
@@ -82,6 +88,8 @@ public class ShriekBat extends Enemy {
 	}
 	
 	public void move() {
+		
+		checkIfFrozen();
 		updateHitBoxes();
 		
 		y += dy;
@@ -93,7 +101,6 @@ public class ShriekBat extends Enemy {
 			attack();
 		
 		checkBeingHurt();
-		animation.update();
 	}
 	
 	public void attack() {
