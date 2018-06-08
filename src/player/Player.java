@@ -412,107 +412,110 @@ public class Player extends Being {
 		AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
 		AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
 		AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
-			default:
-				break;
-			case START:
-				animation = Constants.samStart;
-				break;
-//			case MORPH:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_SPIN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_SPIN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case STAND_LEFT:
-//				animation = Constants.samX;
-//				break;
-			case WALK_LEFT:
-				animation = Constants.samWalkLeft;
-				break;
-//			case JUMP_LEFT:
-//				animation = Constants.samX;
-//				break;
-			case CROUCH_LEFT:
-				animation = Constants.samCrouchLeft;
-				break;
-//			case STAND_RIGHT:
-//				animation = Constants.samX;
-//				break;
-			case WALK_RIGHT:
-				animation = Constants.samWalkRight;
-				break;
-//			case JUMP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_RIGHT:
-//				animation = Constants.samCrouchRight;
-//				break;
-//			case AIM_UP_L:
-//				animation = Constants.samFireUpL;
-//				break;
-//			case JUMP_UP_L:
-//				animation = Constants.samX;
-//				break;
-//			case AIM_UP_R:
-//				animation = Constants.samFireUpR;
-//				break;
-//			case JUMP_DOWN_L:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_R:
-//				animation = Constants.samX;
-//				break;
-//			case AIM_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_UP_LEFT:
-//				animation = Constants.samCrouchUpLeft;
-//				break;
-//			case AIM_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-			case CROUCH_UP_RIGHT:
-				animation = Constants.samCrouchRight;
-				break;
-//			case AIM_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_DOWN_LEFT:
-//				animation = Constants.samCrouchDownLeft;
-//				break;
-//			case AIM_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_DOWN_RIGHT:
-//				animation = Constants.samCrouchDownRight;
-//				break;
+		default:
+			break;
+		case START:
+			animation = Constants.samStart;
+			break;
+		case MORPH:
+			animation = Constants.samMorph;
+			break;
+		case JUMP_SPIN_LEFT:
+			animation = Constants.samJumpSpinLeft;
+			break;
+		case JUMP_SPIN_RIGHT:
+			animation = Constants.samJumpSpinRight;
+			break;
+		case AIM_LEFT:
+			animation = Constants.samAimLeft;
+			break;
+		case WALK_LEFT:
+			animation = Constants.samWalkLeft;
+			break;
+		case JUMP_LEFT:
+			animation = Constants.samJumpLeft;
+			break;
+		case CROUCH_LEFT:
+			animation = Constants.samCrouchLeft;
+			break;
+		case AIM_RIGHT:
+			animation = Constants.samAimRight;
+			break;
+		case WALK_RIGHT:
+			animation = Constants.samWalkRight;
+			break;
+		case JUMP_RIGHT:
+			animation = Constants.samJumpRight;
+			break;
+		case CROUCH_RIGHT:
+			animation = Constants.samCrouchRight;
+			break;
+		case AIM_UP_L:
+			animation = Constants.samFireUpL;
+			break;
+		case JUMP_UP_L:
+			animation = Constants.samJumpUpL;
+			break;
+		case AIM_UP_R:
+			animation = Constants.samFireUpR;
+			break;
+		case JUMP_UP_R:
+			animation = Constants.samJumpUpR;
+			break;
+//		case JUMP_DOWN_L:
+//			animation = Constants.samJumpDownL;
+//			break;
+//		case JUMP_DOWN_R:
+//			animation = Constants.samJumpDownR;
+//			break;
+		case AIM_UP_LEFT:
+			animation = Constants.samAimUpLeft;
+			break;
+//		case WALK_UP_LEFT:
+//			animation = Constants.samWalkUpLeft;
+//			break;
+		case JUMP_UP_LEFT:
+			animation = Constants.samJumpUpLeft;
+			break;
+		case CROUCH_UP_LEFT:
+			animation = Constants.samCrouchUpLeft;
+			break;
+		case AIM_UP_RIGHT:
+			animation = Constants.samAimUpRight;
+			break;
+//		case WALK_UP_RIGHT:
+//			animation = Constants.samWalkUpRight;
+//			break;
+		case JUMP_UP_RIGHT:
+			animation = Constants.samJumpUpRight;
+			break;
+		case CROUCH_UP_RIGHT:
+			animation = Constants.samCrouchRight;
+			break;
+		case AIM_DOWN_LEFT:
+			animation = Constants.samAimDownLeft;
+			break;
+//		case WALK_DOWN_LEFT:
+//			animation = Constants.samWalkDownLeft;
+//			break;
+		case JUMP_DOWN_LEFT:
+			animation = Constants.samJumpDownLeft;
+			break;
+		case CROUCH_DOWN_LEFT:
+			animation = Constants.samCrouchDownLeft;
+			break;
+		case AIM_DOWN_RIGHT:
+			animation = Constants.samAimDownRight;
+			break;
+//		case WALK_DOWN_RIGHT:
+//			animation = Constants.samWalkDownRight;
+//			break;
+		case JUMP_DOWN_RIGHT:
+			animation = Constants.samJumpDownRight;
+			break;
+		case CROUCH_DOWN_RIGHT:
+			animation = Constants.samCrouchDownRight;
+			break;
 		}
 		
 		if (last != spriteMotion)
