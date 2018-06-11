@@ -156,7 +156,10 @@ public class Ripper extends Enemy {
 		frontBox.transform(at);
 		hitBox.transform(at);
 		
-		attackBox.set(hitBox);
+		if (isFrozen)
+			attackBox = new AttackBox(new Area( new Rectangle(0, 0, 0, 0)), 0);
+		else
+			attackBox = new AttackBox(hitBox, 10);
 	}
 	
 	public void checkTink() {

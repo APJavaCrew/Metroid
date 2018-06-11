@@ -95,7 +95,7 @@ public class ShriekBat extends Enemy {
 		y += dy;
 		x += dx;
 		
-		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(landBox.getBounds2D()) && !isFrozen)
 			floorDie();
 		else if (instance.getPlayer().getHitBox().intersects(viewBox.getBounds2D()))
 			attack();
@@ -133,7 +133,10 @@ public class ShriekBat extends Enemy {
 		landBox = new Area(new Rectangle(w / 2 - 1, h, 2, 3));
 		landBox.transform(at);
 		
-		attackBox.set(hitBox);
+		if (isFrozen)
+			attackBox = new AttackBox(new Area( new Rectangle(0, 0, 0, 0)), 0);
+		else
+			attackBox = new AttackBox(hitBox, 10);
 		
 	}
 

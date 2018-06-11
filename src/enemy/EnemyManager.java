@@ -2,6 +2,9 @@ package enemy;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +16,8 @@ import main.Runner;
 public class EnemyManager {
 	
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	
+	Area freezeBox = new Area( new Rectangle(0, 0, 0, 0));
 	
 	Runner instance;
 	
@@ -50,8 +55,13 @@ public class EnemyManager {
 	
 	public void updateEnemies(Runner in) {
 		instance = in;
+		freezeBox.subtract(freezeBox);
+		
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).updateInstance(in);
+			
+			if (enemies.get(i).isFrozen)
+				freezeBox.add(enemies.get(i).getHitBox());
 			
 			if (!enemies.get(i).isAlive()) {
 				System.out.println("death ;)");
@@ -60,6 +70,10 @@ public class EnemyManager {
 			
 		}
 		
+	}
+	
+	public Area getFreezeBox() {
+		return freezeBox;
 	}
 	
 	public void draw(Graphics2D g) {

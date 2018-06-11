@@ -44,7 +44,7 @@ public class Geemer extends Enemy {
 		UP, RIGHT, DOWN, LEFT
 	}
 	
-	Direction direction = Direction.UP;
+	private Direction direction = Direction.UP;
 	
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
@@ -277,7 +277,10 @@ public class Geemer extends Enemy {
 		rightBox = new Area(rightBoxRect);
 		rightBox.transform(at);
 		
-		attackBox = new AttackBox(hitBox, 10);
+		if (isFrozen)
+			attackBox = new AttackBox(new Area( new Rectangle(0, 0, 0, 0)), 0);
+		else
+			attackBox = new AttackBox(hitBox, 10);
 	}
 
 	private void fall() {
@@ -287,5 +290,27 @@ public class Geemer extends Enemy {
 	public AttackBox getAttackBox() {
 		return attackBox;
 	}
+	
+//	public Area getHitBox() {
+//		
+//		Area newBox;
+//		
+//		switch(direction) {
+//			default:
+//				newBox = hitBox;
+//				break;
+//			case RIGHT:
+//			case LEFT:
+//				newBox = new Area( new Rectangle(0, 0, h, w) );
+//				break;
+//			case UP:
+//			case DOWN:
+//				newBox = new Area( new Rectangle(0, 0, w, h) );
+//				break;
+//		}
+//		
+//		return newBox;
+//		
+//	}
 	
 }

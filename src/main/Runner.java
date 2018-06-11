@@ -165,7 +165,7 @@ public class Runner extends JFrame implements KeyListener {
 				draw();
 				
 				time = (1000 / fps) - (System.currentTimeMillis() - time);
-	//			System.out.println(time);
+//				System.out.println(time);
 				
 				if (time > 0) {
 					try {

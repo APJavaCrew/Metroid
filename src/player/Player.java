@@ -622,12 +622,15 @@ public class Player extends Being {
 
 	
 	public void fall() {
-		if(!instance.getRoomBounds().intersects(landBox.getBounds2D()) && !instance.getRoomBounds().intersects(topBox.getBounds2D())) {
+		if( !instance.getRoomBounds().intersects(landBox.getBounds2D()) && 
+				!instance.getEnemyManager().getFreezeBox().intersects(landBox.getBounds2D()) && 
+				!instance.getRoomBounds().intersects(topBox.getBounds2D())) {
 			if(dy < Constants.TERMINAL_VELOCITY) {
 				dy += Constants.GRAVITY_ACCEL;
 			}
 			isOnGround = false;
-		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D()) && !isOnGround) {
+		} else if ( ( instance.getRoomBounds().intersects(topBox.getBounds2D()) || 
+				instance.getEnemyManager().getFreezeBox().intersects(topBox.getBounds2D())) && !isOnGround) {
 			dy = Constants.BONK_SPEED;
 		} else /*player is on the ground*/ {
 			dy = 0;
@@ -656,13 +659,16 @@ public class Player extends Being {
 		stopL = false;
 		stopR = false;
 		
-		if (instance.getRoomBounds().intersects(leftBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(leftBox.getBounds2D()) || 
+				instance.getEnemyManager().getFreezeBox().intersects(leftBox.getBounds2D()))
 			stopL = true;
 		
-		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()) ||
+				instance.getEnemyManager().getFreezeBox().intersects(rightBox.getBounds2D()))
 			stopR = true;
 		
-		if (instance.getRoomBounds().intersects(ascendBox.getBounds2D()) &&
+		if ( ( instance.getRoomBounds().intersects(ascendBox.getBounds2D()) ||
+				instance.getEnemyManager().getFreezeBox().intersects(ascendBox.getBounds2D()) ) &&
 				!instance.getRoomBounds().intersects(topBox.getBounds2D()))
 			dy = -2;
 		else if (stopL && dx < 0)
