@@ -367,6 +367,15 @@ public class Player extends Being {
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_DOWN_LEFT;
 					break;
+				case AIM_UP_RIGHT:
+					spriteMotion = SpriteMotion.WALK_UP_RIGHT;
+					break;
+				case AIM_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.WALK_DOWN_RIGHT;
+					break;
+				case MORPH:
+					break;
+					
 			}
 		else if (dx > 0 && isOnGround)
 			switch(last) {
@@ -381,6 +390,13 @@ public class Player extends Being {
 				break;
 			case CROUCH_DOWN_LEFT:
 				spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
+				break;
+			case AIM_UP_LEFT:
+				spriteMotion = SpriteMotion.WALK_UP_LEFT;
+				break;
+			case AIM_DOWN_LEFT:
+				spriteMotion = SpriteMotion.WALK_DOWN_LEFT;
+			case MORPH:
 				break;
 		}
 		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
@@ -425,6 +441,12 @@ public class Player extends Being {
 					break;
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_UP_L;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_UP_R;
 					break;
 					
 			}
@@ -479,6 +501,12 @@ public class Player extends Being {
 					break;
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_L;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_R;
 					break;
 			}
 			
@@ -541,6 +569,7 @@ public class Player extends Being {
 				case CROUCH_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
 					break;
+				
 			}
 		}
 		
@@ -676,8 +705,14 @@ public class Player extends Being {
 
 	
 	public void jump() {
-		if (isOnGround)
+		if (isOnGround) {
 			dy = Constants.JUMP_SPEED;
+			if(dx > 0) {
+				spriteMotion = SpriteMotion.JUMP_RIGHT;
+			} else if(dx < 0) {
+				spriteMotion = SpriteMotion.JUMP_LEFT;
+			}
+		}
 	}
 
 	
@@ -818,10 +853,10 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 21));
 				break;
 			case JUMP_LEFT:
-				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 22));
 				break;
 			case JUMP_RIGHT:
-				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 22));
 				break;
 			case AIM_UP_L:
 				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
@@ -833,7 +868,7 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_R:
-				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 40, y - 25));
 				break;
 			case JUMP_DOWN_L:
 				weapons.add(new Beam(beamType, 90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
