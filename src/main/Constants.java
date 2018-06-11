@@ -53,7 +53,7 @@ public class Constants {
 	public final static Animation samJumpSpinRight = new Animation(new SpriteSheet("SamJumpSpinRight.png", 27, 27).
 			getSpritesAt("8-0-1-2-3-4-5-6-7", "0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samAimLeft = new Animation(new SpriteSheet("SamAimLeft.png", 27, 36).
-			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpLeft = new Animation(new SpriteSheet("SamJumpLeft.png", 22, 39).
@@ -61,7 +61,7 @@ public class Constants {
 	public final static Animation samCrouchLeft = new Animation(new SpriteSheet("SamCrouchLeft.png", 24, 25).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimRight = new Animation(new SpriteSheet("SamAimRight.png", 27, 36).
-			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
+			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samWalkRight = new Animation(new SpriteSheet("SamWalkRight.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9-10", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpRight = new Animation(new SpriteSheet("SamJumpRight.png", 22, 39).

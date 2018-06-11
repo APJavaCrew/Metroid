@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.util.ArrayList;
 
 import main.Constants;
 import main.Runner;
@@ -15,6 +16,8 @@ public class Dragon extends Enemy {
 	
 	private int size = 3;
 	private int shootWait;
+	
+	ArrayList<DragonShot> shots = new ArrayList<DragonShot>();
 	
 	public Dragon(double x, double y) {
 		super(x, y);
@@ -38,6 +41,8 @@ public class Dragon extends Enemy {
 		g.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
 		
+		drawShots(g);
+		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
 			at.translate(0, 0);
@@ -52,6 +57,10 @@ public class Dragon extends Enemy {
 	
 	public void move() {
 		updateHitBoxes();
+		
+		attack();
+		updateShots();
+		
 	}
 	
 	
@@ -68,8 +77,21 @@ public class Dragon extends Enemy {
 		attackBox.set(hitBox);
 	}
 	
+	private void updateShots() {
+		for (int i = 0; i < shots.size(); i++) {
+			shots.get(i).updateInstance(instance);
+			if (instance.getRoomBounds().intersects( shots.get(i).getHitBox().getBounds2D()))
+				shots.remove(i);
+		}
+	}
+	
+	private void drawShots(Graphics2D g) {
+		for (DragonShot s : shots)
+			s.draw(g);
+	}
+	
 	private void attack() {
-		
+//		shots.add(new DragonShot(x, y, -1));
 	}
 	
 }
