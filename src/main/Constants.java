@@ -21,6 +21,7 @@ public class Constants {
 	public final static double BEAM_SPEED = 15; //speed at which fired beams travel (negative for left)
 	public final static double MAX_BEAM_SIZE = 20; //max beam size
 	public final static double KNOCKBACK_SPEED = .5; //speed at which Samus is knocked back when hit
+	public final static double PUSH_UP_SPEED = -2; //speed at which Samus is pushed upwards when inside a tile
 
 
 	public static final int TILESIZE = 60;
@@ -68,11 +69,11 @@ public class Constants {
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samCrouchRight = new Animation(new SpriteSheet("SamCrouchRight.png", 24, 25).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-	public final static Animation samFireUpL = new Animation(new SpriteSheet("SamAimUpL.png", 22, 44).
+	public final static Animation samAimUpL = new Animation(new SpriteSheet("SamAimUpL.png", 22, 44).
 			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samJumpUpL = new Animation(new SpriteSheet("SamJumpUpL.png", 14, 48).
 			getSpritesAt("1-0", "0"), 5, 1, true);
-	public final static Animation samFireUpR = new Animation(new SpriteSheet("SamAimUpR.png", 22, 44).
+	public final static Animation samAimUpR = new Animation(new SpriteSheet("SamAimUpR.png", 22, 44).
 			getSpritesAt("3-0-1-2", "0-0-0"), 10, 1, true);
 	public final static Animation samJumpUpR = new Animation(new SpriteSheet("SamJumpUpR.png", 14, 48).
 			getSpritesAt("1-0", "0"), 5, 1, true);
@@ -82,7 +83,7 @@ public class Constants {
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samAimUpLeft = new Animation(new SpriteSheet("SamAimUpLeft.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkUpLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//	public final static Animation samWalkUpLeft = new Animation(new SpriteSheet("SamWalkUpLeft.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samJumpUpLeft = new Animation(new SpriteSheet("SamJumpUpLeft.png", 22, 44).
 			getSpritesAt("1-0", "0"), 5, 1, true);
@@ -90,7 +91,7 @@ public class Constants {
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimUpRight = new Animation(new SpriteSheet("SamAimUpRight.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkUpRight = new Animation(new SpriteSheet("SamX.png", x, y).
+//	public final static Animation samWalkUpRight = new Animation(new SpriteSheet("SamWalkUpRight.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samJumpUpRight = new Animation(new SpriteSheet("SamJumpUpRight.png", 23, 44).
 			getSpritesAt("1-0", "0"), 5, 1, true);
@@ -98,7 +99,7 @@ public class Constants {
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownLeft = new Animation(new SpriteSheet("SamAimDownLeft.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkDownLeft = new Animation(new SpriteSheet("SamX.png", x, y).
+//	public final static Animation samWalkDownLeft = new Animation(new SpriteSheet("SamWalkDownLeft.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samJumpDownLeft = new Animation(new SpriteSheet("SamJumpDownLeft.png", 20, 39).
 			getSpritesAt("1-0", "0"), 5, 1, true);
@@ -106,7 +107,7 @@ public class Constants {
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownRight = new Animation(new SpriteSheet("SamAimDownRight.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkDownRight = new Animation(new SpriteSheet("SamX.png", x, y).
+//	public final static Animation samWalkDownRight = new Animation(new SpriteSheet("SamWalkDownRight.png", x, y).
 //			getSpritesAt("", ""), 5, 1, true);
 	public final static Animation samJumpDownRight = new Animation(new SpriteSheet("SamJumpDownRight.png", 20, 39).
 			getSpritesAt("1-0", "0"), 5, 1, true);

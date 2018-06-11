@@ -466,6 +466,18 @@ public class Player extends Being {
 				case WALK_RIGHT:
 					spriteMotion = SpriteMotion.AIM_RIGHT;
 					break;
+				case AIM_UP_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case AIM_UP_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case AIM_DOWN_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case AIM_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
 					
 			}
 		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
@@ -483,6 +495,12 @@ public class Player extends Being {
 					break;
 				case AIM_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_L;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_R;
 					break;
 				case CROUCH_LEFT:
 					spriteMotion = SpriteMotion.MORPH;
@@ -502,12 +520,7 @@ public class Player extends Being {
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.MORPH;
 					break;
-				case JUMP_LEFT:
-					spriteMotion = SpriteMotion.JUMP_DOWN_L;
-					break;
-				case JUMP_RIGHT:
-					spriteMotion = SpriteMotion.JUMP_DOWN_R;
-					break;
+				
 			}
 			
 		}
@@ -629,13 +642,13 @@ public class Player extends Being {
 			animation = Constants.samCrouchRight;
 			break;
 		case AIM_UP_L:
-			animation = Constants.samFireUpL;
+			animation = Constants.samAimUpL;
 			break;
 		case JUMP_UP_L:
 			animation = Constants.samJumpUpL;
 			break;
 		case AIM_UP_R:
-			animation = Constants.samFireUpR;
+			animation = Constants.samAimUpR;
 			break;
 		case JUMP_UP_R:
 			animation = Constants.samJumpUpR;
@@ -705,7 +718,7 @@ public class Player extends Being {
 
 	
 	public void jump() {
-		if (isOnGround) {
+		if (isOnGround && spriteMotion != SpriteMotion.MORPH) {
 			dy = Constants.JUMP_SPEED;
 			if(dx > 0) {
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
@@ -765,7 +778,7 @@ public class Player extends Being {
 		if ( ( instance.getRoomBounds().intersects(ascendBox.getBounds2D()) ||
 				instance.getEnemyManager().getFreezeBox().intersects(ascendBox.getBounds2D()) ) &&
 				!instance.getRoomBounds().intersects(topBox.getBounds2D()))
-			dy = -2;
+			dy = Constants.PUSH_UP_SPEED;
 		else if (stopL && dx < 0)
 			dx = 0;
 		else if (stopR && dx > 0)
