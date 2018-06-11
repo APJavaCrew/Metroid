@@ -52,6 +52,7 @@ public class Runner extends JFrame implements KeyListener {
 	private boolean multiplayer = true;
 	
 	private static boolean controlConnect = false;
+	private boolean rPressed = false, lPressed = false;
 	
 	private boolean start = true, isRunning = true;
 	private int fps = 60;
@@ -295,15 +296,27 @@ public class Runner extends JFrame implements KeyListener {
 			else
 				axis[0][2] = 0;
 			if(key == KeyEvent.VK_L)
-				player.aimUp();
+				rPressed = true;
+			else
+				rPressed = false;
 			if(key == KeyEvent.VK_J)
-				player.aimDown();
+				lPressed = true;
+			else
+				lPressed = false;
 		} else {
 			if (key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN)
 				opening.changeSelection();
 			if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_K)
 				opening.select();
 		}
+	}
+
+	public boolean isrPressed() {
+		return rPressed;
+	}
+
+	public boolean islPressed() {
+		return lPressed;
 	}
 
 	@Override
@@ -321,8 +334,14 @@ public class Runner extends JFrame implements KeyListener {
 			}
 			if (key == KeyEvent.VK_W)
 				axis[0][2] = 0;
+			if (key == KeyEvent.VK_S)
+				axis[0][2] = 0;
 			if (key == KeyEvent.VK_ESCAPE)
 				isRunning = false;
+			if (key == KeyEvent.VK_L)
+				rPressed = false;
+			if (key == KeyEvent.VK_J)
+				lPressed = false;
 		} else {
 			
 		}

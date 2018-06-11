@@ -462,26 +462,86 @@ public class Player extends Being {
 				case AIM_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_RIGHT;
 					break;
-//				case CROUCH_LEFT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
-//				case CROUCH_RIGHT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
-//				case CROUCH_UP_LEFT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
-//				case CROUCH_UP_RIGHT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
-//				case CROUCH_DOWN_LEFT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
-//				case CROUCH_DOWN_RIGHT:
-//					spriteMotion = SpriteMotion.MORPH;
-//					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_UP_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_DOWN_LEFT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.MORPH;
+					break;
 			}
 			
+		}
+		if(instance.isrPressed()) {
+			switch(last) {
+				default:
+					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.AIM_UP_LEFT;
+					break;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.WALK_UP_LEFT;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_UP_LEFT;
+					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_UP_LEFT;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.AIM_UP_RIGHT;
+					break;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.WALK_UP_RIGHT;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_UP_RIGHT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_UP_RIGHT;
+					break;
+			}
+		}
+		else if(instance.islPressed()) {
+			switch(last) {
+				default:
+					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.AIM_DOWN_LEFT;
+					break;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.WALK_DOWN_LEFT;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_LEFT;
+					break;
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_DOWN_LEFT;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.AIM_DOWN_RIGHT;
+					break;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.WALK_DOWN_RIGHT;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_RIGHT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
+					break;
+			}
 		}
 		
 		
@@ -782,52 +842,52 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_LEFT:
-				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, -Constants.BEAM_SPEED, beamSize, x - 10, y + 15));
 				break;
 			case WALK_UP_LEFT:
-				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, -Constants.BEAM_SPEED, beamSize, x - 10, y + 15));
 				break;
 			case JUMP_UP_LEFT:
-				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, -Constants.BEAM_SPEED, beamSize, x - 10, y + 15));
 				break;
 			case CROUCH_UP_LEFT:
-				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, -Constants.BEAM_SPEED, beamSize, x - 10, y + 15));
 				break;
 			case AIM_UP_RIGHT:
-				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, Constants.BEAM_SPEED, beamSize, x + 70, y + 0));
 				break;
 			case WALK_UP_RIGHT:
-				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, Constants.BEAM_SPEED, beamSize, x + 70, y + 0));
 				break;
 			case JUMP_UP_RIGHT:
-				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, Constants.BEAM_SPEED, beamSize, x + 70, y + 0));
 				break;
 			case CROUCH_UP_RIGHT:
-				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, Constants.BEAM_SPEED, beamSize, x + 70, y + 0));
 				break;
 			case AIM_DOWN_LEFT:
-				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, -Constants.BEAM_SPEED, beamSize, x - 10, y + 70));
 				break;
 			case WALK_DOWN_LEFT:
-				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, -Constants.BEAM_SPEED, beamSize, x - 10, y + 70));
 				break;
 			case JUMP_DOWN_LEFT:
-				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, -Constants.BEAM_SPEED, beamSize, x - 10, y + 70));
 				break;
 			case CROUCH_DOWN_LEFT:
-				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 115, -Constants.BEAM_SPEED, beamSize, x - 10, y + 70));
 				break;
 			case AIM_DOWN_RIGHT:
-				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, Constants.BEAM_SPEED, beamSize, x + 70, y + 75));
 				break;
 			case WALK_DOWN_RIGHT:
-				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, Constants.BEAM_SPEED, beamSize, x + 70, y + 75));
 				break;
 			case JUMP_DOWN_RIGHT:
-				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, Constants.BEAM_SPEED, beamSize, x + 70, y + 75));
 				break;
 			case CROUCH_DOWN_RIGHT:
-				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 235, Constants.BEAM_SPEED, beamSize, x + 70, y + 75));
 				break;
 		}
 		
