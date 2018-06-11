@@ -42,6 +42,9 @@ public class EnemyManager {
 					case 3:
 						add( new ShriekBat(fileRead.nextInt(), fileRead.nextInt()) );
 						break;
+					case 4:
+						add( new Dragon(fileRead.nextInt(), fileRead.nextInt()));
+						break;
 				}
 			}
 		} catch (FileNotFoundException e) {

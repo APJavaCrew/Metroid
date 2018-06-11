@@ -616,7 +616,7 @@ public class Player extends Being {
 
 	
 	public void jump() {
-		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
+		if (isOnGround)
 			dy = Constants.JUMP_SPEED;
 	}
 

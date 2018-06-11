@@ -139,6 +139,7 @@ public class Runner extends JFrame implements KeyListener {
 	private void run() {
 		init();
 		while (isRunning) {
+			player.setHealth(99);
 			while (!opening.isFinished()) {
 				long time = System.currentTimeMillis();
 				
