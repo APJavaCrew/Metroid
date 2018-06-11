@@ -1,4 +1,4 @@
-package weapon;
+/*package weapon;
 
 import java.awt.Color;
 import java.io.File;
@@ -26,3 +26,4 @@ public class PowerBeam extends Beam {
 	}
 
 }
+*/

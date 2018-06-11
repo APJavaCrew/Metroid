@@ -39,7 +39,6 @@ public class Opening {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		try {
 			AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/titleTheme.wav"));
 			theme = AudioSystem.getClip();

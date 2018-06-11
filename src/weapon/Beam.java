@@ -16,7 +16,7 @@ public class Beam extends Weapon {
 	private double angle, velModifier, b, damage, size, w, h;
 	Color color;
 	
-	public Beam(double deg, double velModifier, double size, double x, double y) {
+	public Beam(String type, double deg, double velModifier, double size, double x, double y) {
 		isRemoved = false;
 		angle = Math.toRadians(deg);
 		this.velModifier = velModifier;
@@ -27,8 +27,18 @@ public class Beam extends Weapon {
 		h = size;
 		this.size = size;
 		damage = 0.555555555555556 * Math.pow(1.116123174, size);
+		this.type = type;
 		
-		color = new Color(0, 0, 0); 
+		switch (type) {
+			default:
+				type = "power";
+			case "power":
+				color = new Color(255, 200, 0);
+				break;
+			case "ice":
+				color = new Color(0, 210, 255);
+				break;
+		}
 		
 		dx = 0;
 		dy = 0;

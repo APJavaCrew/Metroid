@@ -28,6 +28,8 @@ public class Enemy extends Being {
 	protected int hurtTimeout;
 	Runner instance;
 	
+	private int frozenDelay = 300;
+	
 	public Enemy(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -81,12 +83,9 @@ public class Enemy extends Being {
 	public void checkBeingHurt() {
 		if (instance != null) {
 			ArrayList<Weapon> beams = instance.getPlayer().getWeapons();
-			if (beams != null) {
+			if (beams != null && !instance.getPlayer().removingWeapon) {
 				for (Weapon b : beams) {
 					if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
-						isHurt = true;
-						health -= b.getWeaponBox().getDamage();
-						hurtTimeout = 0;
 						
 						try {
 							AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/enemyHurt.wav"));
@@ -97,12 +96,16 @@ public class Enemy extends Being {
 							e.printStackTrace();
 						}
 						
+						isHurt = true;
+						health -= b.getWeaponBox().getDamage();
+						hurtTimeout = 0;
 						
 						switch (b.getType()) {
 							default:
 								break;
 							case "ice":
 								isFrozen = true;
+								frozenDelay = 300;
 								break;
 						}
 					}
@@ -112,6 +115,21 @@ public class Enemy extends Being {
 		
 		if (health <= 0)
 			isAlive = false;
+	}
+	
+	protected void checkIfFrozen() {
+		if (isFrozen) {
+			dx = 0;
+			dy = 0;
+			
+			if (frozenDelay > 0)
+				frozenDelay--;
+			else {
+				isFrozen = false;
+				frozenDelay = 300;
+			}
+			
+		}
 	}
 	
 

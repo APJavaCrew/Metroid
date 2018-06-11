@@ -165,7 +165,7 @@ public class Runner extends JFrame implements KeyListener {
 				draw();
 				
 				time = (1000 / fps) - (System.currentTimeMillis() - time);
-	//			System.out.println(time);
+//				System.out.println(time);
 				
 				if (time > 0) {
 					try {
@@ -290,6 +290,14 @@ public class Runner extends JFrame implements KeyListener {
 				player.charge();
 			if (key == KeyEvent.VK_W)
 				axis[0][2] = -1;
+			else if(key == KeyEvent.VK_S)
+				axis[0][2] = 1;
+			else
+				axis[0][2] = 0;
+			if(key == KeyEvent.VK_L)
+				player.aimUp();
+			if(key == KeyEvent.VK_J)
+				player.aimDown();
 		} else {
 			if (key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN)
 				opening.changeSelection();

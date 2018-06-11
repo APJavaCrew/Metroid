@@ -15,6 +15,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import com.sun.glass.events.KeyEvent;
+
 import enemy.AttackBox;
 import entity.Being;
 import main.Constants;
@@ -22,7 +24,7 @@ import main.Runner;
 import sprite.Animation;
 import sprite.SpriteSheet;
 import tiles.Tile;
-import weapon.PowerBeam;
+import weapon.Beam;
 import weapon.Weapon;
 
 public class Player extends Being {
@@ -41,6 +43,7 @@ public class Player extends Being {
 
 	private boolean stopL = false, stopR = false;
 	private boolean isOnGround = false, firing;
+	public boolean removingWeapon = false;
 	
 	Runner instance;
 	
@@ -51,6 +54,7 @@ public class Player extends Being {
 	private boolean isHurt = false, isHurtStart = false;
 	private double beamSize = 5.0;
 	private double speed = 5.0;
+	String beamType = "ice";
 	
 	private int hurtTimeout = 0;
 	private int deathOpac = 0;
@@ -58,8 +62,8 @@ public class Player extends Being {
 	private enum SpriteMotion { //34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -70,14 +74,15 @@ public class Player extends Being {
 		AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
 		AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
 		AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right
-	};
+	}
 	
 	SpriteMotion spriteMotion;
 	
 	public Player(Runner in) {
 		instance = in;
 		
-		spriteMotion = spriteMotion.START;
+		spriteMotion = SpriteMotion.START;
+		
 		
 		animation.start();
 		
@@ -182,8 +187,8 @@ public class Player extends Being {
 		    	/*//34 states
 				START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 	
-				STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-				STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+				AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+				AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 	
 				AIM_UP_L, JUMP_UP_L, //up (facing left)
 				AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -198,34 +203,34 @@ public class Player extends Being {
 		    			break;
 		    		case MORPH:
 		    			break;
-		    		case STAND_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    		case AIM_LEFT:
+		    			x = (int) (w / size - 25); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_LEFT:
-		    			x = -(int) (w / size - 35); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 35); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    		case JUMP_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_LEFT:
-		    			x = -(int) (w / size + 10); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 25); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
-		    		case STAND_RIGHT:
+		    		case AIM_RIGHT:
 		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
@@ -240,7 +245,7 @@ public class Player extends Being {
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 		    	    	break;
 		    		case JUMP_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -349,11 +354,37 @@ public class Player extends Being {
 		SpriteMotion last = spriteMotion;
 		
 		if (dx < 0 && isOnGround)
-			spriteMotion = SpriteMotion.WALK_LEFT;
+			switch(last) {
+				default:
+					spriteMotion = SpriteMotion.WALK_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_UP_LEFT;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_DOWN_LEFT;
+					break;
+			}
 		else if (dx > 0 && isOnGround)
-			spriteMotion = SpriteMotion.WALK_RIGHT;
+			switch(last) {
+			default:
+				spriteMotion = SpriteMotion.WALK_RIGHT;
+				break;
+			case CROUCH_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_RIGHT;
+				break;
+			case CROUCH_UP_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_UP_RIGHT;
+				break;
+			case CROUCH_DOWN_LEFT:
+				spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
+				break;
+		}
 		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
-			switch (last) {
+			switch (last) {//add crouch states > aim l/r
 				default:
 					break;
 				case WALK_LEFT:
@@ -362,34 +393,95 @@ public class Player extends Being {
 				case WALK_RIGHT:
 					spriteMotion = SpriteMotion.AIM_UP_R;
 					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.AIM_UP_L;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.AIM_UP_R;
+					break;
+				case MORPH:
+					if(facingLeft) {
+						spriteMotion = SpriteMotion.CROUCH_LEFT;
+						break;
+					}
+					else {
+						spriteMotion = SpriteMotion.CROUCH_RIGHT;
+						break;
+					}
+				case CROUCH_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case CROUCH_UP_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_UP_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+				case CROUCH_DOWN_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
+					break;
+				case CROUCH_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+					
 			}
-		} else if (instance.getAxis1()[2] == 0  /*&& dx == 0 */&& isOnGround) {
+		} else if (instance.getAxis1()[2] == 0  && dx == 0 && isOnGround) {
 			switch(last) {
 				default:
 					break;
 				case AIM_UP_L:
-					spriteMotion = SpriteMotion.WALK_LEFT;
+					spriteMotion = SpriteMotion.AIM_LEFT;
 					break;
 				case AIM_UP_R:
-					spriteMotion = SpriteMotion.WALK_RIGHT;
+					spriteMotion = SpriteMotion.AIM_RIGHT;
 					break;
-				case CROUCH_LEFT:
-					spriteMotion = SpriteMotion.WALK_LEFT;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.AIM_LEFT;
 					break;
-				case CROUCH_RIGHT:
-					spriteMotion = SpriteMotion.WALK_RIGHT;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.AIM_RIGHT;
+					break;
+					
 			}
-		} else if(instance.getAxis1()[2] >= 0.9/* && dx == 0 */&& isOnGround) {
+		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
 			switch(last) {
-			default:
-				break;
-			case WALK_LEFT:
-				spriteMotion = SpriteMotion.CROUCH_LEFT;
-				break;
-			case WALK_RIGHT:
-				spriteMotion = SpriteMotion.CROUCH_RIGHT;
-				break;
+				default:
+					break;
+				case WALK_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case WALK_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+				case AIM_LEFT:
+					spriteMotion = SpriteMotion.CROUCH_LEFT;
+					break;
+				case AIM_RIGHT:
+					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+//				case CROUCH_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_UP_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_UP_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_DOWN_LEFT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
+//				case CROUCH_DOWN_RIGHT:
+//					spriteMotion = SpriteMotion.MORPH;
+//					break;
 			}
+			
 		}
 		
 		
@@ -397,8 +489,8 @@ public class Player extends Being {
 		/*//34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -409,115 +501,119 @@ public class Player extends Being {
 		AIM_UP_RIGHT, WALK_UP_RIGHT, JUMP_UP_RIGHT, CROUCH_UP_RIGHT, //up-right
 		AIM_DOWN_LEFT, WALK_DOWN_LEFT, JUMP_DOWN_LEFT, CROUCH_DOWN_LEFT, //down-left
 		AIM_DOWN_RIGHT, WALK_DOWN_RIGHT, JUMP_DOWN_RIGHT, CROUCH_DOWN_RIGHT, //down-right*/
-			default:
-				break;
-			case START:
-				animation = Constants.samStart;
-				break;
-//			case MORPH:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_SPIN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_SPIN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case STAND_LEFT:
-//				animation = Constants.samX;
-//				break;
-			case WALK_LEFT:
-				animation = Constants.samWalkLeft;
-				break;
-//			case JUMP_LEFT:
-//				animation = Constants.samX;
-//				break;
-			case CROUCH_LEFT:
-				animation = Constants.samCrouchLeft;
-				break;
-//			case STAND_RIGHT:
-//				animation = Constants.samX;
-//				break;
-			case WALK_RIGHT:
-				animation = Constants.samWalkRight;
-				break;
-//			case JUMP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_RIGHT:
-//				animation = Constants.samCrouchRight;
-//				break;
-//			case AIM_UP_L:
-//				animation = Constants.samFireUpL;
-//				break;
-//			case JUMP_UP_L:
-//				animation = Constants.samX;
-//				break;
-//			case AIM_UP_R:
-//				animation = Constants.samFireUpR;
-//				break;
-//			case JUMP_DOWN_L:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_R:
-//				animation = Constants.samX;
-//				break;
-//			case AIM_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_UP_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_UP_LEFT:
-//				animation = Constants.samCrouchUpLeft;
-//				break;
-//			case AIM_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_UP_RIGHT:
-//				animation = Constants.samX;
-//				break;
-			case CROUCH_UP_RIGHT:
-				animation = Constants.samCrouchRight;
-				break;
-//			case AIM_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_LEFT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_DOWN_LEFT:
-//				animation = Constants.samCrouchDownLeft;
-//				break;
-//			case AIM_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case WALK_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case JUMP_DOWN_RIGHT:
-//				animation = Constants.samX;
-//				break;
-//			case CROUCH_DOWN_RIGHT:
-//				animation = Constants.samCrouchDownRight;
-//				break;
+		default:
+			break;
+		case START:
+			animation = Constants.samStart;
+			break;
+		case MORPH:
+			animation = Constants.samMorph;
+			break;
+		case JUMP_SPIN_LEFT:
+			animation = Constants.samJumpSpinLeft;
+			break;
+		case JUMP_SPIN_RIGHT:
+			animation = Constants.samJumpSpinRight;
+			break;
+		case AIM_LEFT:
+			animation = Constants.samAimLeft;
+			break;
+		case WALK_LEFT:
+			animation = Constants.samWalkLeft;
+			break;
+		case JUMP_LEFT:
+			animation = Constants.samJumpLeft;
+			break;
+		case CROUCH_LEFT:
+			animation = Constants.samCrouchLeft;
+			break;
+		case AIM_RIGHT:
+			animation = Constants.samAimRight;
+			break;
+		case WALK_RIGHT:
+			animation = Constants.samWalkRight;
+			break;
+		case JUMP_RIGHT:
+			animation = Constants.samJumpRight;
+			break;
+		case CROUCH_RIGHT:
+			animation = Constants.samCrouchRight;
+			break;
+		case AIM_UP_L:
+			animation = Constants.samFireUpL;
+			break;
+		case JUMP_UP_L:
+			animation = Constants.samJumpUpL;
+			break;
+		case AIM_UP_R:
+			animation = Constants.samFireUpR;
+			break;
+		case JUMP_UP_R:
+			animation = Constants.samJumpUpR;
+			break;
+		case JUMP_DOWN_L:
+			animation = Constants.samJumpDownL;
+			break;
+		case JUMP_DOWN_R:
+			animation = Constants.samJumpDownR;
+			break;
+		case AIM_UP_LEFT:
+			animation = Constants.samAimUpLeft;
+			break;
+//		case WALK_UP_LEFT:
+//			animation = Constants.samWalkUpLeft;
+//			break;
+		case JUMP_UP_LEFT:
+			animation = Constants.samJumpUpLeft;
+			break;
+		case CROUCH_UP_LEFT:
+			animation = Constants.samCrouchUpLeft;
+			break;
+		case AIM_UP_RIGHT:
+			animation = Constants.samAimUpRight;
+			break;
+//		case WALK_UP_RIGHT:
+//			animation = Constants.samWalkUpRight;
+//			break;
+		case JUMP_UP_RIGHT:
+			animation = Constants.samJumpUpRight;
+			break;
+		case CROUCH_UP_RIGHT:
+			animation = Constants.samCrouchRight;
+			break;
+		case AIM_DOWN_LEFT:
+			animation = Constants.samAimDownLeft;
+			break;
+//		case WALK_DOWN_LEFT:
+//			animation = Constants.samWalkDownLeft;
+//			break;
+		case JUMP_DOWN_LEFT:
+			animation = Constants.samJumpDownLeft;
+			break;
+		case CROUCH_DOWN_LEFT:
+			animation = Constants.samCrouchDownLeft;
+			break;
+		case AIM_DOWN_RIGHT:
+			animation = Constants.samAimDownRight;
+			break;
+//		case WALK_DOWN_RIGHT:
+//			animation = Constants.samWalkDownRight;
+//			break;
+		case JUMP_DOWN_RIGHT:
+			animation = Constants.samJumpDownRight;
+			break;
+		case CROUCH_DOWN_RIGHT:
+			animation = Constants.samCrouchDownRight;
+			break;
 		}
 		
 		if (last != spriteMotion)
 			animation.restart();
 		else
 			animation.update();
-		
 	}
+		
+
 	
 	public void jump() {
 		if (instance.getRoomBounds().intersects(landBox.getBounds2D()))
@@ -526,17 +622,28 @@ public class Player extends Being {
 
 	
 	public void fall() {
-		if(!instance.getRoomBounds().intersects(landBox.getBounds2D()) && !instance.getRoomBounds().intersects(topBox.getBounds2D())) {
+		if( !instance.getRoomBounds().intersects(landBox.getBounds2D()) && 
+				!instance.getEnemyManager().getFreezeBox().intersects(landBox.getBounds2D()) && 
+				!instance.getRoomBounds().intersects(topBox.getBounds2D())) {
 			if(dy < Constants.TERMINAL_VELOCITY) {
 				dy += Constants.GRAVITY_ACCEL;
 			}
 			isOnGround = false;
-		} else if (instance.getRoomBounds().intersects(topBox.getBounds2D()) && !isOnGround) {
+		} else if ( ( instance.getRoomBounds().intersects(topBox.getBounds2D()) || 
+				instance.getEnemyManager().getFreezeBox().intersects(topBox.getBounds2D())) && !isOnGround) {
 			dy = Constants.BONK_SPEED;
 		} else /*player is on the ground*/ {
 			dy = 0;
 			isOnGround = true;
 		}
+	}
+	
+	public void aimUp() {
+		return;
+	}
+	
+	public void aimDown() {
+		return;
 	}
 
 	public void damage(AttackBox attackBox) {
@@ -552,13 +659,16 @@ public class Player extends Being {
 		stopL = false;
 		stopR = false;
 		
-		if (instance.getRoomBounds().intersects(leftBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(leftBox.getBounds2D()) || 
+				instance.getEnemyManager().getFreezeBox().intersects(leftBox.getBounds2D()))
 			stopL = true;
 		
-		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()))
+		if (instance.getRoomBounds().intersects(rightBox.getBounds2D()) ||
+				instance.getEnemyManager().getFreezeBox().intersects(rightBox.getBounds2D()))
 			stopR = true;
 		
-		if (instance.getRoomBounds().intersects(ascendBox.getBounds2D()) &&
+		if ( ( instance.getRoomBounds().intersects(ascendBox.getBounds2D()) ||
+				instance.getEnemyManager().getFreezeBox().intersects(ascendBox.getBounds2D()) ) &&
 				!instance.getRoomBounds().intersects(topBox.getBounds2D()))
 			dy = -2;
 		else if (stopL && dx < 0)
@@ -599,12 +709,14 @@ public class Player extends Being {
 		if (beamSize < Constants.MAX_BEAM_SIZE)
 			beamSize = Constants.MAX_BEAM_SIZE;
 		
+		
+		
 		switch (spriteMotion) {
 		/*//34 states
 		START, MORPH, JUMP_SPIN_LEFT, JUMP_SPIN_RIGHT,  //no direction/etc.
 
-		STAND_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
-		STAND_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
+		AIM_LEFT, WALK_LEFT, JUMP_LEFT, CROUCH_LEFT, //left
+		AIM_RIGHT, WALK_RIGHT, JUMP_RIGHT, CROUCH_RIGHT, //right
 
 		AIM_UP_L, JUMP_UP_L, //up (facing left)
 		AIM_UP_R, JUMP_UP_R, //up (facing right)
@@ -620,102 +732,102 @@ public class Player extends Being {
 			case MORPH:
 				break;
 			case JUMP_SPIN_LEFT:
-				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_LEFT;
 				break;
 			case JUMP_SPIN_RIGHT:
-				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				spriteMotion = SpriteMotion.JUMP_RIGHT;
 				break;
-			case STAND_LEFT:
-				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+			case AIM_LEFT:
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 14));
 				break;
-			case STAND_RIGHT:
-				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+			case AIM_RIGHT:
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 14));
 				break;
 			case WALK_LEFT:
-				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 17));
 				break;
 			case WALK_RIGHT:
-				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 17));
 				break;
 			case CROUCH_LEFT:
-				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 21));
 				break;
 			case CROUCH_RIGHT:
-				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 21));
 				break;
 			case JUMP_LEFT:
-				weapons.add(new PowerBeam(0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_RIGHT:
-				weapons.add(new PowerBeam(0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
 				break;
 			case AIM_UP_L:
-				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
 				break;
 			case AIM_UP_R:
-				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 55, y - 26));
 				break;
 			case JUMP_UP_L:
-				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_R:
-				weapons.add(new PowerBeam(90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_L:
-				weapons.add(new PowerBeam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_R:
-				weapons.add(new PowerBeam(90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_LEFT:
-				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_LEFT:
-				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_LEFT:
-				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_LEFT:
-				weapons.add(new PowerBeam(135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 135, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_UP_RIGHT:
-				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_UP_RIGHT:
-				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_RIGHT:
-				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_UP_RIGHT:
-				weapons.add(new PowerBeam(45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 45, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_LEFT:
-				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_LEFT:
-				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_LEFT:
-				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_LEFT:
-				weapons.add(new PowerBeam(225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 225, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case AIM_DOWN_RIGHT:
-				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case WALK_DOWN_RIGHT:
-				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_DOWN_RIGHT:
-				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case CROUCH_DOWN_RIGHT:
-				weapons.add(new PowerBeam(315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 315, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 		}
 		
@@ -761,8 +873,11 @@ public class Player extends Being {
 	public void updateWeapons() {
 		for (int i = 0; i < weapons.size(); i++) {
 			weapons.get(i).updateInstance(instance);
-			if (weapons.get(i).isRemoved())
+			if (weapons.get(i).isRemoved()) {
 				weapons.remove(weapons.get(i));
+				removingWeapon = true;
+			} else
+				removingWeapon = false;
 		}
 	}
 	
@@ -773,6 +888,7 @@ public class Player extends Being {
 	public double getLastY() {
 		return lastY;
 	}
+	
 	public double getDx() {return dx;}
 
 	public double getDy() {return dy;}

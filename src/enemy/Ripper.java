@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -35,6 +37,8 @@ public class Ripper extends Enemy {
 	public Ripper(double x, double y, Runner in) {
 		
 		super(x, y);
+		
+		health = 862;
 		
 		instance = in;
 		
@@ -66,7 +70,14 @@ public class Ripper extends Enemy {
 		at.translate(x, y);
 		at.scale(size, size);
 		g.transform(at);
-		g.drawImage(animation.getSprite(), 0, 0, null);
+		if (!isFrozen) {
+			g.drawImage(animation.getSprite(), 0, 0, null);
+			animation.update();
+		} else {
+			g.drawImage(animation.getSprite(), 0, 0, null);
+			g.setColor(new Color(0, 210, 255, 100));
+			g.fillRoundRect(0, 0, w, h, 3, 3);
+		}
 		
 		if (Constants.SHOWHITBOXES) {
 			at = new AffineTransform();
@@ -78,19 +89,21 @@ public class Ripper extends Enemy {
 			g.fill(frontBox);
 		}
 		
-		animation.update();
 		move();
-		updateHitBoxes();
+		
 	}
 	
 	public void move() {
-		
-		checkTink();
 		
 		if (!turning)
 			dx = dir * speed;
 		else
 			dx = 0;
+
+		checkTink();
+		checkIfFrozen();
+		checkBeingHurt();
+		health = 862;
 		
 		if (animation.equals(Constants.ripperTurnL) && animation.hasStopped()) {
 			turning = false;
@@ -113,6 +126,8 @@ public class Ripper extends Enemy {
 		
 		if (turnWait < 10)
 			turnWait++;
+		
+		updateHitBoxes();
 	}
 	
 	public void turn() {
@@ -141,14 +156,17 @@ public class Ripper extends Enemy {
 		frontBox.transform(at);
 		hitBox.transform(at);
 		
-		attackBox.set(hitBox);
+		if (isFrozen)
+			attackBox = new AttackBox(new Area( new Rectangle(0, 0, 0, 0)), 0);
+		else
+			attackBox = new AttackBox(hitBox, 10);
 	}
 	
 	public void checkTink() {
 		ArrayList<Weapon> weapons = instance.getPlayer().getWeapons();
 		
 		for (Weapon w : weapons) {
-			if (w.getWeaponBox().intersects(attackBox.getBounds2D())) {
+			if (w.getWeaponBox().intersects(attackBox.getBounds2D()) && !w.getType().equals("ice")) {
 				try {
 					AudioInputStream stream = AudioSystem.getAudioInputStream(new File("Music/tink.wav"));
 					Clip tink = AudioSystem.getClip();

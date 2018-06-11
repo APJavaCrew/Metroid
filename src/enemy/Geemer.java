@@ -44,7 +44,7 @@ public class Geemer extends Enemy {
 		UP, RIGHT, DOWN, LEFT
 	}
 	
-	Direction direction = Direction.UP;
+	private Direction direction = Direction.UP;
 	
 	SpriteMotion spriteMotion = SpriteMotion.WALK;
 	
@@ -110,10 +110,17 @@ public class Geemer extends Enemy {
 			at.rotate(angle, w / 2, h / 2);
 	
 			g.transform(at);
-			g.drawImage(legs.getSprite(), 0, 0, w, h, null);
-			g.drawImage(animation.getSprite(), 0, 0, w, h, null);
-			animation.update();
-			legs.update();
+			if (!isFrozen) {
+				g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				animation.update();
+				legs.update();
+			} else {
+				g.drawImage(legs.getSprite(), 0, 0, w, h, null);
+				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
+				g.setColor(new Color(0, 210, 255, 120));
+				g.fillRoundRect(0, 0, w, h, 10, 10);
+			}
 		} else {
 			if (hurtTimeout < 1)
 				hurtTimeout++;
@@ -171,6 +178,8 @@ public class Geemer extends Enemy {
 			turnOtherWay();
 		} else
 			fall();
+		
+		checkIfFrozen();
 		
 		x += dx;
 		y += dy;
@@ -268,7 +277,10 @@ public class Geemer extends Enemy {
 		rightBox = new Area(rightBoxRect);
 		rightBox.transform(at);
 		
-		attackBox = new AttackBox(hitBox, 10);
+		if (isFrozen)
+			attackBox = new AttackBox(new Area( new Rectangle(0, 0, 0, 0)), 0);
+		else
+			attackBox = new AttackBox(hitBox, 10);
 	}
 
 	private void fall() {
@@ -278,5 +290,27 @@ public class Geemer extends Enemy {
 	public AttackBox getAttackBox() {
 		return attackBox;
 	}
+	
+//	public Area getHitBox() {
+//		
+//		Area newBox;
+//		
+//		switch(direction) {
+//			default:
+//				newBox = hitBox;
+//				break;
+//			case RIGHT:
+//			case LEFT:
+//				newBox = new Area( new Rectangle(0, 0, h, w) );
+//				break;
+//			case UP:
+//			case DOWN:
+//				newBox = new Area( new Rectangle(0, 0, w, h) );
+//				break;
+//		}
+//		
+//		return newBox;
+//		
+//	}
 	
 }
