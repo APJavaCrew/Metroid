@@ -104,7 +104,7 @@ public class Runner extends JFrame implements KeyListener {
 			System.err.println("CameCube controllers not found!");
 		}
 		
-		room = new Room("Test", 0, 0);
+		room = new Room("Room1", 0,0);
 		
 		setTitle("Metroid");
 		setSize(windowWidth, windowHeight);
@@ -140,6 +140,7 @@ public class Runner extends JFrame implements KeyListener {
 	private void run() {
 		init();
 		while (isRunning) {
+			player.setHealth(99);
 			while (!opening.isFinished()) {
 				long time = System.currentTimeMillis();
 				
