@@ -217,7 +217,7 @@ public class Player extends Being {
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    		case JUMP_LEFT:
-		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 22); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -231,28 +231,28 @@ public class Player extends Being {
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case AIM_RIGHT:
-		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 		    	    	break;
 		    		case JUMP_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -286,7 +286,22 @@ public class Player extends Being {
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
-		    		
+		    		case AIM_UP_LEFT:
+		    		case WALK_UP_LEFT:
+		    		case JUMP_UP_LEFT:
+		    		case CROUCH_UP_LEFT:
+		    		case AIM_UP_RIGHT:
+		    		case WALK_UP_RIGHT:
+		    		case JUMP_UP_RIGHT:
+		    		case CROUCH_UP_RIGHT:
+		    		case AIM_DOWN_LEFT:
+		    		case WALK_DOWN_LEFT:
+		    		case JUMP_DOWN_LEFT:
+		    		case CROUCH_DOWN_LEFT:
+		    		case AIM_DOWN_RIGHT:
+		    		case WALK_DOWN_RIGHT:
+		    		case JUMP_DOWN_RIGHT:
+		    		case CROUCH_DOWN_RIGHT:
 		    	}
 		    }
 		    
