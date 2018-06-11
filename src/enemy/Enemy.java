@@ -126,10 +126,8 @@ public class Enemy extends Being {
 				frozenDelay--;
 			else {
 				isFrozen = false;
-				frozenDelay = 10;
+				frozenDelay = 300;
 			}
-			
-			System.out.println("frez");
 			
 		}
 	}

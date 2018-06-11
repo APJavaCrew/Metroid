@@ -76,7 +76,7 @@ public class Ripper extends Enemy {
 		} else {
 			g.drawImage(animation.getSprite(), 0, 0, null);
 			g.setColor(new Color(0, 210, 255, 100));
-			g.fillRect(0, 0, w, h);
+			g.fillRoundRect(0, 0, w, h, 3, 3);
 		}
 		
 		if (Constants.SHOWHITBOXES) {

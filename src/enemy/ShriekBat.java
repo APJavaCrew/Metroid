@@ -64,7 +64,7 @@ public class ShriekBat extends Enemy {
 			} else {
 				g.drawImage(animation.getSprite(), 0, 0, w, h, null);
 				g.setColor(new Color(0, 210, 255, 100));
-				g.fillRect(0, 0, w, h);
+				g.fillRoundRect(0, 0, w, h, 10, 10);
 			}
 		} else {
 			if (hurtTimeout < 1)
