@@ -6,6 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import enemy.AttackBox;
 import entity.Entity;
@@ -29,15 +36,35 @@ public class Beam extends Weapon {
 		damage = 0.555555555555556 * Math.pow(1.116123174, size);
 		this.type = type;
 		
+		AudioInputStream stream = null;
+		
 		switch (type) {
 			default:
 				type = "power";
 			case "power":
 				color = new Color(255, 200, 0);
+				try {
+					stream = AudioSystem.getAudioInputStream(new File("Music/shoot.wav"));
+				} catch (UnsupportedAudioFileException | IOException e) {
+					e.printStackTrace();
+				}
 				break;
 			case "ice":
 				color = new Color(0, 210, 255);
+				try {
+					stream = AudioSystem.getAudioInputStream(new File("Music/Ice Beam Shot.wav"));
+				} catch (UnsupportedAudioFileException | IOException e) {
+					e.printStackTrace();
+				}
 				break;
+		}
+		
+		try {
+			Clip shoop = AudioSystem.getClip();
+			shoop.open(stream);
+			shoop.start();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		dx = 0;
