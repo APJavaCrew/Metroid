@@ -68,4 +68,8 @@ public class Dragon extends Enemy {
 		attackBox.set(hitBox);
 	}
 	
+	private void attack() {
+		
+	}
+	
 }

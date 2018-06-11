@@ -52,7 +52,7 @@ public class Constants {
 			getSpritesAt("8-0-1-2-3-4-5-6-7", "0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpSpinRight = new Animation(new SpriteSheet("SamJumpSpinRight.png", 27, 27).
 			getSpritesAt("8-0-1-2-3-4-5-6-7", "0-0-0-0-0-0-0-0"), 5, 1, true);
-	public final static Animation samAimLeft = new Animation(new SpriteSheet("SamAimLeft.png", 26, 36).
+	public final static Animation samAimLeft = new Animation(new SpriteSheet("SamAimLeft.png", 27, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samWalkLeft = new Animation(new SpriteSheet("SamWalkLeft.png", 36, 37).
 			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
