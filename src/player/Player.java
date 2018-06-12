@@ -217,7 +217,7 @@ public class Player extends Being {
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    		case JUMP_LEFT:
-		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    			x = (int) (w / size - 22); y = (int) (20 / size + 5); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -231,28 +231,28 @@ public class Player extends Being {
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case AIM_RIGHT:
-		    			x = (int) (w / size + 10); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case WALK_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 0); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));      
 		    	    	break;
 		    		case JUMP_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 1); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
 		    		case CROUCH_RIGHT:
-		    			x = (int) (w / size); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    			x = (int) (w / size + 3); y = (int) (20 / size + 5); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
 		    	    	g.fillOval(x - rad, y - rad, diam, diam);
 		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
 		    	    	rando = Math.random() * 2 + 1;
@@ -286,7 +286,46 @@ public class Player extends Being {
 		    	    	rando = Math.random() * 2 + 1;
 		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
 		    	    	break;
-		    		
+		    		case AIM_UP_LEFT:
+		    			x = (int) (w / size - 25); y = (int) (20 / size - 8); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_UP_LEFT:
+		    		case JUMP_UP_LEFT:
+		    		case CROUCH_UP_LEFT:
+		    		case AIM_UP_RIGHT:
+		    			x = (int) (w / size + 0); y = (int) (20 / size - 8); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_UP_RIGHT:
+		    		case JUMP_UP_RIGHT:
+		    		case CROUCH_UP_RIGHT:
+		    		case AIM_DOWN_LEFT:
+		    			x = (int) (w / size - 25); y = (int) (20 / size + 15); diam = (int) ((beamSize / size + Math.random() * 3)); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_DOWN_LEFT:
+		    		case JUMP_DOWN_LEFT:
+		    		case CROUCH_DOWN_LEFT:
+		    		case AIM_DOWN_RIGHT:
+		    			x = (int) (w / size + 0); y = (int) (20 / size + 15); diam = (int) (beamSize / size + Math.random() * 3); rad = diam / 2;
+		    	    	g.fillOval(x - rad, y - rad, diam, diam);
+		    	    	g.setColor( new Color( 255, 150, 0, (int) (Math.random() * 70) ) );
+		    	    	rando = Math.random() * 2 + 1;
+		    	    	g.fillOval(x - (int) (rad / rando), y - (int) (rad / rando), (int) (diam / rando), (int) (diam / rando));
+		    	    	break;
+		    		case WALK_DOWN_RIGHT:
+		    		case JUMP_DOWN_RIGHT:
+		    		case CROUCH_DOWN_RIGHT:
 		    	}
 		    }
 		    
@@ -367,6 +406,15 @@ public class Player extends Being {
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_DOWN_LEFT;
 					break;
+				case AIM_UP_RIGHT:
+					spriteMotion = SpriteMotion.WALK_UP_RIGHT;
+					break;
+				case AIM_DOWN_RIGHT:
+					spriteMotion = SpriteMotion.WALK_DOWN_RIGHT;
+					break;
+				case MORPH:
+					break;
+					
 			}
 		else if (dx > 0 && isOnGround)
 			switch(last) {
@@ -381,6 +429,13 @@ public class Player extends Being {
 				break;
 			case CROUCH_DOWN_LEFT:
 				spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
+				break;
+			case AIM_UP_LEFT:
+				spriteMotion = SpriteMotion.WALK_UP_LEFT;
+				break;
+			case AIM_DOWN_LEFT:
+				spriteMotion = SpriteMotion.WALK_DOWN_LEFT;
+			case MORPH:
 				break;
 		}
 		else if (instance.getAxis1()[2] <= -0.9 && dx == 0 && isOnGround) {
@@ -426,6 +481,12 @@ public class Player extends Being {
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.AIM_RIGHT;
 					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_UP_L;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_UP_R;
+					break;
 					
 			}
 		} else if (instance.getAxis1()[2] == 0  && dx == 0 && isOnGround) {
@@ -444,6 +505,18 @@ public class Player extends Being {
 				case WALK_RIGHT:
 					spriteMotion = SpriteMotion.AIM_RIGHT;
 					break;
+//				case AIM_UP_LEFT:
+//					spriteMotion = SpriteMotion.AIM_LEFT;
+//					break;
+//				case AIM_UP_RIGHT:
+//					spriteMotion = SpriteMotion.AIM_RIGHT;
+//					break;
+//				case AIM_DOWN_LEFT:
+//					spriteMotion = SpriteMotion.AIM_LEFT;
+//					break;
+//				case AIM_DOWN_RIGHT:
+//					spriteMotion = SpriteMotion.AIM_RIGHT;
+//					break;
 					
 			}
 		} else if(instance.getAxis1()[2] >= 0.9 && dx == 0 && isOnGround) {
@@ -461,6 +534,12 @@ public class Player extends Being {
 					break;
 				case AIM_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_RIGHT;
+					break;
+				case JUMP_LEFT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_L;
+					break;
+				case JUMP_RIGHT:
+					spriteMotion = SpriteMotion.JUMP_DOWN_R;
 					break;
 				case CROUCH_LEFT:
 					spriteMotion = SpriteMotion.MORPH;
@@ -480,6 +559,7 @@ public class Player extends Being {
 				case CROUCH_DOWN_RIGHT:
 					spriteMotion = SpriteMotion.MORPH;
 					break;
+				
 			}
 			
 		}
@@ -541,6 +621,7 @@ public class Player extends Being {
 				case CROUCH_RIGHT:
 					spriteMotion = SpriteMotion.CROUCH_DOWN_RIGHT;
 					break;
+				
 			}
 		}
 		
@@ -600,13 +681,13 @@ public class Player extends Being {
 			animation = Constants.samCrouchRight;
 			break;
 		case AIM_UP_L:
-			animation = Constants.samFireUpL;
+			animation = Constants.samAimUpL;
 			break;
 		case JUMP_UP_L:
 			animation = Constants.samJumpUpL;
 			break;
 		case AIM_UP_R:
-			animation = Constants.samFireUpR;
+			animation = Constants.samAimUpR;
 			break;
 		case JUMP_UP_R:
 			animation = Constants.samJumpUpR;
@@ -676,8 +757,14 @@ public class Player extends Being {
 
 	
 	public void jump() {
-		if (isOnGround)
+		if (isOnGround && spriteMotion != SpriteMotion.MORPH) {
 			dy = Constants.JUMP_SPEED;
+			if(dx > 0) {
+				spriteMotion = SpriteMotion.JUMP_RIGHT;
+			} else if(dx < 0) {
+				spriteMotion = SpriteMotion.JUMP_LEFT;
+			}
+		}
 	}
 
 	
@@ -730,7 +817,7 @@ public class Player extends Being {
 		if ( ( instance.getRoomBounds().intersects(ascendBox.getBounds2D()) ||
 				instance.getEnemyManager().getFreezeBox().intersects(ascendBox.getBounds2D()) ) &&
 				!instance.getRoomBounds().intersects(topBox.getBounds2D()))
-			dy = -2;
+			dy = Constants.PUSH_UP_SPEED;
 		else if (stopL && dx < 0)
 			dx = 0;
 		else if (stopR && dx > 0)
@@ -818,10 +905,10 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 21));
 				break;
 			case JUMP_LEFT:
-				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 0, -Constants.BEAM_SPEED, beamSize, x - 10, y + 22));
 				break;
 			case JUMP_RIGHT:
-				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 20));
+				weapons.add(new Beam(beamType, 0, Constants.BEAM_SPEED, beamSize, x + w, y + 22));
 				break;
 			case AIM_UP_L:
 				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 31, y - 26));
@@ -833,7 +920,7 @@ public class Player extends Being {
 				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
 				break;
 			case JUMP_UP_R:
-				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
+				weapons.add(new Beam(beamType, 90, Constants.BEAM_SPEED, beamSize, x + 40, y - 25));
 				break;
 			case JUMP_DOWN_L:
 				weapons.add(new Beam(beamType, 90, -Constants.BEAM_SPEED, beamSize, x - 10, y + 20));
