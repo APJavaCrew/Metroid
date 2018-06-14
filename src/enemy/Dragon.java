@@ -15,7 +15,9 @@ public class Dragon extends Enemy {
 	AffineTransform at;
 	
 	private int size = 3;
-	private int shootWait;
+	private int shootWait = 120;
+	
+	private Area viewBox;
 	
 	ArrayList<DragonShot> shots = new ArrayList<DragonShot>();
 	
@@ -23,6 +25,8 @@ public class Dragon extends Enemy {
 		super(x, y);
 		
 		animation = Constants.dragon;
+		
+		health = 9;
 		
 		at = new AffineTransform();
 		at.translate(x, y);
@@ -40,7 +44,7 @@ public class Dragon extends Enemy {
 		g.transform(at);
 		g.drawImage(animation.getSprite(), 0, 0, null);
 		animation.update();
-		
+
 		drawShots(g);
 		
 		if (Constants.SHOWHITBOXES) {
@@ -59,7 +63,8 @@ public class Dragon extends Enemy {
 		updateHitBoxes();
 		
 		attack();
-		updateShots();
+		
+		checkBeingHurt();
 		
 	}
 	
@@ -77,21 +82,21 @@ public class Dragon extends Enemy {
 		attackBox.set(hitBox);
 	}
 	
-	private void updateShots() {
-		for (int i = 0; i < shots.size(); i++) {
-			shots.get(i).updateInstance(instance);
-			if (instance.getRoomBounds().intersects( shots.get(i).getHitBox().getBounds2D()))
-				shots.remove(i);
-		}
-	}
-	
 	private void drawShots(Graphics2D g) {
 		for (DragonShot s : shots)
 			s.draw(g);
 	}
 	
 	private void attack() {
-//		shots.add(new DragonShot(x, y, -1));
+		if (shootWait == 0) {
+			instance.getEnemyManager().add(new DragonShot(x, y, -1));
+			shootWait = 120;
+		} else {
+			shootWait--;
+		}
+		
+		if (shootWait == 7)
+			animation.restart();
 	}
 	
 }

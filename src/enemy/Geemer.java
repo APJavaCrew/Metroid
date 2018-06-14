@@ -269,7 +269,7 @@ public class Geemer extends Enemy {
 		Rectangle2D hitBoxRect = new Rectangle(0, 0, w, h);
 		hitBox = new Area(hitBoxRect);
 		hitBox.transform(at);
-		landBoxRect = new Rectangle(12, h - 5, w - 24, 10);
+		landBoxRect = new Rectangle(5, h - 5, w - 10, 10);
 		landBox = new Area(landBoxRect);
 		landBox.transform(at);
 		

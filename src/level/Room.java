@@ -61,10 +61,6 @@ public class Room extends Entity {
 		g.drawImage(backgroundImage.getSheet(), (int) x, (int) y, w, h, null);
 	}
 	
-	private void translateBackground() {
-		
-	}
-	
 	public void load() {
 		
 		switch(fileRead.nextInt()) {
@@ -104,10 +100,6 @@ public class Room extends Entity {
 		
 		w = 1280;
 		h = 1000;
-	}
-	
-	public void addEnemies() {
-		instance.getEnemyManager().addFromFile("testEnemies");
 	}
 	
 	public void updateInstance(Runner in) {

@@ -80,10 +80,10 @@ public class EnemyManager {
 	}
 	
 	public void draw(Graphics2D g) {
-		for (Enemy e : enemies) {
+		for (int i = 0; i < enemies.size(); i++) {
 			g = instance.getBackBuffer().createGraphics();
 			g.translate( (int) instance.getCamera().getXOffset(), (int) instance.getCamera().getYOffset());
-			e.draw(g);
+			enemies.get(i).draw(g);
 		}
 	}
 	

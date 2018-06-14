@@ -84,7 +84,8 @@ public class Enemy extends Being {
 		if (instance != null) {
 			ArrayList<Weapon> beams = instance.getPlayer().getWeapons();
 			if (beams != null && !instance.getPlayer().removingWeapon) {
-				for (Weapon b : beams) {
+				for (int i = 0; i < beams.size(); i++) {
+					Weapon b = beams.get(i);
 					if ( b.getWeaponBox().intersects(hitBox.getBounds2D()) ) {
 						
 						try {

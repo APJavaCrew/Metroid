@@ -140,7 +140,10 @@ public class Runner extends JFrame implements KeyListener {
 	private void run() {
 		init();
 		while (isRunning) {
-			player.setHealth(99);
+			player = new Player(this);
+			camera = new Camera(player.getX() - player.getW() / 2, player.getY() - 150);
+			enemyManager = new EnemyManager(this);
+			enemyManager.addFromFile("testEnemies");
 			while (!opening.isFinished()) {
 				long time = System.currentTimeMillis();
 				
@@ -249,10 +252,6 @@ public class Runner extends JFrame implements KeyListener {
 		camera.updateInstance(this);
 		player.updateInstance(this);
 		room.updateInstance(this);
-
-		if (start)
-			room.addEnemies();
-		start = false;
 		
 		enemyManager.updateEnemies(this);
 		
