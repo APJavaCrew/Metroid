@@ -83,32 +83,32 @@ public class Constants {
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samAimUpLeft = new Animation(new SpriteSheet("SamAimUpLeft.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkUpLeft = new Animation(new SpriteSheet("SamWalkUpLeft.png", x, y).
-//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samWalkUpLeft = new Animation(new SpriteSheet("SamWalkUpLeft.png", 34, 43).
+			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpUpLeft = new Animation(new SpriteSheet("SamJumpUpLeft.png", 22, 44).
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samCrouchUpLeft = new Animation(new SpriteSheet("SamCrouchUpLeft.png", 23, 30).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimUpRight = new Animation(new SpriteSheet("SamAimUpRight.png", 25, 40).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkUpRight = new Animation(new SpriteSheet("SamWalkUpRight.png", x, y).
-//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samWalkUpRight = new Animation(new SpriteSheet("SamWalkUpRight.png", 34, 41).
+			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpUpRight = new Animation(new SpriteSheet("SamJumpUpRight.png", 23, 44).
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samCrouchUpRight = new Animation(new SpriteSheet("SamCrouchUpRight.png", 23, 30).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownLeft = new Animation(new SpriteSheet("SamAimDownLeft.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkDownLeft = new Animation(new SpriteSheet("SamWalkDownLeft.png", x, y).
-//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samWalkDownLeft = new Animation(new SpriteSheet("SamWalkDownLeft.png", 32, 42).
+			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpDownLeft = new Animation(new SpriteSheet("SamJumpDownLeft.png", 20, 39).
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samCrouchDownLeft = new Animation(new SpriteSheet("SamCrouchDownLeft.png", 23, 25).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
 	public final static Animation samAimDownRight = new Animation(new SpriteSheet("SamAimDownRight.png", 24, 36).
 			getSpritesAt("3-0-1-2", "0-0-0"), 5, 1, true);
-//	public final static Animation samWalkDownRight = new Animation(new SpriteSheet("SamWalkDownRight.png", x, y).
-//			getSpritesAt("", ""), 5, 1, true);
+	public final static Animation samWalkDownRight = new Animation(new SpriteSheet("SamWalkDownRight.png", 32, 36).
+			getSpritesAt("10-0-1-2-3-4-5-6-7-8-9", "0-0-0-0-0-0-0-0-0-0"), 5, 1, true);
 	public final static Animation samJumpDownRight = new Animation(new SpriteSheet("SamJumpDownRight.png", 20, 39).
 			getSpritesAt("1-0", "0"), 5, 1, true);
 	public final static Animation samCrouchDownRight = new Animation(new SpriteSheet("SamCrouchDownRight.png", 23, 25).

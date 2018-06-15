@@ -180,7 +180,7 @@ public class Runner extends JFrame implements KeyListener {
 					}
 				}
 				
-				if (!player.isAlive()) {
+				if (!player.isAlive()) { 
 					if (deathDelay > 0)
 						deathDelay--;
 					if (deathDelay <= 0) {
