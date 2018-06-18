@@ -464,7 +464,7 @@ public class Player extends Being {
 	private void updateSprite() {
 		SpriteMotion last = spriteMotion;
 		
-		if (dx < 0 && isOnGround)
+		if (dx < 0 && isOnGround && !instance.islPressed() && !instance.isrPressed())
 			switch(last) {
 				default:
 					spriteMotion = SpriteMotion.WALK_LEFT;
@@ -488,7 +488,7 @@ public class Player extends Being {
 					break;
 					
 			}
-		else if (dx > 0 && isOnGround)
+		else if (dx > 0 && isOnGround && !instance.islPressed() && !instance.isrPressed())
 			switch(last) {
 			default:
 				spriteMotion = SpriteMotion.WALK_RIGHT;

@@ -47,6 +47,7 @@ public abstract class Being extends Entity {
 	}
 	
 	public abstract void move();
+	
 	public abstract void checkCollision();
 	public boolean isAlive() {
 		return isAlive;
